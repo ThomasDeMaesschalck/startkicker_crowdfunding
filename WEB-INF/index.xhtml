@@ -14,10 +14,14 @@
 <h:body>
 
 
-
 	<h:form>
-		<p:linkButton outcome="login" value="Login here"></p:linkButton>
+		<p:linkButton outcome="login" value="Login here" style="margin-right:20px;" />
 	</h:form>
+
+	<h:form rendered="#{loggedInUser.admin == true}">
+		<p:linkButton outcome="admin" value="Admin" style="margin-right:20px;" />
+	</h:form>
+
 
 	<br></br><br></br>
 	<div class="card">

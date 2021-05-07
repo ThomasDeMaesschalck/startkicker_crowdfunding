@@ -3,6 +3,7 @@ package be.hogent.startkicker.front.beans;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
@@ -13,7 +14,7 @@ import be.hogent.startkicker.service.dto.UserDTO;
 import be.hogent.startkicker.service.LoginService;
 import be.hogent.startkicker.service.UserService;
 
-@ManagedBean
+@ManagedBean(name = "loginBean", eager = true)
 @RequestScoped
 public class LoginBean implements Serializable {
 
@@ -32,6 +33,8 @@ public class LoginBean implements Serializable {
 	public String getErrorMsg() {
 		return errorMsg;
 	}
+
+	public void setErrorMsg(String errorMsg) { this.errorMsg = errorMsg;	}
 
 	public String getUserName() {
 		return userName;
@@ -54,17 +57,15 @@ public class LoginBean implements Serializable {
 		UserDTO foundPerson = LoginService.getInstance().doLogin(userName, password);
 		if (foundPerson == null) {
 			//be carefull with "exposing" error messages that are too detailed
-			errorMsg = "Unknown Username/Password: " + userName + " - " + password;
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Unknown Username/Password"));
 		} else {
-			List<UserDTO> allPersons = UserService.getInstance().getAllPersons();
 			ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 			HttpSession currentSession = (HttpSession) ctx.getSession(true);
 			currentSession.setAttribute("loggedInUser", foundPerson);
 			AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
-			appBean.setAllUsers(allPersons);
 			System.out.println("appBean.getAllUsers().size() -- "+appBean.getAllUsers().size());
 			currentSession.getServletContext().setAttribute("myAppWideBean",appBean);
-			pathToFollow = "index";
+			pathToFollow = "index.jsf";
 		}
 		return pathToFollow;
 	}

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
@@ -19,10 +21,15 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;
+	@NotNull
 	protected String firstName;
+	@NotNull
 	protected String name;
+	@NotNull
 	protected String userName;
+	@NotNull
 	protected String password;
+	@Email
 	protected String email;
 	protected boolean actif;
 	protected boolean admin;
