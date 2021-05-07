@@ -7,18 +7,19 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Demo Login JSF2.2 - Service Layer - JPA Repository</title>
+	<title>User list</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
    <div class="card">
 Hello <h:outputText value="#{loggedInUser.firstName}"></h:outputText>
-
 <br></br>
+       Is admin  <h:outputText value="#{loggedInUser.admin}"></h:outputText>
+
+       <br></br>
 
       <h:form>
-
       <p:dataTable value = "#{myAppWideBean.allUsers}" var = "user"
              rows="10"
              paginator="true"
@@ -38,9 +39,7 @@ Hello <h:outputText value="#{loggedInUser.firstName}"></h:outputText>
       <h:outputText value="#{user.email}" />
 
    </p:column>
-   
-</p:dataTable>
-
+    </p:dataTable>
       </h:form>
 
 </div>

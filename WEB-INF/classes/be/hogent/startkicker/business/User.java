@@ -1,12 +1,7 @@
-package be.hogent.startkicker.service.dto;
+package be.hogent.startkicker.business;
 
-import java.io.Serializable;
+public class User {
 
-public class PersonDTO implements Comparable<PersonDTO>, Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private long id;
 	protected String firstName;
 	protected String name;
@@ -14,9 +9,11 @@ public class PersonDTO implements Comparable<PersonDTO>, Serializable {
 	protected String password;
 	protected String email;
 	protected boolean actif;
+	protected boolean admin;
 
-	public PersonDTO(String firstName, String name, String userName,
-			String password, String email) {
+
+	public User(String firstName, String name, String userName,
+				String password, String email) {
 		super();
 		this.firstName = firstName;
 		this.name = name;
@@ -73,39 +70,6 @@ public class PersonDTO implements Comparable<PersonDTO>, Serializable {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		int aantal = this.getClass().getSimpleName().length() - 3;
-		return this.getClass().getSimpleName().substring(0, aantal);
-	}
-
-	@Override
-	public int compareTo(PersonDTO o) {
-		return this.toString().compareTo(o.toString());
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PersonDTO other = (PersonDTO) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
 	public boolean isActif() {
 		return actif;
 	}
@@ -114,4 +78,12 @@ public class PersonDTO implements Comparable<PersonDTO>, Serializable {
 		this.actif = actif;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 }
+

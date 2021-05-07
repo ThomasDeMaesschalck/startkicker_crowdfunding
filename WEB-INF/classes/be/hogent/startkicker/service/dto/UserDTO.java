@@ -1,7 +1,12 @@
-package be.hogent.startkicker.business;
+package be.hogent.startkicker.service.dto;
 
-public class Person  {
+import java.io.Serializable;
 
+public class UserDTO implements Comparable<UserDTO>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private long id;
 	protected String firstName;
 	protected String name;
@@ -9,10 +14,10 @@ public class Person  {
 	protected String password;
 	protected String email;
 	protected boolean actif;
+	protected boolean admin;
 
-
-	public Person(String firstName, String name, String userName,
-			String password, String email) {
+	public UserDTO(String firstName, String name, String userName,
+				   String password, String email) {
 		super();
 		this.firstName = firstName;
 		this.name = name;
@@ -69,6 +74,47 @@ public class Person  {
 		this.email = email;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
+	@Override
+	public String toString() {
+		int aantal = this.getClass().getSimpleName().length() - 3;
+		return this.getClass().getSimpleName().substring(0, aantal);
+	}
+
+	@Override
+	public int compareTo(UserDTO o) {
+		return this.toString().compareTo(o.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+
 	public boolean isActif() {
 		return actif;
 	}
@@ -76,5 +122,5 @@ public class Person  {
 	public void setActif(boolean actif) {
 		this.actif = actif;
 	}
-}
 
+}

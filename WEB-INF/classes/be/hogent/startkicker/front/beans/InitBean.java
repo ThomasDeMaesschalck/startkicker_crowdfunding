@@ -5,10 +5,6 @@ import java.io.Serializable;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-import be.hogent.startkicker.service.dto.PersonDTO;
-import be.hogent.startkicker.service.LoginService;
-import be.hogent.startkicker.service.PersonService;
-
 @ManagedBean(eager = true) // eager loading of bean @startup
 @ApplicationScoped
 public class InitBean implements Serializable {
@@ -21,7 +17,7 @@ public class InitBean implements Serializable {
 	public InitBean() {
 		System.out.println("InitBean created");
 
-		PersonDTO person = LoginService.getInstance().doLogin("My_Admin", "AbC123");
+		/* PersonDTO person = LoginService.getInstance().doLogin("My_Admin", "AbC123");
 		if (person == null) {
 			PersonService pManager = PersonService.getInstance();
 			PersonDTO p = new PersonDTO("Voornaam_Admin", "Achternaam_Admin", "My_Admin", "AbC123", "noreply@test.be");
@@ -32,8 +28,9 @@ public class InitBean implements Serializable {
 				pFor.setActif(true);
 				pManager.savePerson(pFor);
 			}
-			
-		}
+		} */
+
+
 	}
 
 }

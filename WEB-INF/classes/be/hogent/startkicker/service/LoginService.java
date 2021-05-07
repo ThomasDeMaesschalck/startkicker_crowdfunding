@@ -1,17 +1,17 @@
 package be.hogent.startkicker.service;
 
-import be.hogent.startkicker.business.repositories.IPersonRepo;
-import be.hogent.startkicker.business.repositories.PersonJPARepo;
-import be.hogent.startkicker.service.dto.PersonDTO;
-import be.hogent.startkicker.service.mappers.PersonMapper;
+import be.hogent.startkicker.business.repositories.IUserRepo;
+import be.hogent.startkicker.business.repositories.UserJPARepo;
+import be.hogent.startkicker.service.dto.UserDTO;
+import be.hogent.startkicker.service.mappers.UserMapper;
 
 public class LoginService {
 
-	private IPersonRepo personRepo;
+	private IUserRepo userRepo;
 	private static LoginService instance;
 
 	private LoginService() {
-		personRepo = new PersonJPARepo();
+		userRepo = new UserJPARepo();
 	}
 
 	public static LoginService getInstance() {
@@ -21,10 +21,10 @@ public class LoginService {
 		return instance;
 	}
 
-	public PersonDTO doLogin(String userName, String password) {
+	public UserDTO doLogin(String userName, String password) {
 		System.out.println("doLogin");
-		return new PersonMapper().mapObjectToDTO(personRepo
-				.getPerson(userName, password));
+		return new UserMapper().mapObjectToDTO(userRepo
+				.getUser(userName, password));
 	}
 
 

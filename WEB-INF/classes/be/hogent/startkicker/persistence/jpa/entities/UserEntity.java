@@ -10,7 +10,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
-public class PersonEntity implements Serializable {
+public class UserEntity implements Serializable {
 
 	/**
 	 * 
@@ -25,15 +25,16 @@ public class PersonEntity implements Serializable {
 	protected String password;
 	protected String email;
 	protected boolean actif;
+	protected boolean admin;
 
 	// VERY IMPORTANT BECAUSE OF OVERLOADED CONSTRUCTOR!!
 	// OTHERWISE Person(String,String,String,String,String) WILL ALWAYS BE
 	// CALLED BY FRAMEWORK, RESULTING IN POSSIBLE DUPLICATE ENTRIES
-	protected PersonEntity() {
+	protected UserEntity() {
 	}
 
-	public PersonEntity(String firstName, String name, String userName,
-			String password, String email) {
+	public UserEntity(String firstName, String name, String userName,
+					  String password, String email) {
 		super();
 		this.firstName = firstName;
 		this.name = name;
@@ -98,6 +99,14 @@ public class PersonEntity implements Serializable {
 		this.actif = actif;
 	}
 
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,7 +128,7 @@ public class PersonEntity implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PersonEntity other = (PersonEntity) obj;
+		UserEntity other = (UserEntity) obj;
 		if (actif != other.actif)
 			return false;
 		if (email == null) {

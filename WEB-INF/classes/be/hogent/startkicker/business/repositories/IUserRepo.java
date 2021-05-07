@@ -3,19 +3,19 @@ package be.hogent.startkicker.business.repositories;
 import java.io.Serializable;
 import java.util.List;
 
-import be.hogent.startkicker.business.Person;
+import be.hogent.startkicker.business.User;
 
-public interface IPersonRepo extends Serializable {
+public interface IUserRepo extends Serializable {
 	public static final String SUCCESS = "success";
 	public static final String FAIL = "fail";
 	public static final String USERNAME_ALREADY_EXISTS = "Username already in use";
 
-	public List<Person> getAllPersons();
+	public List<User> getAllUsers();
 
-	public String savePerson(Person p);
+	public String saveUser(User p);
 
-	public Person getPerson(String userName, String password);
+	public User getUser(String userName, String password);
 
-	public Person getPerson(long id);
+	public User getUser(long id);
 
 }

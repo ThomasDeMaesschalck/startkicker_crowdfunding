@@ -9,9 +9,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import be.hogent.startkicker.service.dto.PersonDTO;
+import be.hogent.startkicker.service.dto.UserDTO;
 import be.hogent.startkicker.service.LoginService;
-import be.hogent.startkicker.service.PersonService;
+import be.hogent.startkicker.service.UserService;
 
 @ManagedBean
 @RequestScoped
@@ -25,7 +25,7 @@ public class LoginBean implements Serializable {
 
 	public LoginBean() {
 		// TODO remove this in production as you expose Admin credentials :)
-		userName = "My_Admin";
+		userName = "ThomasDM";
 		password = "AbC123"; //overkill, as <h:inputSecret> does not pre-populate the field
 	}
 
@@ -51,12 +51,12 @@ public class LoginBean implements Serializable {
 
 	public String login() {
 		String pathToFollow = null;
-		PersonDTO foundPerson = LoginService.getInstance().doLogin(userName, password);
+		UserDTO foundPerson = LoginService.getInstance().doLogin(userName, password);
 		if (foundPerson == null) {
 			//be carefull with "exposing" error messages that are too detailed
 			errorMsg = "Unknown Username/Password: " + userName + " - " + password;
 		} else {
-			List<PersonDTO> allPersons = PersonService.getInstance().getAllPersons();
+			List<UserDTO> allPersons = UserService.getInstance().getAllPersons();
 			ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 			HttpSession currentSession = (HttpSession) ctx.getSession(true);
 			currentSession.setAttribute("loggedInUser", foundPerson);

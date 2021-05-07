@@ -8,11 +8,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-import be.hogent.startkicker.business.Person;
-import be.hogent.startkicker.persistence.jpa.entities.PersonEntity;
-import be.hogent.startkicker.persistence.jpa.mapper.PersonMapper;
+import be.hogent.startkicker.business.User;
+import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
+import be.hogent.startkicker.persistence.jpa.mapper.UserMapper;
 
-public class PersonJPARepo implements IPersonRepo {
+public class UserJPARepo implements IUserRepo {
 	/**
 	 * 
 	 */
@@ -22,10 +22,10 @@ public class PersonJPARepo implements IPersonRepo {
 
 	private EntityManagerFactory emf = null;
 	private EntityManager em = null;
-	private PersonMapper pm = new PersonMapper();
+	private UserMapper pm = new UserMapper();
 
-	public PersonJPARepo() {
-		System.out.println("PersonJPARepo created");
+	public UserJPARepo() {
+		System.out.println("UserJPARepo created");
 		emf = Persistence.createEntityManagerFactory(NAME_PERSISTENCEUNIT);
 	}
 
@@ -42,16 +42,16 @@ public class PersonJPARepo implements IPersonRepo {
 	}
 
 	@Override
-	public String savePerson(Person person) {
+	public String saveUser(User user) {
 		try {
 			createEM();
-			PersonEntity personInDB = em.find(PersonEntity.class, person.getId());
+			UserEntity personInDB = em.find(UserEntity.class, user.getId());
 
 			em.getTransaction().begin();
 			if (personInDB != null) {
-				return updatePerson(pm.mapObjectToEntity(person), personInDB);
+				return updateUser(pm.mapObjectToEntity(user), personInDB);
 			} else {
-				return saveNewPerson(pm.mapObjectToEntity(person));
+				return saveNewUser(pm.mapObjectToEntity(user));
 			}
 		} catch (Exception e) {
 			return FAIL;
@@ -67,7 +67,7 @@ public class PersonJPARepo implements IPersonRepo {
 	 * @param person
 	 * @return
 	 */
-	private String saveNewPerson(PersonEntity person) {
+	private String saveNewUser(UserEntity person) {
 		try {
 			em.persist(person);
 			em.getTransaction().commit();
@@ -85,7 +85,7 @@ public class PersonJPARepo implements IPersonRepo {
 	 * @param personInDB
 	 * @return
 	 */
-	private String updatePerson(PersonEntity person, PersonEntity personInDB) {
+	private String updateUser(UserEntity person, UserEntity personInDB) {
 		try {
 			personInDB.setFirstName(person.getFirstName());
 			personInDB.setName(person.getName());
@@ -102,13 +102,13 @@ public class PersonJPARepo implements IPersonRepo {
 	}
 
 	@Override
-	public Person getPerson(String userName, String password) {
+	public User getUser(String userName, String password) {
 		try {
 			createEM();
 			System.out.println(em);
-			TypedQuery<PersonEntity> q = em.createQuery(
-					"select p from PersonEntity p where p.userName= :userName and p.password= :password and p.actif = '1' ",
-					PersonEntity.class);
+			TypedQuery<UserEntity> q = em.createQuery(
+					"select p from UserEntity p where p.userName= :userName and p.password= :password and p.actif = '1' ",
+					UserEntity.class);
 			q.setParameter("userName", userName);
 			q.setParameter("password", password);
 			return pm.mapEntityToObject(q.getSingleResult());
@@ -122,10 +122,10 @@ public class PersonJPARepo implements IPersonRepo {
 	}
 
 	@Override
-	public Person getPerson(long id) {
+	public User getUser(long id) {
 		try {
 			createEM();
-			return pm.mapEntityToObject(em.find(PersonEntity.class, id));
+			return pm.mapEntityToObject(em.find(UserEntity.class, id));
 		} catch (Exception e) {
 			return null;
 		} finally {
@@ -135,15 +135,15 @@ public class PersonJPARepo implements IPersonRepo {
 	}
 
 	@Override
-	public List<Person> getAllPersons() {
+	public List<User> getAllUsers() {
 		try {
 			createEM();
-			TypedQuery<PersonEntity> q = em.createQuery("select p from PersonEntity p where not p.userName = :initUser order by p.name ",
-					PersonEntity.class);
+			TypedQuery<UserEntity> q = em.createQuery("select p from UserEntity p where not p.userName = :initUser order by p.name ",
+					UserEntity.class);
 			q.setParameter("initUser", "My_Admin");
 			return pm.allEntityToObject(q.getResultList());
 		} catch (Exception e) {
-			return new ArrayList<Person>();
+			return new ArrayList<User>();
 		} finally {
 			closeEM();
 		}

@@ -17,6 +17,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="DemoLayered2.2" />
           <factory-entry name="startkicker" />
         </datasource-mapping>
         <naming-strategy-map />
