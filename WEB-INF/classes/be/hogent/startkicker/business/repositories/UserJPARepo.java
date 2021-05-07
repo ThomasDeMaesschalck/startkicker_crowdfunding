@@ -64,12 +64,12 @@ public class UserJPARepo implements IUserRepo {
 	 * De nieuwe persoon proberen opslaan.<br>
 	 * Username moet uniek zijn om succes te hebben.<br>
 	 * see uniqueConstraints = @UniqueConstraint(columnNames = "userName")
-	 * @param person
+	 * @param user
 	 * @return
 	 */
-	private String saveNewUser(UserEntity person) {
+	private String saveNewUser(UserEntity user) {
 		try {
-			em.persist(person);
+			em.persist(user);
 			em.getTransaction().commit();
 			return SUCCESS;
 		} catch (Exception ex) {

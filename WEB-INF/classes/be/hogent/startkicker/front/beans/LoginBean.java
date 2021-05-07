@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import be.hogent.startkicker.service.dto.UserDTO;
 import be.hogent.startkicker.service.LoginService;
-import be.hogent.startkicker.service.UserService;
 
 @ManagedBean(name = "loginBean", eager = true)
 @RequestScoped
@@ -22,19 +21,12 @@ public class LoginBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6955508471291131930L;
-	private String userName, password, errorMsg;
+	private String userName, password;
 
 	public LoginBean() {
 		// TODO remove this in production as you expose Admin credentials :)
 		userName = "ThomasDM";
-		password = "AbC123"; //overkill, as <h:inputSecret> does not pre-populate the field
 	}
-
-	public String getErrorMsg() {
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String errorMsg) { this.errorMsg = errorMsg;	}
 
 	public String getUserName() {
 		return userName;
@@ -54,19 +46,26 @@ public class LoginBean implements Serializable {
 
 	public String login() {
 		String pathToFollow = null;
-		UserDTO foundPerson = LoginService.getInstance().doLogin(userName, password);
-		if (foundPerson == null) {
-			//be carefull with "exposing" error messages that are too detailed
+		UserDTO foundUser = LoginService.getInstance().doLogin(userName, password);
+		if (foundUser == null) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Unknown Username/Password"));
 		} else {
 			ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 			HttpSession currentSession = (HttpSession) ctx.getSession(true);
-			currentSession.setAttribute("loggedInUser", foundPerson);
+			currentSession.setAttribute("loggedInUser", foundUser);
 			AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
 			System.out.println("appBean.getAllUsers().size() -- "+appBean.getAllUsers().size());
 			currentSession.getServletContext().setAttribute("myAppWideBean",appBean);
-			pathToFollow = "index.jsf";
+			pathToFollow = "index.jsf?faces-redirect=true";
 		}
+		return pathToFollow;
+	}
+
+	public String logout(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		HttpSession httpSession = (HttpSession)facesContext.getExternalContext().getSession(false);
+		httpSession.invalidate();
+		String pathToFollow = "index.jsf?faces-redirect=true";
 		return pathToFollow;
 	}
 

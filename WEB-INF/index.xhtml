@@ -15,13 +15,20 @@
 
 
 	<h:form>
-		<p:linkButton outcome="login" value="Login here" style="margin-right:20px;" />
+		<p:linkButton rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;" />
 	</h:form>
 
 	<h:form rendered="#{loggedInUser.admin == true}">
 		<p:linkButton outcome="admin" value="Admin" style="margin-right:20px;" />
 	</h:form>
 
+	<h:form rendered="#{loggedInUser == null}">
+		<p:linkButton outcome="register" value="Register" style="margin-right:20px;" />
+	</h:form>
+
+
+	<p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
+					  action="#{loginBean.logout}" style="margin-right:20px;" ></p:commandButton>
 
 	<br></br><br></br>
 	<div class="card">
