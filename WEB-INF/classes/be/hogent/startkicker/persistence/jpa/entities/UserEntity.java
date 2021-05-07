@@ -2,13 +2,8 @@ package be.hogent.startkicker.persistence.jpa.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import org.hibernate.validator.constraints.*;
 
 @Entity
 @Table(name = "Users", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
@@ -21,15 +16,15 @@ public class UserEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	private long id;
-	@NotNull
+	@Column(nullable = false) @NotBlank
 	protected String firstName;
-	@NotNull
+	@Column(nullable = false) @NotBlank
 	protected String name;
-	@NotNull
+	@Column(nullable = false) @NotBlank
 	protected String userName;
-	@NotNull
+	@Column(nullable = false) @NotBlank
 	protected String password;
-	@Email
+	@Column(nullable = false) @NotBlank
 	protected String email;
 	protected boolean actif;
 	protected boolean admin;

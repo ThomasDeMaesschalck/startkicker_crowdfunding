@@ -26,6 +26,10 @@ public class UserDTO implements Comparable<UserDTO>, Serializable {
 		this.email = email;
 	}
 
+	public UserDTO() {
+		super();
+	}
+
 	public long getId() {
 		return id;
 	}

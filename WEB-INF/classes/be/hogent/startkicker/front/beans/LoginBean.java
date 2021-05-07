@@ -10,6 +10,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+
+import be.hogent.startkicker.service.UserService;
 import be.hogent.startkicker.service.dto.UserDTO;
 import be.hogent.startkicker.service.LoginService;
 
@@ -22,6 +24,9 @@ public class LoginBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 6955508471291131930L;
 	private String userName, password;
+
+	private UserDTO userToSave = new UserDTO();
+
 
 	public LoginBean() {
 		// TODO remove this in production as you expose Admin credentials :)
@@ -43,6 +48,16 @@ public class LoginBean implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public UserDTO getUserToSave() {
+		return userToSave;
+	}
+
+	public void setUserToSave(UserDTO userToSave) {
+		this.userToSave = userToSave;
+	}
+
+
 
 	public String login() {
 		String pathToFollow = null;
@@ -66,6 +81,23 @@ public class LoginBean implements Serializable {
 		HttpSession httpSession = (HttpSession)facesContext.getExternalContext().getSession(false);
 		httpSession.invalidate();
 		String pathToFollow = "index.jsf?faces-redirect=true";
+		return pathToFollow;
+	}
+
+
+
+	public String register() {
+
+		String pathToFollow = null;
+		String outcome = UserService.getInstance().savePerson(userToSave);
+
+		if (outcome == "success") {
+			pathToFollow = "index.jsf?faces-redirect=true";
+			return pathToFollow;
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", outcome));
+		}
+
 		return pathToFollow;
 	}
 

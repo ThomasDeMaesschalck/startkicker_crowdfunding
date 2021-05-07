@@ -45,11 +45,11 @@ public class UserJPARepo implements IUserRepo {
 	public String saveUser(User user) {
 		try {
 			createEM();
-			UserEntity personInDB = em.find(UserEntity.class, user.getId());
+			UserEntity userInDB = em.find(UserEntity.class, user.getId());
 
 			em.getTransaction().begin();
-			if (personInDB != null) {
-				return updateUser(pm.mapObjectToEntity(user), personInDB);
+			if (userInDB != null) {
+				return updateUser(pm.mapObjectToEntity(user), userInDB);
 			} else {
 				return saveNewUser(pm.mapObjectToEntity(user));
 			}

@@ -30,8 +30,8 @@ public class UserService {
 		userMapper = new UserMapper();
 	}
 
-	public String savePerson(UserDTO pDTO) {
-		return userRepo.saveUser(userMapper.mapDTOToObject(pDTO));
+	public String savePerson(UserDTO uDTO) {
+		return userRepo.saveUser(userMapper.mapDTOToObject(uDTO));
 	}
 
 	public List<UserDTO> getAllPersons() {
