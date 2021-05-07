@@ -1,36 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+				"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
 	  xmlns:p="http://primefaces.org/ui">
 <h:head>
-<title>Demo Login JSF2.2 - Service Layer - JPA Repository</title>
+	<title>Startkicker - Home</title>
 	<h:outputStylesheet name="css/primeflex.css" />
-	<h:outputStylesheet library="css" name="style.css"/>
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
-
 <h:body>
-<h1 >Hello from IntelliJ
-</h1>
-<hr>
-</hr>
-<br></br><br></br>
-	<style type="text/css">
-		p {
-			line-height: 1.5;
-			margin: 0;
-		}
-	</style>
-	<p:card style="width: 25rem; margin-left: 10em; margin-top: 15em; margin-bottom: 2em; align-content: center">
+
+
 
 	<h:form>
 		<p:linkButton outcome="login" value="Login here"></p:linkButton>
-</h:form>
-	</p:card>
+	</h:form>
+
+	<br></br><br></br>
+	<div class="card">
 
 
+		<h:panelGrid rendered="#{loggedInUser != null}">
+			Hello
+		<h:outputText value="#{loggedInUser.firstName}"></h:outputText>
+<br></br><br></br>
+		Is admin: <h:outputText value="#{loggedInUser.admin}"></h:outputText>
+		</h:panelGrid>
+
+		<br></br>
+
+		<h:form>
+			<p:dataTable value = "#{myAppWideBean.allUsers}" var = "user"
+						 rows="10"
+						 paginator="true"
+						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+						 rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
+
+				<p:column headerText="Name">
+					<h:outputText value="#{user.name}" />
+				</p:column>
+
+				<p:column headerText="Firstname">
+					<h:outputText value="#{user.firstName}" />
+				</p:column>
+
+				<p:column headerText="E-mail">
+					<h:outputText value="#{user.email}" />
+
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</div>
 </h:body>
 </html>

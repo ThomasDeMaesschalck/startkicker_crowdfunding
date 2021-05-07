@@ -6,7 +6,11 @@ import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
+import be.hogent.startkicker.service.UserService;
 import be.hogent.startkicker.service.dto.UserDTO;
 
 @ManagedBean(name = "myAppWideBean", eager = true)
@@ -23,6 +27,13 @@ public class AppBean implements Serializable {
 	}
 
 	public List<UserDTO> getAllUsers() {
+
+		List<UserDTO> allPersons = UserService.getInstance().getAllPersons();
+		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
+		HttpSession currentSession = (HttpSession) ctx.getSession(true);
+		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
+		appBean.setAllUsers(allPersons);
+
 		return Collections.unmodifiableList(allUsers);
 	}
 

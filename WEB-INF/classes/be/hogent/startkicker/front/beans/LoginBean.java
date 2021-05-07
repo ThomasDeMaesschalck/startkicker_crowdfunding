@@ -64,7 +64,7 @@ public class LoginBean implements Serializable {
 			appBean.setAllUsers(allPersons);
 			System.out.println("appBean.getAllUsers().size() -- "+appBean.getAllUsers().size());
 			currentSession.getServletContext().setAttribute("myAppWideBean",appBean);
-			pathToFollow = "welcome";
+			pathToFollow = "index";
 		}
 		return pathToFollow;
 	}
