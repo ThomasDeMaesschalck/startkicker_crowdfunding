@@ -32,8 +32,9 @@
 
         <br></br>
 
+        <h1>User list:</h1>
         <h:form>
-            <p:dataTable value = "#{myAppWideBean.allUsers}" var = "user"
+            <p:dataTable id="userlist" value = "#{myAppWideBean.allUsers}" var = "user"
                          rows="10"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -50,6 +51,15 @@
 
                 <p:column headerText="E-mail">
                     <h:outputText value="#{user.email}" />
+
+                </p:column>
+
+                <p:column headerText="Active?">
+                    <h:outputText value="#{user.actif}" />
+                    <p:commandButton rendered="#{user.actif == false}" action="#{loginBean.activateUser(user.id)}"
+                                     value="Activate #{user.id}"
+                    update="userlist" />
+
 
                 </p:column>
             </p:dataTable>

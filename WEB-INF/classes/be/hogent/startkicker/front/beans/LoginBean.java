@@ -63,7 +63,7 @@ public class LoginBean implements Serializable {
 		String pathToFollow = null;
 		UserDTO foundUser = LoginService.getInstance().doLogin(userName, password);
 		if (foundUser == null) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Unknown Username/Password"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Unknown Username/Password. Or User not actived yet."));
 		} else {
 			ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 			HttpSession currentSession = (HttpSession) ctx.getSession(true);
@@ -98,6 +98,12 @@ public class LoginBean implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", outcome));
 		}
 
+		return pathToFollow;
+	}
+
+	public String activateUser(long userId) {
+		String pathToFollow = null;
+		UserService.getInstance().switchPersonActif(userId);
 		return pathToFollow;
 	}
 
