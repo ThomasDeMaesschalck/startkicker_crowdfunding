@@ -25,8 +25,6 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 6955508471291131930L;
 	private String userName, password;
 
-	private UserDTO userToSave = new UserDTO();
-
 
 	public LoginBean() {
 		// TODO remove this in production as you expose Admin credentials :)
@@ -47,14 +45,6 @@ public class LoginBean implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public UserDTO getUserToSave() {
-		return userToSave;
-	}
-
-	public void setUserToSave(UserDTO userToSave) {
-		this.userToSave = userToSave;
 	}
 
 
@@ -85,26 +75,5 @@ public class LoginBean implements Serializable {
 	}
 
 
-
-	public String register() {
-
-		String pathToFollow = null;
-		String outcome = UserService.getInstance().savePerson(userToSave);
-
-		if (outcome == "success") {
-			pathToFollow = "index.jsf?faces-redirect=true";
-			return pathToFollow;
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", outcome));
-		}
-
-		return pathToFollow;
-	}
-
-	public String activateUser(long userId) {
-		String pathToFollow = null;
-		UserService.getInstance().switchPersonActif(userId);
-		return pathToFollow;
-	}
 
 }

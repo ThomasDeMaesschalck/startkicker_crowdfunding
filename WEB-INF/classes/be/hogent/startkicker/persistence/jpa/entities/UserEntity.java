@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 
 @Entity
@@ -28,7 +27,6 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false) @NotBlank(message = "Password can't be blank")
 	protected String password;
 	@Column(nullable = false) @NotBlank(message = "Enter a valid email address")
-	@Pattern(regexp=".+@.+\\..+", message="Please provide a valid email address")
 	@Email(message = "must be a valid email")
 	protected String email;
 	protected boolean actif;

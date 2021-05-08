@@ -33,7 +33,6 @@ public class AppBean implements Serializable {
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
 		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
 		appBean.setAllUsers(allPersons);
-
 		return Collections.unmodifiableList(allUsers);
 	}
 

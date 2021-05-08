@@ -17,6 +17,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
 				pDTO.getUserName(), pDTO.getPassword(), pDTO.getEmail());
 		user.setId(pDTO.getId());
 		user.setActif(pDTO.isActif());
+		user.setAdmin(pDTO.isAdmin());
 		return user;
 	}
 

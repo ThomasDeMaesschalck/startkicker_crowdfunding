@@ -47,13 +47,18 @@ public class UserJPARepo implements IUserRepo {
 			createEM();
 			UserEntity userInDB = em.find(UserEntity.class, user.getId());
 
+			System.out.println(user.getId() + "is userID");
+
 			em.getTransaction().begin();
 			if (userInDB != null) {
+				System.out.println("User found...");
 				return updateUser(pm.mapObjectToEntity(user), userInDB);
 			} else {
+				System.out.println("Making new user...");
 				return saveNewUser(pm.mapObjectToEntity(user));
 			}
 		} catch (Exception e) {
+			System.out.println("not found...");
 			return FAIL;
 		} finally {
 			closeEM();
@@ -81,22 +86,27 @@ public class UserJPARepo implements IUserRepo {
 	 * De persoon proberen updaten.<br>
 	 * Username, indien veranderd, moet uniek zijn om succes te hebben.<br>
 	 * 
-	 * @param person
-	 * @param personInDB
+	 * @param user
+	 * @param userInDB
 	 * @return
 	 */
-	private String updateUser(UserEntity person, UserEntity personInDB) {
+	private String updateUser(UserEntity user, UserEntity userInDB) {
 		try {
-			personInDB.setFirstName(person.getFirstName());
-			personInDB.setName(person.getName());
-			personInDB.setEmail(person.getEmail());
-			personInDB.setUserName(person.getUserName());
-			personInDB.setPassword(person.getPassword());
-			personInDB.setActif(person.isActif());
-			em.persist(personInDB);
+			userInDB.setFirstName(user.getFirstName());
+			userInDB.setName(user.getName());
+			userInDB.setEmail(user.getEmail());
+			userInDB.setUserName(user.getUserName());
+			userInDB.setPassword(user.getPassword());
+			userInDB.setActif(user.isActif());
+			userInDB.setAdmin(user.isAdmin());
+			em.persist(userInDB);
 			em.getTransaction().commit();
+			System.out.println("updating...");
 			return SUCCESS;
+
 		} catch (Exception e) {
+			System.out.println(e.toString());
+
 			return USERNAME_ALREADY_EXISTS;
 		}
 	}
@@ -138,7 +148,7 @@ public class UserJPARepo implements IUserRepo {
 	public List<User> getAllUsers() {
 		try {
 			createEM();
-			TypedQuery<UserEntity> q = em.createQuery("select p from UserEntity p where not p.userName = :initUser order by p.name ",
+			TypedQuery<UserEntity> q = em.createQuery("select p from UserEntity p where not p.userName = :initUser order by p.id DESC",
 					UserEntity.class);
 			q.setParameter("initUser", "My_Admin");
 			return pm.allEntityToObject(q.getResultList());

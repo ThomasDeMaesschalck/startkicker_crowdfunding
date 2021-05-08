@@ -15,7 +15,7 @@
 
 
 	<h:form>
-		<p:linkButton rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;" />
+		<p:linkButton rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
 	</h:form>
 
 	<h:form rendered="#{loggedInUser.admin == true}">
@@ -31,8 +31,9 @@
 					  action="#{loginBean.logout}" style="margin-right:20px;" ></p:commandButton>
 
 	<br></br><br></br>
-	<div class="card">
 
+
+	<p:card>
 
 		<h:panelGrid rendered="#{loggedInUser != null}">
 			Hello
@@ -65,7 +66,7 @@
 				</p:column>
 			</p:dataTable>
 		</h:form>
+	</p:card>
 
-	</div>
 </h:body>
 </html>
