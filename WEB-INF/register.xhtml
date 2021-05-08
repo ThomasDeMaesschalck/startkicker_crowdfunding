@@ -36,18 +36,22 @@
                          columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
                          contentStyleClass="p-align-baseline ui-fluid">
 
-                <h:outputText value="Lastname" />
-                <p:inputText value="#{loginBean.userToSave.name}"/>
-                <h:outputText value="Firstname" />
-                <p:inputText value="#{loginBean.userToSave.firstName}" />
-                <h:outputText value="Username" />
-                <p:inputText value="#{loginBean.userToSave.userName}"/>
-                <h:outputText value="Password" />
-                <p:password id="toggle" value="#{loginBean.userToSave.password}" toggleMask="true" redisplay="true"/>
-                <h:outputText value="Email" />
-                <p:inputText value="#{loginBean.userToSave.email}"/>
+                <h:outputText for="Lastname" value="Lastname" />
+                <p:inputText id="Lastname" value="#{loginBean.userToSave.name}" required="true" />
 
-                <p:commandButton value="Save" ajax="false" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{loginBean.register}" />
+                <h:outputText for="Firstname" value="Firstname" />
+                <p:inputText id="Firstname" value="#{loginBean.userToSave.firstName}"  required="true" />
+
+                <h:outputText for="Username" value="Username" />
+                <p:inputText id="Username" value="#{loginBean.userToSave.userName}" required="true" />
+
+                <h:outputText for="Password" value="Password" />
+                <p:password id="Password" value="#{loginBean.userToSave.password}" toggleMask="true" redisplay="true" feedback="true" required="true" />
+
+                <h:outputText for="Email" value="Email" />
+                <p:inputText id="Email" value="#{loginBean.userToSave.email}" required="true" />
+
+                <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{loginBean.register}" />
 
             </p:panelGrid>
         </h:form>
