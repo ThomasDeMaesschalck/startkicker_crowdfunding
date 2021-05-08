@@ -25,6 +25,17 @@
     <p:card>
         <br></br>
 
+
+        <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+        </p:messages>
+
+
+        <p:commandButton icon="pi pi-user-plus" value="Add a new user" update=":userCreateForm:userCreate" oncomplete="PF('makeDialog').show()">
+            <f:setPropertyActionListener value="#{user}" target="#{userBean.userToSave}"/>
+        </p:commandButton>
+
+        <br /><br />
         <h1>User list:</h1>
         <h:form id="userForm">
             <p:dataTable id="userlist" value = "#{myAppWideBean.allUsers}" var = "user"
@@ -52,7 +63,7 @@
                 </p:column>
 
                 <p:column headerText="Active?">
-                    <h:outputText value="#{user.actif}" />
+                    <h:outputText rendered="#{user.actif == true}"  styleClass="pi pi-check"/>
                     <p:commandButton rendered="#{user.actif == false}" action="#{userBean.activateUser(user.id)}"
                                      value="Activate #{user.id}"
                     update="userlist" />
@@ -74,7 +85,7 @@
 
                     <p:panelGrid  columns="2" rendered="#{not empty userBean.selectedUser}" columnClasses="label,value">
                         <h:outputText value="Id: " />
-                        <p:inputNumber value="#{userBean.selectedUser.id}" />
+                        <p:inputNumber value="#{userBean.selectedUser.id}" disabled="true" />
                         <h:outputText value="Name: " />
                         <p:inputText value="#{userBean.selectedUser.name}" />
                         <h:outputText value="Firstname: " />
@@ -99,47 +110,47 @@
         </h:form>
     </p:card>
 
-        <p:card>
-            <h2>Make a new user:</h2>
-            <p:messages id="messages" showDetail="true" closable="true">
-                <p:autoUpdate/>
-            </p:messages>
 
 
-            <h:form>
-                <p:panelGrid columns="4"
-                             layout="flex"
-                             columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-                             contentStyleClass="p-align-baseline ui-fluid">
+            <h:form id="userCreateForm">
+                <p:dialog header="Make User" widgetVar="makeDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="userCreate" style="text-align:center;">
 
-                    <h:outputText for="Lastname" value="Lastname" />
-                    <p:inputText id="Lastname" value="#{userBean.userToSave.name}" required="true" />
+                        <p:messages id="messages" showDetail="false" closable="true">
+                            <p:autoUpdate/>
+                        </p:messages>
 
-                    <h:outputText for="Firstname" value="Firstname" />
-                    <p:inputText id="Firstname" value="#{userBean.userToSave.firstName}"  required="true" />
-
-                    <h:outputText for="Username" value="Username" />
-                    <p:inputText id="Username" value="#{userBean.userToSave.userName}" required="true" />
-
-                    <h:outputText for="Password" value="Password" />
-                    <p:password id="Password" value="#{userBean.userToSave.password}" toggleMask="true" redisplay="true" feedback="true" required="true" />
-
-                    <h:outputText for="Email" value="Email" />
-                    <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true" />
-
-                    <h:outputText for="Active" value="Active" />
-                    <p:selectBooleanCheckbox id="Active" value="#{userBean.userToSave.actif}" itemLabel="Activate"/>
-
-                    <h:outputText for="Admin" value="Admin" />
-                    <p:selectBooleanCheckbox id="Admin" value="#{userBean.userToSave.admin}" itemLabel="Administrator"/>
+                        <p:panelGrid  columns="2" columnClasses="label,value">
 
 
-                    <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{userBean.register(true)}" />
+                            <h:outputText for="Lastname" value="Lastname" />
+                            <p:inputText id="Lastname" value="#{userBean.userToSave.name}" required="true" />
 
-                </p:panelGrid>
+                            <h:outputText for="Firstname" value="Firstname" />
+                            <p:inputText id="Firstname" value="#{userBean.userToSave.firstName}"  required="true" />
+
+                            <h:outputText for="Username" value="Username" />
+                            <p:inputText id="Username" value="#{userBean.userToSave.userName}" required="true" />
+
+                            <h:outputText for="Password" value="Password" />
+                            <p:password id="Password" value="#{userBean.userToSave.password}" toggleMask="true" redisplay="true" feedback="true" required="true" />
+
+                            <h:outputText for="Email" value="Email" />
+                            <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true" />
+
+                            <h:outputText for="Active" value="Active" />
+                            <p:selectBooleanCheckbox id="Active" value="#{userBean.userToSave.actif}" itemLabel="Activate"/>
+
+
+                            <h:outputText for="Admin" value="Admin" />
+                            <p:selectBooleanCheckbox id="Admin" value="#{userBean.userToSave.admin}" itemLabel="Administrator"/>
+
+
+                        </p:panelGrid>
+                        <p:commandButton value="Save" icon="fa fa-fw fa-pencil" action="#{userBean.register(true)}"/>
+                    </p:outputPanel>
+                </p:dialog>
             </h:form>
-
-        </p:card>
 
     </h:panelGrid>
 </h:body>
