@@ -76,4 +76,11 @@ public class UserBean implements Serializable {
         UserService.getInstance().switchPersonActif(userId);
         return pathToFollow;
     }
+
+    public String deleteUser(UserDTO userDTO) {
+        String pathToFollow = null;
+        UserService.getInstance().deleteUser(userDTO);
+        return pathToFollow;
+    }
+
 }

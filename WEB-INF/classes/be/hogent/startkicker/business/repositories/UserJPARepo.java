@@ -159,4 +159,29 @@ public class UserJPARepo implements IUserRepo {
 		}
 	}
 
+	@Override
+	public String deleteUser(User user) {
+		String outcome = "";
+		try {
+			createEM();
+			UserEntity userInDB = em.find(UserEntity.class, user.getId());
+			if (userInDB != null)
+			{
+				em.getTransaction().begin();
+				em.remove(userInDB);
+				em.getTransaction().commit();
+				outcome = SUCCESS;
+			}
+			else  {
+				outcome = FAIL;
+			}
+		} catch (Exception e) {
+			outcome = FAIL;
+		} finally {
+			closeEM();
+			return outcome;
+		}
+	}
+
+
 }

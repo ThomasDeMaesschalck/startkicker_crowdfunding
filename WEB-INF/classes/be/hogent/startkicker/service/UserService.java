@@ -34,6 +34,11 @@ public class UserService {
 		return userRepo.saveUser(userMapper.mapDTOToObject(uDTO));
 	}
 
+	public String deleteUser(UserDTO uDTO)
+	{
+		return userRepo.deleteUser(userMapper.mapDTOToObject(uDTO));
+	}
+
 	public List<UserDTO> getAllPersons() {
 		return userMapper.allObjectToDTO(userRepo.getAllUsers());
 

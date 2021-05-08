@@ -18,4 +18,6 @@ public interface IUserRepo extends Serializable {
 
 	public User getUser(long id);
 
+	public String deleteUser(User u);
+
 }
