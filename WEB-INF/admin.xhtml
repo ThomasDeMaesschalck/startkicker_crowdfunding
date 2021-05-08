@@ -76,7 +76,8 @@
 
                     <p:commandButton action="#{userBean.deleteUser(user)}"
                                      icon="fa fa-trash"
-                                     update="userlist" />
+                                     update="userlist"
+                                     styleClass="ui-button-danger"/>
                 </p:column>
             </p:dataTable>
 
@@ -88,8 +89,8 @@
                     </p:messages>
 
                     <p:panelGrid  columns="2" rendered="#{not empty userBean.selectedUser}" columnClasses="label,value">
-                        <h:outputText value="Id: " />
-                        <p:inputNumber value="#{userBean.selectedUser.id}" disabled="true" />
+                        <h:outputText value="id #{userBean.selectedUser.id}" type="hidden"/>
+                        <p:inputNumber value="#{userBean.selectedUser.id}" type="hidden" />
                         <h:outputText value="Name: " />
                         <p:inputText value="#{userBean.selectedUser.name}" />
                         <h:outputText value="Firstname: " />
@@ -108,7 +109,7 @@
                         <p:selectBooleanCheckbox id="AdminEdit" value="#{userBean.selectedUser.admin}" itemLabel="Administrator"/>
 
                     </p:panelGrid>
-                    <p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{userBean.userEdit()}"/>
+                    <p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{userBean.userEdit}"/>
                 </p:outputPanel>
             </p:dialog>
         </h:form>
