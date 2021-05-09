@@ -14,7 +14,7 @@ public interface IProjectRepo extends Serializable {
 
     public String saveProject(Project p);
 
-    public User getProject(long id);
+    public Project getProject(long id);
 
     public String deleteProject(Project p);
 
