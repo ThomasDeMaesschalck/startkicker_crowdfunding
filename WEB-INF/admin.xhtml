@@ -100,8 +100,9 @@
                         <h:outputText value="Password: " />
                         <p:inputText value="#{userBean.selectedUser.password}"/>
                         <h:outputText value="E-mail " />
-                        <p:inputText value="#{userBean.selectedUser.email}" />
-
+                        <p:inputText value="#{userBean.selectedUser.email}" validatorMessage="Incorrect e-mail…">
+                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                        </p:inputText>
                         <h:outputText for="ActiveEdit" value="Active" />
                         <p:selectBooleanCheckbox id="ActiveEdit" value="#{userBean.selectedUser.actif}" itemLabel="Activate"/>
 
@@ -141,7 +142,9 @@
                             <p:password id="Password" value="#{userBean.userToSave.password}" toggleMask="true" redisplay="true" feedback="true" required="true" />
 
                             <h:outputText for="Email" value="Email" />
-                            <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true" />
+                            <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true" validatorMessage="Incorrect e-mail…">
+                                <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+                            </p:inputText>
 
                             <h:outputText for="Active" value="Active" />
                             <p:selectBooleanCheckbox id="Active" value="#{userBean.userToSave.actif}" itemLabel="Activate"/>

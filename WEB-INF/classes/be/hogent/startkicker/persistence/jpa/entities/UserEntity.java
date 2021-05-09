@@ -27,7 +27,6 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false) @NotBlank(message = "Password can't be blank")
 	protected String password;
 	@Column(nullable = false) @NotBlank(message = "Enter a valid email address")
-	@Email(message = "must be a valid email")
 	protected String email;
 	protected boolean actif;
 	protected boolean admin;
