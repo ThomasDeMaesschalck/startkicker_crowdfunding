@@ -37,20 +37,20 @@
                          contentStyleClass="p-align-baseline ui-fluid">
 
                 <h:outputText for="Lastname"  value="Lastname" />
-                <p:inputText id="Lastname" name="Lastname" value="#{userBean.userToSave.name}" required="true" />
+                <p:inputText id="Lastname" name="Lastname" value="#{userBean.userToSave.name}" required="true" requiredMessage="Firstname needed" />
 
                 <h:outputText for="Firstname"  value="Firstname" />
-                <p:inputText id="Firstname" name="Firstname" value="#{userBean.userToSave.firstName}"  required="true" />
+                <p:inputText id="Firstname" name="Firstname" value="#{userBean.userToSave.firstName}"  required="true" requiredMessage="Lastname needed" />
 
                 <h:outputText for="Username" value="Username" />
-                <p:inputText id="Username" name="Username" value="#{userBean.userToSave.userName}" required="true" />
+                <p:inputText id="Username" name="Username" value="#{userBean.userToSave.userName}" required="true" requiredMessage="Username needed" />
 
                 <h:outputText for="Password" value="Password" />
                 <p:password id="Password" value="#{userBean.userToSave.password}"
-                            name="Password"  toggleMask="true" redisplay="true" feedback="true" required="true" />
+                            name="Password"  toggleMask="true" redisplay="true" feedback="true" required="true" requiredMessage="Password needed" />
 
                 <h:outputText for="Email" value="Email" />
-                <p:inputText id="Email" name="Email" value="#{userBean.userToSave.email}" required="true" validatorMessage="Incorrect e-mail…">
+                <p:inputText id="Email" name="Email" value="#{userBean.userToSave.email}" required="true" validatorMessage="Incorrect e-mail…" requiredMessage="Email needed" >
                 <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
                 </p:inputText>
 

@@ -130,19 +130,21 @@
 
 
                             <h:outputText for="Lastname" value="Lastname" />
-                            <p:inputText id="Lastname" value="#{userBean.userToSave.name}" required="true" />
+                            <p:inputText id="Lastname" value="#{userBean.userToSave.name}" required="true" requiredMessage="Lastname needed" />
 
                             <h:outputText for="Firstname" value="Firstname" />
-                            <p:inputText id="Firstname" value="#{userBean.userToSave.firstName}"  required="true" />
+                            <p:inputText id="Firstname" value="#{userBean.userToSave.firstName}"  required="true"  requiredMessage="Firstname needed" />
 
                             <h:outputText for="Username" value="Username" />
-                            <p:inputText id="Username" value="#{userBean.userToSave.userName}" required="true" />
+                            <p:inputText id="Username" value="#{userBean.userToSave.userName}" required="true" requiredMessage="Username needed"  />
 
                             <h:outputText for="Password" value="Password" />
-                            <p:password id="Password" value="#{userBean.userToSave.password}" toggleMask="true" redisplay="true" feedback="true" required="true" />
+                            <p:password id="Password" value="#{userBean.userToSave.password}" toggleMask="true"
+                                        redisplay="true" feedback="true" required="true" requiredMessage="Password needed" />
 
                             <h:outputText for="Email" value="Email" />
-                            <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true" validatorMessage="Incorrect e-mail…">
+                            <p:inputText id="Email" value="#{userBean.userToSave.email}" required="true"
+                                         requiredMessage="Email needed"  validatorMessage="Incorrect e-mail…">
                                 <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
                             </p:inputText>
 
