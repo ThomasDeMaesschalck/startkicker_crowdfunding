@@ -30,8 +30,7 @@ public class UserService {
 		userMapper = new UserMapper();
 	}
 
-	public String savePerson(UserDTO uDTO) {
-		System.out.println(uDTO.getId() + "is in service");
+	public String saveUser(UserDTO uDTO) {
 		return userRepo.saveUser(userMapper.mapDTOToObject(uDTO));
 	}
 
@@ -40,13 +39,13 @@ public class UserService {
 		return userRepo.deleteUser(userMapper.mapDTOToObject(uDTO));
 	}
 
-	public List<UserDTO> getAllPersons() {
+	public List<UserDTO> getAllUsers() {
 		return userMapper.allObjectToDTO(userRepo.getAllUsers());
 
 	}
 
-	public void switchPersonActif(long idPerson) {
-		UserDTO p = userMapper.mapObjectToDTO(userRepo.getUser(idPerson));
+	public void switchUserActive(long idUser) {
+		UserDTO p = userMapper.mapObjectToDTO(userRepo.getUser(idUser));
 		p.setActif(!p.isActif());
 		userRepo.saveUser(userMapper.mapDTOToObject(p));
 

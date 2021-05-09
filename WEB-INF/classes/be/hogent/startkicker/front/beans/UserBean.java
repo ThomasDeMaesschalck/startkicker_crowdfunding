@@ -39,7 +39,7 @@ public class UserBean implements Serializable {
     public String register(boolean admin) {
 
         String pathToFollow = null;
-        String outcome = UserService.getInstance().savePerson(userToSave);
+        String outcome = UserService.getInstance().saveUser(userToSave);
 
         if (outcome == "success") {
             if (admin)
@@ -59,7 +59,7 @@ public class UserBean implements Serializable {
 
     public String userEdit() {
         String pathToFollow = null;
-        String outcome = UserService.getInstance().savePerson(selectedUser);
+        String outcome = UserService.getInstance().saveUser(selectedUser);
         if (outcome == "success") {
             pathToFollow = "admin.jsf?faces-redirect=true";
             return pathToFollow;
@@ -73,7 +73,7 @@ public class UserBean implements Serializable {
 
     public String activateUser(long userId) {
         String pathToFollow = null;
-        UserService.getInstance().switchPersonActif(userId);
+        UserService.getInstance().switchUserActive(userId);
         return pathToFollow;
     }
 

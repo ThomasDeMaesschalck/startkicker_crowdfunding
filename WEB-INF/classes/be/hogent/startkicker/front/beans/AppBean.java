@@ -28,11 +28,11 @@ public class AppBean implements Serializable {
 
 	public List<UserDTO> getAllUsers() {
 
-		List<UserDTO> allPersons = UserService.getInstance().getAllPersons();
+		List<UserDTO> allUsers = UserService.getInstance().getAllUsers();
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
 		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
-		appBean.setAllUsers(allPersons);
+		appBean.setAllUsers(allUsers);
 		return Collections.unmodifiableList(allUsers);
 	}
 

@@ -148,9 +148,8 @@ public class UserJPARepo implements IUserRepo {
 	public List<User> getAllUsers() {
 		try {
 			createEM();
-			TypedQuery<UserEntity> q = em.createQuery("select p from UserEntity p where not p.userName = :initUser order by p.id DESC",
+			TypedQuery<UserEntity> q = em.createQuery("select p from UserEntity p order by p.id DESC",
 					UserEntity.class);
-			q.setParameter("initUser", "My_Admin");
 			return pm.allEntityToObject(q.getResultList());
 		} catch (Exception e) {
 			return new ArrayList<User>();
