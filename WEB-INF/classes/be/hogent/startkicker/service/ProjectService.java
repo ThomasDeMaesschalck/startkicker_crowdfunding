@@ -42,6 +42,11 @@ public class ProjectService {
             return projectRepo.deleteProject(projectMapper.mapDTOToObject(pDTO));
         }
 
+        public ProjectDTO getProject(long id)
+        {
+           return projectMapper.mapObjectToDTO(projectRepo.getProject(id));
+        }
+
         public List<ProjectDTO> getAllProjects() {
             return projectMapper.allObjectToDTO(projectRepo.getAllProjects());
 

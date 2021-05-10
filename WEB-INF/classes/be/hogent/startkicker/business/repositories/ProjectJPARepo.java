@@ -121,9 +121,7 @@ public class ProjectJPARepo implements IProjectRepo {
     }
 
     /**
-     * De nieuwe persoon proberen opslaan.<br>
-     * Username moet uniek zijn om succes te hebben.<br>
-     * see uniqueConstraints = @UniqueConstraint(columnNames = "userName")
+     * Project proberen opslaan.<br>
      * @param p
      * @return
      */
@@ -138,8 +136,7 @@ public class ProjectJPARepo implements IProjectRepo {
     }
 
     /**
-     * De persoon proberen updaten.<br>
-     * Username, indien veranderd, moet uniek zijn om succes te hebben.<br>
+     * Project proberen updaten.<br>
      *
      * @param p
      * @param projectInDB

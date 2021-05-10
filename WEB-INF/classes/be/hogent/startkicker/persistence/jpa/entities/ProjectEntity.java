@@ -1,8 +1,5 @@
 package be.hogent.startkicker.persistence.jpa.entities;
 
-import be.hogent.startkicker.business.User;
-import be.hogent.startkicker.service.dto.UserDTO;
-
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
@@ -43,7 +40,7 @@ public class ProjectEntity implements Serializable {
     public ProjectEntity() {
     }
 
-    public ProjectEntity(String description, String title, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator) {
+    public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator) {
         super();
         this.title = title;
         this.description = description;

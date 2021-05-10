@@ -93,7 +93,7 @@
 	<p:card>
 	<h2>Project lists</h2>
 
-		<h:form>
+		<h:form id="projectList">
 			<p:dataTable value = "#{myAppWideBean.allProjects}" var = "project"
 						 rows="10"
 						 paginator="true"
@@ -106,7 +106,7 @@
 				</p:column>
 
 				<p:column headerText="Title">
-					<h:outputText value="#{project.description}" />
+					<h:outputText value="#{project.title}" />
 				</p:column>
 
 				<p:column headerText="Start date">
@@ -115,9 +115,44 @@
 				</p:column>
 				<p:column headerText="Creator">
 					<h:outputText value="#{project.creator.userName}" />
-
 				</p:column>
+
+				<p:column headerText="View">
+					<p:commandButton icon="fa fa-pencil" update=":projectList:projectView" oncomplete="PF('viewDialog').show()">
+						<f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
+					</p:commandButton>
+				</p:column>
+
 			</p:dataTable>
+
+
+			<p:dialog header="View project" widgetVar="viewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="projectView" style="text-align:center;">
+
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate/>
+					</p:messages>
+
+					<p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
+						<h:outputText value="id #{projectBean.selectedProject.id}"/>
+						<h:outputText value="Title: " />
+						<h:outputText value="#{projectBean.selectedProject.title}" />
+						<h:outputText value="Description: " />
+						<h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
+						<h:outputText value="Funds required: " />
+						<h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
+						<h:outputText value="Start date: " />
+						<h:outputText value="#{projectBean.selectedProject.startDate}"/>
+						<h:outputText value="End date:" />
+						<h:outputText value="#{projectBean.selectedProject.endDate}" />
+						<h:outputText value="Project created by:" />
+						<h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
+
+
+					</p:panelGrid>
+					<p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{userBean.userEdit}"/>
+				</p:outputPanel>
+			</p:dialog>
 		</h:form>
 	</p:card>
 
