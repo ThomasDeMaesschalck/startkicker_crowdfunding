@@ -4,6 +4,9 @@ import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.service.dto.UserDTO;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,10 +22,15 @@ public class ProjectEntity implements Serializable {
     @Id @GeneratedValue
     private long id;
 
+    @NotBlank
     private String title;
+    @NotBlank
     private String description;
+    @NotBlank
     private String comment;
+    @NotBlank @FutureOrPresent
     private LocalDate startDate;
+    @NotBlank @Future
     private LocalDate endDate;
     private BigDecimal fundingTarget;
 

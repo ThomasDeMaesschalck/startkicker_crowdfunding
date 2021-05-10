@@ -7,15 +7,45 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Startkicker - Home</title>
+    <title>Startkicker - User registration</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+
+                <p:menubar>
+                    <f:facet name="options">
+                        <p:linkButton outcome="index" value="Home" style="margin-right:20px;" />
+                    </f:facet>
+
+
+                    <f:facet name="options">
+                        <p:linkButton rendered="#{loggedInUser != null}" outcome="createproject" value="Create a project" style="margin-right:20px;" />
+                        <p:button rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
+                    </f:facet>
+
+                    <p:divider layout="vertical"/>
+
+
+                    <f:facet name="options">
+
+                        <p:linkButton  rendered="#{loggedInUser == null}" outcome="register" value="Register" style="margin-right:20px;" />
+
+                        <p:linkButton rendered="#{loggedInUser.admin == true}" outcome="admin" value="Admin" style="margin-right:20px;" />
+
+                        <p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
+                                          action="#{loginBean.logout}" style="margin-right:20px;"
+                                          icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"></p:commandButton>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div>
+
     <h:panelGrid rendered="#{loggedInUser == null}">
-
-
 
 
 
@@ -25,7 +55,7 @@
         <h1>        Register a new user acccount on Startkicker
         </h1>
 
-        <p:messages id="messages" showDetail="false" closable="true">
+        <p:messages id="messages" showDetail="true" closable="true">
             <p:autoUpdate/>
         </p:messages>
 
@@ -54,7 +84,7 @@
                 <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
                 </p:inputText>
 
-                <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{userBean.register}" />
+                <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{userBean.register(false)}" />
 
             </p:panelGrid>
         </h:form>

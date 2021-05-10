@@ -47,7 +47,7 @@ public class UserBean implements Serializable {
                 pathToFollow = "admin.jsf?faces-redirect=true";
             }
             else {
-                pathToFollow = "index.jsf?faces-redirect=true";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Account created. It will be activated after approval by an administrator.", outcome));
             }
             return pathToFollow;
         } else {

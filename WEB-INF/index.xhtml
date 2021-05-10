@@ -13,22 +13,44 @@
 </h:head>
 <h:body>
 
+	<div class="card">
+		<h:form>
+			<p:growl id="messages"/>
 
-	<h:form>
-		<p:linkButton rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
+			<p:menubar>
+				<f:facet name="options">
+					<p:linkButton outcome="index" value="Home" style="margin-right:20px;" />
+				</f:facet>
+
+
+				<f:facet name="options">
+					<p:linkButton rendered="#{loggedInUser != null}" outcome="createproject" value="Create a project" style="margin-right:20px;" />
+					<p:button rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
+				</f:facet>
+
+				<p:divider layout="vertical"/>
+
+
+				<f:facet name="options">
+
+					<p:linkButton  rendered="#{loggedInUser == null}" outcome="register" value="Register" style="margin-right:20px;" />
+
+					<p:linkButton rendered="#{loggedInUser.admin == true}" outcome="admin" value="Admin" style="margin-right:20px;" />
+
+					<p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
+												action="#{loginBean.logout}" style="margin-right:20px;"
+									  icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"></p:commandButton>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+	</div>
+
+
+	<h:form >
 	</h:form>
 
-	<h:form rendered="#{loggedInUser.admin == true}">
-		<p:linkButton outcome="admin" value="Admin" style="margin-right:20px;" />
-	</h:form>
-
-	<h:form rendered="#{loggedInUser == null}">
-		<p:linkButton outcome="register" value="Register" style="margin-right:20px;" />
-	</h:form>
 
 
-	<p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
-					  action="#{loginBean.logout}" style="margin-right:20px;" ></p:commandButton>
 
 	<br></br><br></br>
 
