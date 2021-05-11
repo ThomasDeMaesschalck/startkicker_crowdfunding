@@ -57,17 +57,16 @@
 
 	<p:card>
 
-		<h:panelGrid rendered="#{loggedInUser != null}">
-			Hello
+		<h:panelGrid columns="2" rendered="#{loggedInUser != null}">
+			<h:outputText value="Hello "></h:outputText>
 		<h:outputText value="#{loggedInUser.firstName}"></h:outputText>
 <br></br><br></br>
-		Is admin: <h:outputText value="#{loggedInUser.admin}"></h:outputText>
 		</h:panelGrid>
 
 		<br></br>
 
-		<h:form>
-			<p:dataTable value = "#{myAppWideBean.allUsers}" var = "user"
+		<h:form id="userForm">
+			<p:dataTable id="userlist" value = "#{myAppWideBean.allUsers}" var = "user"
 						 rows="10"
 						 paginator="true"
 						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -92,9 +91,8 @@
 
 	<p:card>
 	<h2>Project lists</h2>
-
-		<h:form id="projectList">
-			<p:dataTable value = "#{myAppWideBean.allProjects}" var = "project"
+		<h:form id="projectForm">
+			<p:dataTable id="projectList" value = "#{myAppWideBean.allProjects}" var = "project"
 						 rows="10"
 						 paginator="true"
 						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -118,41 +116,57 @@
 				</p:column>
 
 				<p:column headerText="View">
-					<p:commandButton icon="fa fa-pencil" update=":projectList:projectView" oncomplete="PF('viewDialog').show()">
+
+					<p:commandButton value="View"  action="#{projectBean.view}"   style="margin-right:20px;" styleClass="ui-button-info">
 						<f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
 					</p:commandButton>
+
+
+					<p:commandButton value="Edit" rendered="#{project.creator.id == loggedInUser.id}" icon="fa fa-edit" update=":projectForm:projectEdit" oncomplete="PF('projectEditDialog').show()">
+						<f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
+					</p:commandButton>
+
+					<p:commandButton rendered="#{project.creator.id == loggedInUser.id}" action="#{projectBean.deleteProject(project)}" value="Delete"  update="projectList" />
+
+
 				</p:column>
 
 			</p:dataTable>
 
 
-			<p:dialog header="View project" widgetVar="viewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-				<p:outputPanel id="projectView" style="text-align:center;">
 
-					<p:messages id="messages" showDetail="true" closable="true">
-						<p:autoUpdate/>
-					</p:messages>
+			<p:dialog header="Edit project" widgetVar="projectEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+				<p:outputPanel id="projectEdit" style="text-align:center;">
 
-					<p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
-						<h:outputText value="id #{projectBean.selectedProject.id}"/>
+
+					<p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
+						<h:outputText value="id #{projectBean.selectedProject.id}" type="hidden"/>
+
+						<p:inputNumber type="hidden" value="#{projectBean.selectedProject.id}"/>
+
 						<h:outputText value="Title: " />
-						<h:outputText value="#{projectBean.selectedProject.title}" />
+						<p:inputText value="#{projectBean.selectedProject.title}" />
 						<h:outputText value="Description: " />
-						<h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
+						<p:textEditor escape="false" secure="false" value="#{projectBean.selectedProject.description}" />
 						<h:outputText value="Funds required: " />
-						<h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
+						<p:inputNumber value="#{projectBean.selectedProject.fundingTarget}"/>
 						<h:outputText value="Start date: " />
-						<h:outputText value="#{projectBean.selectedProject.startDate}"/>
+						<p:datePicker id="startDate" mindate="#{projectBean.today}" value="#{projectBean.selectedProject.startDate}">
+							<p:ajax event="dateSelect" update="endDate" global="false" />
+							<p:ajax event="change" update="endDate" global="false" />
+						</p:datePicker>
 						<h:outputText value="End date:" />
-						<h:outputText value="#{projectBean.selectedProject.endDate}" />
+						<p:datePicker id="endDate" mindate="#{projectBean.minEndDate}" value="#{projectBean.selectedProject.endDate}"/>
+
 						<h:outputText value="Project created by:" />
 						<h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
 
-
 					</p:panelGrid>
-					<p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{userBean.userEdit}"/>
+					<p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{projectBean.projectEdit}"/>
+
 				</p:outputPanel>
 			</p:dialog>
+
 		</h:form>
 	</p:card>
 

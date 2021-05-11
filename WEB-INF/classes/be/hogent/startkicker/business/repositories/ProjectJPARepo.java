@@ -24,6 +24,7 @@ public class ProjectJPARepo implements IProjectRepo {
     private EntityManagerFactory emf = null;
     private EntityManager em = null;
     private ProjectMapper pm = new ProjectMapper();
+    private UserMapper um = new UserMapper();
 
     public ProjectJPARepo() {
         System.out.println("ProjectJPARepo created");
@@ -107,6 +108,7 @@ public class ProjectJPARepo implements IProjectRepo {
             em.getTransaction().begin();
             if (projectInDB != null) {
                 System.out.println("Project found...");
+                p.setCreator(um.mapEntityToObject(projectInDB.getCreator()));
                 return updateProject(pm.mapObjectToEntity(p), projectInDB);
             } else {
                 System.out.println("Making new Project...");

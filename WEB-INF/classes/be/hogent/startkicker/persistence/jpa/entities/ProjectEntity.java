@@ -29,6 +29,7 @@ public class ProjectEntity implements Serializable {
     private LocalDate startDate;
     @NotBlank @Future
     private LocalDate endDate;
+    @NotBlank
     private BigDecimal fundingTarget;
 
     //project status en funds nog te implementen

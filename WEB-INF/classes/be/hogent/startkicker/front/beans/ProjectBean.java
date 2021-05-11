@@ -25,7 +25,6 @@ public class ProjectBean implements Serializable {
     private ProjectDTO selectedProject = new ProjectDTO();
     private LocalDate today;
     private LocalDate minEndDate;
-    private long creatorId;
 
     public ProjectBean() {
     }
@@ -34,10 +33,8 @@ public class ProjectBean implements Serializable {
     public String makeAProject() {
         String pathToFollow = null;
 
-       UserDTO creator =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
-
+        UserDTO creator =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         projectToSave.setCreator(creator);
-
 
         String outcome = ProjectService.getInstance().saveProject(projectToSave);
         if (outcome == "success") {
@@ -70,6 +67,9 @@ public class ProjectBean implements Serializable {
         return pathToFollow;
     }
 
+    public String view(){
+        return "project";
+    }
 
     public ProjectDTO getProjectToSave() {
         return projectToSave;
@@ -109,11 +109,4 @@ public class ProjectBean implements Serializable {
         this.minEndDate = minEndDate;
     }
 
-    public long getCreatorId() {
-        return creatorId;
-    }
-
-    public void setCreatorId(long creatorId) {
-        this.creatorId = creatorId;
-    }
 }

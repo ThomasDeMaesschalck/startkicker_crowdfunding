@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Startkicker - Make a new project</title>
+    <h:outputStylesheet name="css/primeflex.css" />
+    <h:outputStylesheet name="css/quill.css" />
+    <h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+
+
+    <div class="card">
+        <h:form>
+            <p:growl id="messages"/>
+
+            <p:menubar>
+                <f:facet name="options">
+                    <p:linkButton outcome="index" value="Home" style="margin-right:20px;" />
+                </f:facet>
+
+
+                <f:facet name="options">
+                    <p:linkButton rendered="#{loggedInUser != null}" outcome="createproject" value="Create a project" style="margin-right:20px;" />
+                    <p:button rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
+                </f:facet>
+
+                <p:divider layout="vertical"/>
+
+
+                <f:facet name="options">
+
+                    <p:linkButton  rendered="#{loggedInUser == null}" outcome="register" value="Register" style="margin-right:20px;" />
+
+                    <p:linkButton rendered="#{loggedInUser.admin == true}" outcome="admin" value="Admin" style="margin-right:20px;" />
+
+                    <p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
+                                      action="#{loginBean.logout}" style="margin-right:20px;"
+                                      icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"></p:commandButton>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </div>
+
+    <h:panelGrid>
+        <div class="card">
+            <h:form>
+                <p:breadCrumb>
+                    <p:menuitem value="Home" url="index.jsf"/>
+                    <p:menuitem value="Project ##{projectBean.selectedProject.id}"/>
+                </p:breadCrumb>
+            </h:form>
+        </div>
+
+        <div class="card">
+            <br></br><br></br>
+
+            <h1>     Project details:            </h1>
+
+            <p:messages id="messages" showDetail="false" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+
+            <p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
+                <h:outputText value="Title: " />
+                <h:outputText value="#{projectBean.selectedProject.title}" />
+                <h:outputText value="Description: " />
+                <h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
+                <h:outputText value="Funds required: " />
+                <h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
+                <h:outputText value="Start date: " />
+                <h:outputText value="#{projectBean.selectedProject.startDate}"/>
+                <h:outputText value="End date:" />
+                <h:outputText value="#{projectBean.selectedProject.endDate}" />
+                <h:outputText value="Project created by:" />
+                <h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
+            </p:panelGrid>
+
+
+
+        </div>
+
+    </h:panelGrid>
+
+
+</h:body>
+</html>
