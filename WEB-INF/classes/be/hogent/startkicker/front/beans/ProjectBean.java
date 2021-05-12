@@ -117,7 +117,14 @@ public class ProjectBean implements Serializable {
 
     public LocalDate getMinEditEndDate() {
         try {
-            return selectedProject.getStartDate().plusDays(1);
+            LocalDate endDate = selectedProject.getEndDate();
+
+            if (endDate.isBefore(selectedProject.getStartDate()) || endDate.isEqual(selectedProject.getStartDate()))
+            {
+                selectedProject.setEndDate(selectedProject.getStartDate().plusDays(1));
+            }
+             return selectedProject.getStartDate().plusDays(1);
+
         }
         catch (Exception e)
         {

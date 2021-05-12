@@ -2,10 +2,12 @@ package be.hogent.startkicker.service.dto;
 
 import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
+import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
 
@@ -20,6 +22,8 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
     private BigDecimal fundingTarget;
     private UserDTO creator;
     private ProjectStatus status;
+    private Set<FundingEntity> funding;
+
 
     public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status, String comment) {
         super();
@@ -107,6 +111,14 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
 
     public void setStatus(ProjectStatus status) {
         this.status = status;
+    }
+
+    public Set<FundingEntity> getFunding() {
+        return funding;
+    }
+
+    public void setFunding(Set<FundingEntity> funding) {
+        this.funding = funding;
     }
 
     @Override

@@ -84,8 +84,11 @@
             <h:outputText value="Description: " />
             <h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
 
+                <br /><br />
 
                 <h:outputText value="Comments from project creator: " />
+                <br />
+                <h:outputText   value="There are no comments" rendered="#{projectBean.selectedProject.comment == null}"/>
                 <h:outputText   value="#{projectBean.selectedProject.comment}" />
             </p:card>
 

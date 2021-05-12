@@ -1,7 +1,10 @@
 package be.hogent.startkicker.business;
 
+import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Set;
 
 public class Project {
 
@@ -14,6 +17,8 @@ public class Project {
     private BigDecimal fundingTarget;
     private User creator;
     private ProjectStatus status;
+    private Set<FundingEntity> funding;
+
 
     public Project(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, User creator, ProjectStatus status, String comment) {
         this.title = title;
@@ -96,5 +101,13 @@ public class Project {
 
     public void setStatus(ProjectStatus status) {
         this.status = status;
+    }
+
+    public Set<FundingEntity> getFunding() {
+        return funding;
+    }
+
+    public void setFunding(Set<FundingEntity> funding) {
+        this.funding = funding;
     }
 }

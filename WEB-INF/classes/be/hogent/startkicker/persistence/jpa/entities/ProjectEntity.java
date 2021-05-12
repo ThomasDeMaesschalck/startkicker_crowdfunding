@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "Projects")
@@ -38,6 +39,8 @@ public class ProjectEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity creator;
+    @OneToMany(mappedBy = "project")
+    private Set<FundingEntity> funding;
 
     public ProjectEntity() {
     }
