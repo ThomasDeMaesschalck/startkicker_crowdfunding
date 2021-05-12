@@ -21,7 +21,7 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
     private UserDTO creator;
     private ProjectStatus status;
 
-    public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status) {
+    public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status, String comment) {
         super();
         this.title = title;
         this.description = description;
@@ -30,6 +30,7 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
         this.fundingTarget = fundingTarget;
         this.creator = creator;
         this.status = status;
+        this.comment = comment;
     }
 
     public ProjectDTO() {

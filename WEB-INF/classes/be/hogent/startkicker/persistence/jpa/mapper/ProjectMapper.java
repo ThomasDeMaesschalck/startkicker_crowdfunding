@@ -30,9 +30,8 @@ public class ProjectMapper {
         }
         ProjectEntity projectEntity = null;
         projectEntity = new ProjectEntity(p.getTitle(), p.getDescription(), p.getStartDate(), p.getEndDate(), p.getFundingTarget(),
-                userMapper.mapObjectToEntity(p.getCreator()), p.getStatus());
+                userMapper.mapObjectToEntity(p.getCreator()), p.getStatus(), p.getComment());
         projectEntity.setId(p.getId());
-        projectEntity.setComment(p.getComment());
          return projectEntity;
     }
 

@@ -34,6 +34,7 @@ public class ProjectService {
         }
 
         public String saveProject(ProjectDTO pDTO) {
+            System.out.println(pDTO.getComment());
             return projectRepo.saveProject(projectMapper.mapDTOToObject(pDTO));
         }
 

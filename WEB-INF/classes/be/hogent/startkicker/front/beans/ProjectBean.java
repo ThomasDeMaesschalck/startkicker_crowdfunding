@@ -10,6 +10,8 @@ import be.hogent.startkicker.service.dto.UserDTO;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -20,13 +22,14 @@ import java.util.Calendar;
 import java.util.Map;
 
 @ManagedBean(name = "projectBean", eager = true)
-@RequestScoped
+@SessionScoped
 public class ProjectBean implements Serializable {
 
     private ProjectDTO projectToSave = new ProjectDTO();
     private ProjectDTO selectedProject = new ProjectDTO();
     private LocalDate today;
     private LocalDate minEndDate;
+    private int statusInt;
 
     public ProjectBean() {
     }
@@ -57,7 +60,6 @@ public class ProjectBean implements Serializable {
             pathToFollow = "index.jsf?faces-redirect=true";
             return pathToFollow;
         }
-
         else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", outcome));
         }
@@ -129,16 +131,18 @@ public class ProjectBean implements Serializable {
 
     public int getEnumIntPosition(ProjectStatus status)
     {
-        int indexPosition = 0;
-        for (ProjectStatus s : ProjectStatus.values())
+        statusInt = 0;
+for (ProjectStatus s : ProjectStatus.values())
         {
             if (s == status)
             {
-                indexPosition = s.ordinal();
+                statusInt = s.ordinal();
             }
         }
-        return indexPosition;
+        return statusInt;
     }
 
-
+    public int getStatusInt() {
+        return statusInt;
+    }
 }

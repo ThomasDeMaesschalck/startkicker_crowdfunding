@@ -151,7 +151,6 @@ public class ProjectJPARepo implements IProjectRepo {
             projectInDB.setEndDate(p.getEndDate());
             projectInDB.setFundingTarget(p.getFundingTarget());
             projectInDB.setCreator(p.getCreator());
-            projectInDB.setComment(p.getComment());
             em.persist(projectInDB);
             em.getTransaction().commit();
             System.out.println("updating...");

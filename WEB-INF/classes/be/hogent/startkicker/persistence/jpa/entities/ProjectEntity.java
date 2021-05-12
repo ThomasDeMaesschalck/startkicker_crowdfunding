@@ -42,7 +42,7 @@ public class ProjectEntity implements Serializable {
     public ProjectEntity() {
     }
 
-    public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator, ProjectStatus status) {
+    public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator, ProjectStatus status, String comment) {
         super();
         this.title = title;
         this.description = description;
@@ -50,6 +50,7 @@ public class ProjectEntity implements Serializable {
         this.endDate = endDate;
         this.fundingTarget = fundingTarget;
         this.creator = creator;
+        this.comment = comment;
         this.status = status;
     }
 
