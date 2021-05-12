@@ -70,8 +70,6 @@
             <p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
                 <h:outputText value="Title: " />
                 <h:outputText value="#{projectBean.selectedProject.title}" />
-                <h:outputText value="Description: " />
-                <h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
                 <h:outputText value="Funds required: " />
                 <h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
                 <h:outputText value="Start date: " />
@@ -82,7 +80,10 @@
                 <h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
             </p:panelGrid>
 
-
+            <p:card>
+            <h:outputText value="Description: " />
+            <h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
+            </p:card>
 
         </div>
 

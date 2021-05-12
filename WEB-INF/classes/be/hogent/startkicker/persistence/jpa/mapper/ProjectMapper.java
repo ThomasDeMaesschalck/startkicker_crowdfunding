@@ -18,7 +18,7 @@ public class ProjectMapper {
         }
         Project project = null;
         project = new Project(pEntity.getTitle(), pEntity.getDescription(), pEntity.getStartDate(), pEntity.getEndDate(),
-                pEntity.getFundingTarget(), userMapper.mapEntityToObject(pEntity.getCreator()));
+                pEntity.getFundingTarget(), userMapper.mapEntityToObject(pEntity.getCreator()), pEntity.getStatus(), pEntity.getComment());
         project.setId(pEntity.getId());
         project.setComment(pEntity.getComment());
         return project;
@@ -30,7 +30,7 @@ public class ProjectMapper {
         }
         ProjectEntity projectEntity = null;
         projectEntity = new ProjectEntity(p.getTitle(), p.getDescription(), p.getStartDate(), p.getEndDate(), p.getFundingTarget(),
-                userMapper.mapObjectToEntity(p.getCreator()));
+                userMapper.mapObjectToEntity(p.getCreator()), p.getStatus());
         projectEntity.setId(p.getId());
         projectEntity.setComment(p.getComment());
          return projectEntity;

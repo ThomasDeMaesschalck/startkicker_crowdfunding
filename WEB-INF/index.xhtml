@@ -63,30 +63,6 @@
 <br></br><br></br>
 		</h:panelGrid>
 
-		<br></br>
-
-		<h:form id="userForm">
-			<p:dataTable id="userlist" value = "#{myAppWideBean.allUsers}" var = "user"
-						 rows="10"
-						 paginator="true"
-						 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-						 rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
-
-				<p:column headerText="Name">
-					<h:outputText value="#{user.name}" />
-				</p:column>
-
-				<p:column headerText="Firstname">
-					<h:outputText value="#{user.firstName}" />
-				</p:column>
-
-				<p:column headerText="E-mail">
-					<h:outputText value="#{user.email}" />
-
-				</p:column>
-			</p:dataTable>
-		</h:form>
 	</p:card>
 
 	<p:card>
@@ -115,6 +91,10 @@
 					<h:outputText value="#{project.creator.userName}" />
 				</p:column>
 
+				<p:column headerText="Status">
+					<h:outputText value="#{project.status}" />
+				</p:column>
+
 				<p:column headerText="View">
 
 					<p:commandButton value="View"  action="#{projectBean.view}"   style="margin-right:20px;" styleClass="ui-button-info">
@@ -140,6 +120,7 @@
 
 
 					<p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
+
 						<h:outputText value="id #{projectBean.selectedProject.id}" type="hidden"/>
 
 						<p:inputNumber type="hidden" value="#{projectBean.selectedProject.id}"/>
@@ -147,20 +128,31 @@
 						<h:outputText value="Title: " />
 						<p:inputText value="#{projectBean.selectedProject.title}" />
 						<h:outputText value="Description: " />
-						<p:textEditor escape="false" secure="false" value="#{projectBean.selectedProject.description}" />
+						<p:textEditor escape="false" secure="false" responsive="true" value="#{projectBean.selectedProject.description}" >
+						<f:facet name="toolbar">
+             <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+            </span>
+						</f:facet>
+					</p:textEditor>
 						<h:outputText value="Funds required: " />
-						<p:inputNumber value="#{projectBean.selectedProject.fundingTarget}"/>
+						<p:inputNumber value="#{projectBean.selectedProject.fundingTarget}" />
 						<h:outputText value="Start date: " />
-						<p:datePicker id="startDate" mindate="#{projectBean.today}" value="#{projectBean.selectedProject.startDate}">
+						<p:datePicker id="startDate" value="#{projectBean.selectedProject.startDate}" >
 							<p:ajax event="dateSelect" update="endDate" global="false" />
 							<p:ajax event="change" update="endDate" global="false" />
 						</p:datePicker>
 						<h:outputText value="End date:" />
-						<p:datePicker id="endDate" mindate="#{projectBean.minEndDate}" value="#{projectBean.selectedProject.endDate}"/>
+						<p:datePicker id="endDate" mindate="#{projectBean.minEditEndDate}" value="#{projectBean.selectedProject.endDate}"/>
 
 						<h:outputText value="Project created by:" />
 						<h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
 
+						<h:outputText value="Comments: " rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" />
+						<p:inputText value="#{projectBean.selectedProject.comment}" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}"/>
 					</p:panelGrid>
 					<p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{projectBean.projectEdit}"/>
 

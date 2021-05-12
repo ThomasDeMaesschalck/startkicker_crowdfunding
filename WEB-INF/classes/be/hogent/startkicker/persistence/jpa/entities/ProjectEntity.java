@@ -1,5 +1,7 @@
 package be.hogent.startkicker.persistence.jpa.entities;
 
+import be.hogent.startkicker.business.ProjectStatus;
+
 import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
@@ -31,9 +33,8 @@ public class ProjectEntity implements Serializable {
     private LocalDate endDate;
     @NotBlank
     private BigDecimal fundingTarget;
-
-    //project status en funds nog te implementen
-
+    @Enumerated
+    private ProjectStatus status;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity creator;
@@ -41,7 +42,7 @@ public class ProjectEntity implements Serializable {
     public ProjectEntity() {
     }
 
-    public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator) {
+    public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator, ProjectStatus status) {
         super();
         this.title = title;
         this.description = description;
@@ -49,6 +50,7 @@ public class ProjectEntity implements Serializable {
         this.endDate = endDate;
         this.fundingTarget = fundingTarget;
         this.creator = creator;
+        this.status = status;
     }
 
     public long getId() {
@@ -113,6 +115,14 @@ public class ProjectEntity implements Serializable {
 
     public void setCreator(UserEntity creator) {
         this.creator = creator;
+    }
+
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
 
     @Override

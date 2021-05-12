@@ -103,8 +103,6 @@ public class ProjectJPARepo implements IProjectRepo {
             createEM();
             ProjectEntity projectInDB = em.find(ProjectEntity.class, p.getId());
 
-            System.out.println(p.getId() + "is userID");
-
             em.getTransaction().begin();
             if (projectInDB != null) {
                 System.out.println("Project found...");
@@ -153,6 +151,7 @@ public class ProjectJPARepo implements IProjectRepo {
             projectInDB.setEndDate(p.getEndDate());
             projectInDB.setFundingTarget(p.getFundingTarget());
             projectInDB.setCreator(p.getCreator());
+            projectInDB.setComment(p.getComment());
             em.persist(projectInDB);
             em.getTransaction().commit();
             System.out.println("updating...");

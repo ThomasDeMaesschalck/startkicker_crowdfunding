@@ -1,6 +1,7 @@
 package be.hogent.startkicker.front.beans;
 
 
+import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.service.ProjectService;
 import be.hogent.startkicker.service.dto.ProjectDTO;
@@ -14,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -35,6 +37,7 @@ public class ProjectBean implements Serializable {
 
         UserDTO creator =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
         projectToSave.setCreator(creator);
+        projectToSave.setStatus(ProjectStatus.Created);
 
         String outcome = ProjectService.getInstance().saveProject(projectToSave);
         if (outcome == "success") {
@@ -108,5 +111,34 @@ public class ProjectBean implements Serializable {
     public void setMinEndDate(LocalDate minEndDate) {
         this.minEndDate = minEndDate;
     }
+
+
+    public LocalDate getMinEditEndDate() {
+        try {
+            return selectedProject.getStartDate().plusDays(1);
+        }
+        catch (Exception e)
+        {
+            return getToday().plusDays(1);
+        }
+    }
+
+    public void setMinEditEndDate(LocalDate minEndDate) {
+        this.minEndDate = minEndDate;
+    }
+
+    public int getEnumIntPosition(ProjectStatus status)
+    {
+        int indexPosition = 0;
+        for (ProjectStatus s : ProjectStatus.values())
+        {
+            if (s == status)
+            {
+                indexPosition = s.ordinal();
+            }
+        }
+        return indexPosition;
+    }
+
 
 }

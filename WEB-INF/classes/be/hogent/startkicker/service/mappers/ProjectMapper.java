@@ -17,7 +17,7 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
         }
         Project project = null;
         project = new Project(pDTO.getTitle(), pDTO.getDescription(),
-                pDTO.getStartDate(), pDTO.getEndDate(), pDTO.getFundingTarget(), userMapper.mapDTOToObject(pDTO.getCreator()));
+                pDTO.getStartDate(), pDTO.getEndDate(), pDTO.getFundingTarget(), userMapper.mapDTOToObject(pDTO.getCreator()), pDTO.getStatus(), pDTO.getComment());
         project.setId(pDTO.getId());
         project.setComment(pDTO.getComment());
          return project;
@@ -29,7 +29,7 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
         }
         ProjectDTO projectDTO = null;
         projectDTO = new ProjectDTO(p.getTitle(), p.getDescription(),
-                p.getStartDate(), p.getEndDate(), p.getFundingTarget(), userMapper.mapObjectToDTO(p.getCreator()));
+                p.getStartDate(), p.getEndDate(), p.getFundingTarget(), userMapper.mapObjectToDTO(p.getCreator()), p.getStatus());
         projectDTO.setId(p.getId());
         projectDTO.setComment(p.getComment());
         return projectDTO;

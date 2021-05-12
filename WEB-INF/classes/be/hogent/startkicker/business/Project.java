@@ -13,14 +13,17 @@ public class Project {
     private LocalDate endDate;
     private BigDecimal fundingTarget;
     private User creator;
+    private ProjectStatus status;
 
-    public Project(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, User creator) {
+    public Project(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, User creator, ProjectStatus status, String comment) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.fundingTarget = fundingTarget;
         this.creator = creator;
+        this.status = status;
+        this.comment = comment;
     }
 
     public long getId() {
@@ -85,5 +88,13 @@ public class Project {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
 }

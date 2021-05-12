@@ -1,5 +1,6 @@
 package be.hogent.startkicker.service.dto;
 
+import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
 
 import java.io.Serializable;
@@ -18,8 +19,9 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
     private LocalDate endDate;
     private BigDecimal fundingTarget;
     private UserDTO creator;
+    private ProjectStatus status;
 
-    public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator) {
+    public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status) {
         super();
         this.title = title;
         this.description = description;
@@ -27,6 +29,7 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
         this.endDate = endDate;
         this.fundingTarget = fundingTarget;
         this.creator = creator;
+        this.status = status;
     }
 
     public ProjectDTO() {
@@ -95,6 +98,14 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
 
     public void setCreator(UserDTO creator) {
         this.creator = creator;
+    }
+
+    public ProjectStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProjectStatus status) {
+        this.status = status;
     }
 
     @Override

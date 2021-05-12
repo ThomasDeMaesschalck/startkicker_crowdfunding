@@ -67,8 +67,16 @@
                     <p:inputText id="Title" name="Title" value="#{projectBean.projectToSave.title}" required="true" requiredMessage="Title needed" />
 
                     <h:outputText for="Description"  value="Project description" />
-                    <p:textEditor id="Description" required="true" secure="false" requiredMessage="Description needed" widgetVar="description" value="#{projectBean.projectToSave.description}" height="300"  />
-
+                    <p:textEditor id="Description" required="true" secure="false" requiredMessage="Description needed" widgetVar="description" value="#{projectBean.projectToSave.description}" height="300" >
+                    <f:facet name="toolbar">
+             <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+            </span>
+                    </f:facet>
+                </p:textEditor>
 
                     <h:outputText for="Funding" value="Funding target in EUR" />
                     <p:inputNumber id="Funding" name="Funding target" value="#{projectBean.projectToSave.fundingTarget}" required="true" requiredMessage="Funding target needed" />
