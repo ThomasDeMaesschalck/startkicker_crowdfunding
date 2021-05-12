@@ -1,6 +1,7 @@
 package be.hogent.startkicker.front.beans;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class AppBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<UserDTO> allUsers;
 	private List<ProjectDTO> allProjects;
+
 
 	public AppBean() {
 		System.out.println("AppBean -- constructor");
@@ -50,6 +52,10 @@ public class AppBean implements Serializable {
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
 		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
+		for (ProjectDTO p: allProjects) {
+			BigDecimal funded = ProjectService.getInstance().funded(p);
+			p.setFunded(funded);
+		}
 		appBean.setAllProjects(allProjects);
 		return Collections.unmodifiableList(allProjects);
 	}

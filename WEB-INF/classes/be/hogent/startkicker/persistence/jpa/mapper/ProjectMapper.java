@@ -11,6 +11,7 @@ import java.util.List;
 public class ProjectMapper {
 
     UserMapper userMapper = new UserMapper();
+    FundingMapper fundingMapper = new FundingMapper();
 
     public Project mapEntityToObject(ProjectEntity pEntity) {
         if (pEntity == null) {
@@ -21,6 +22,7 @@ public class ProjectMapper {
                 pEntity.getFundingTarget(), userMapper.mapEntityToObject(pEntity.getCreator()), pEntity.getStatus(), pEntity.getComment());
         project.setId(pEntity.getId());
         project.setComment(pEntity.getComment());
+        project.setFunding(fundingMapper.allEntitySetToObject(pEntity.getFunding()));
         return project;
     }
 

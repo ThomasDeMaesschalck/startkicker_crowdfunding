@@ -129,6 +129,14 @@ public class ProjectEntity implements Serializable {
         this.status = status;
     }
 
+    public Set<FundingEntity> getFunding() {
+        return funding;
+    }
+
+    public void setFunding(Set<FundingEntity> funding) {
+        this.funding = funding;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

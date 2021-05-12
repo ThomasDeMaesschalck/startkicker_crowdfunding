@@ -22,7 +22,8 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
     private BigDecimal fundingTarget;
     private UserDTO creator;
     private ProjectStatus status;
-    private Set<FundingEntity> funding;
+    private Set<FundingDTO> funding;
+    private BigDecimal funded;
 
 
     public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status, String comment) {
@@ -113,11 +114,19 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
         this.status = status;
     }
 
-    public Set<FundingEntity> getFunding() {
+    public BigDecimal getFunded() {
+        return funded;
+    }
+
+    public void setFunded(BigDecimal funded) {
+        this.funded = funded;
+    }
+
+    public Set<FundingDTO> getFunding() {
         return funding;
     }
 
-    public void setFunding(Set<FundingEntity> funding) {
+    public void setFunding(Set<FundingDTO> funding) {
         this.funding = funding;
     }
 

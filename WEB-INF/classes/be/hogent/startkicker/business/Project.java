@@ -17,7 +17,7 @@ public class Project {
     private BigDecimal fundingTarget;
     private User creator;
     private ProjectStatus status;
-    private Set<FundingEntity> funding;
+    private Set<Funding> funding;
 
 
     public Project(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, User creator, ProjectStatus status, String comment) {
@@ -103,11 +103,11 @@ public class Project {
         this.status = status;
     }
 
-    public Set<FundingEntity> getFunding() {
+    public Set<Funding> getFunding() {
         return funding;
     }
 
-    public void setFunding(Set<FundingEntity> funding) {
+    public void setFunding(Set<Funding> funding) {
         this.funding = funding;
     }
 }

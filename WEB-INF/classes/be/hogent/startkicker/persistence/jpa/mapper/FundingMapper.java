@@ -6,7 +6,9 @@ import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
 import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FundingMapper {
 
@@ -38,6 +40,17 @@ public class FundingMapper {
             list.add(mapEntityToObject(f));
         }
         return list;
-
     }
+
+    public Set<Funding> allEntitySetToObject(Set<FundingEntity> SetFs) {
+        if (SetFs == null)
+            return null;
+        Set<Funding> set = new HashSet<>();
+        for (FundingEntity f : SetFs) {
+            set.add(mapEntityToObject(f));
+        }
+        return set;
+    }
+
+
 }

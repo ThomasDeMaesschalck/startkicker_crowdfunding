@@ -6,12 +6,14 @@ import be.hogent.startkicker.business.repositories.IProjectRepo;
 import be.hogent.startkicker.business.repositories.IUserRepo;
 import be.hogent.startkicker.business.repositories.ProjectJPARepo;
 import be.hogent.startkicker.business.repositories.UserJPARepo;
+import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 import be.hogent.startkicker.service.mappers.IMapper;
 import be.hogent.startkicker.service.mappers.ProjectMapper;
 import be.hogent.startkicker.service.mappers.UserMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProjectService {
@@ -34,7 +36,6 @@ public class ProjectService {
         }
 
         public String saveProject(ProjectDTO pDTO) {
-            System.out.println(pDTO.getComment());
             return projectRepo.saveProject(projectMapper.mapDTOToObject(pDTO));
         }
 
@@ -46,6 +47,13 @@ public class ProjectService {
         public ProjectDTO getProject(long id)
         {
            return projectMapper.mapObjectToDTO(projectRepo.getProject(id));
+        }
+
+        public BigDecimal funded(ProjectDTO pDTO)
+        {
+            BigDecimal amount;
+            amount =   pDTO.getFunding().stream().map(FundingDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+            return amount;
         }
 
         public List<ProjectDTO> getAllProjects() {

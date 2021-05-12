@@ -6,7 +6,9 @@ import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FundingMapper implements IMapper<Funding, FundingDTO>{
 
@@ -39,6 +41,17 @@ public class FundingMapper implements IMapper<Funding, FundingDTO>{
             list.add(mapObjectToDTO(f));
         }
         return list;
+
+    }
+
+    public Set<FundingDTO> allObjectSetToDTO(Set<Funding> SetFs) {
+        if (SetFs == null)
+            return null;
+        Set<FundingDTO> set = new HashSet<>();
+        for (Funding f : SetFs) {
+            set.add(mapObjectToDTO(f));
+        }
+        return set;
 
     }
 

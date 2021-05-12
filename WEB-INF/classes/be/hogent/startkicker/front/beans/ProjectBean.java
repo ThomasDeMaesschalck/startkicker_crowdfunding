@@ -16,6 +16,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -30,6 +32,7 @@ public class ProjectBean implements Serializable {
     private LocalDate today;
     private LocalDate minEndDate;
     private int statusInt;
+    public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 
     public ProjectBean() {
     }
@@ -98,6 +101,13 @@ public class ProjectBean implements Serializable {
 
     public void setToday(LocalDate today){
         this.today = today;
+    }
+
+    public int getPercentageFunded()
+    {
+      BigDecimal calculation = selectedProject.getFunded().multiply(ONE_HUNDRED).divide(selectedProject.getFundingTarget(), 2, RoundingMode.HALF_UP);
+      int percent = calculation.toBigInteger().intValueExact();
+      return percent;
     }
 
     public LocalDate getMinEndDate() {

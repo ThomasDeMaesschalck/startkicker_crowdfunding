@@ -9,7 +9,6 @@
 <h:head>
     <title>Startkicker - Make a new project</title>
     <h:outputStylesheet name="css/primeflex.css" />
-    <h:outputStylesheet name="css/quill.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
@@ -72,6 +71,9 @@
                 <h:outputText value="#{projectBean.selectedProject.title}" />
                 <h:outputText value="Funds required: " />
                 <h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
+                <h:outputText value="Amount funded: " />
+                <h:outputText value="#{projectBean.selectedProject.funded}EUR" />
+                <p:progressBar value="#{projectBean.percentageFunded}" labelTemplate="{value}%" displayOnly="true"/>
                 <h:outputText value="Start date: " />
                 <h:outputText value="#{projectBean.selectedProject.startDate}"/>
                 <h:outputText value="End date:" />

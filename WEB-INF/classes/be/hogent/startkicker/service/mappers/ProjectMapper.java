@@ -9,6 +9,7 @@ import java.util.List;
 public class ProjectMapper implements IMapper<Project, ProjectDTO> {
 
        be.hogent.startkicker.service.mappers.UserMapper userMapper = new UserMapper();
+    be.hogent.startkicker.service.mappers.FundingMapper fundingMapperr = new FundingMapper();
 
 
     public Project mapDTOToObject(ProjectDTO pDTO) {
@@ -30,6 +31,7 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
         projectDTO = new ProjectDTO(p.getTitle(), p.getDescription(),
                 p.getStartDate(), p.getEndDate(), p.getFundingTarget(), userMapper.mapObjectToDTO(p.getCreator()), p.getStatus(), p.getComment());
         projectDTO.setId(p.getId());
+        projectDTO.setFunding(fundingMapperr.allObjectSetToDTO(p.getFunding()));
         return projectDTO;
     }
 
