@@ -21,9 +21,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Map;
+import java.util.*;
 
 @ManagedBean(name = "projectBean", eager = true)
 @SessionScoped
@@ -36,6 +34,10 @@ public class ProjectBean implements Serializable {
     private LocalDate minEndDate;
     private int statusInt;
     private BigDecimal fundingAmount;
+
+    private List<ProjectDTO> projectsCreatedByUser;
+    private List<ProjectDTO> projectsFundedByUser;
+
 
     public ProjectBean() {
     }
@@ -195,5 +197,30 @@ for (ProjectStatus s : ProjectStatus.values())
 
     public void setFundingAmount(BigDecimal fundingAmount) {
         this.fundingAmount = fundingAmount;
+    }
+
+    public List<ProjectDTO> getProjectsCreatedByUser() {
+        UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        projectsCreatedByUser = ProjectService.getInstance().getAllProjectsCreatedByUser(thisUser);
+
+        return Collections.unmodifiableList(projectsCreatedByUser);
+    }
+
+    public void setProjectsCreatedByUser(List<ProjectDTO> projectsCreatedByUser) {
+        System.out.println("ProjectBEan -- setting allCreatedProjects");
+        this.projectsCreatedByUser = projectsCreatedByUser;
+    }
+
+
+    public List<ProjectDTO> getProjectsFundedByUser() {
+        UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        projectsFundedByUser = ProjectService.getInstance().getAllProjectsFundedByUser(thisUser);
+
+        return Collections.unmodifiableList(projectsFundedByUser);
+    }
+
+    public void setProjectsFundedByUser(List<ProjectDTO> projectsFundedByUser) {
+        System.out.println("ProjectBEan -- setting projectsFundedByUser");
+        this.projectsFundedByUser = projectsFundedByUser;
     }
 }

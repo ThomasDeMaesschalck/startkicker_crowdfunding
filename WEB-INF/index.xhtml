@@ -25,6 +25,8 @@
 
 
 				<f:facet name="options">
+					<p:linkButton rendered="#{loggedInUser != null}" outcome="fundedprojects" value="Funded projects" style="margin-right:20px;" />
+					<p:linkButton rendered="#{loggedInUser != null}" outcome="myprojects" value="My projects" style="margin-right:20px;" />
 					<p:linkButton rendered="#{loggedInUser != null}" outcome="createproject" value="Create a project" style="margin-right:20px;" />
 					<p:button rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
 				</f:facet>
@@ -67,7 +69,7 @@
 	</p:card>
 
 	<p:card>
-	<h2>Project lists</h2>
+	<h2>All Startkicker projects</h2>
 		<h:form id="projectForm">
 			<p:dataTable id="projectList" value = "#{myAppWideBean.allProjects}" var = "project"
 						 rows="10"

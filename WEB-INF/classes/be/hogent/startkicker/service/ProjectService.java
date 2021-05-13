@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectService {
         private IProjectRepo projectRepo;
@@ -82,7 +83,18 @@ public class ProjectService {
             p.setFunded(funded);
         }
         return allProjectsWithUserInfo;
+    }
 
+    public List<ProjectDTO> getAllProjectsFundedByUser(UserDTO user)
+    {
+        List<ProjectDTO> listOfAllProjectsFunded = getAllProjects(user).stream().filter(p -> p.isUserHasFunded()).collect(Collectors.toList());
+        return listOfAllProjectsFunded;
+    }
+
+    public List<ProjectDTO> getAllProjectsCreatedByUser(UserDTO user)
+    {
+        List<ProjectDTO> listOfCreatedProjects = getAllProjects(user).stream().filter(p -> p.getCreator().getId() == user.getId()).collect(Collectors.toList());
+        return listOfCreatedProjects;
     }
 
     public int getPercentageFunded(ProjectDTO pDTO)
