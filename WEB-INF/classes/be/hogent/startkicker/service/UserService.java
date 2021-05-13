@@ -63,7 +63,6 @@ public class UserService {
 		UserDTO p = userMapper.mapObjectToDTO(userRepo.getUser(idUser));
 		p.setActif(!p.isActif());
 		userRepo.saveUser(userMapper.mapDTOToObject(p));
-
 	}
 
 	public BigDecimal userTotalFunded(UserDTO user)

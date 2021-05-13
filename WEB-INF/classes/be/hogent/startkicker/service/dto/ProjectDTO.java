@@ -25,6 +25,7 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
     private Set<FundingDTO> funding;
     private BigDecimal funded;
     private boolean userHasFunded;
+    private boolean ProjectEndDateReached;
 
 
     public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status, String comment) {
@@ -137,6 +138,14 @@ public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
 
     public void setUserHasFunded(boolean userHasFunded) {
         this.userHasFunded = userHasFunded;
+    }
+
+    public boolean isProjectEndDateReached() {
+        return ProjectEndDateReached;
+    }
+
+    public void setProjectEndDateReached(boolean projectEndDateReached) {
+        ProjectEndDateReached = projectEndDateReached;
     }
 
     @Override

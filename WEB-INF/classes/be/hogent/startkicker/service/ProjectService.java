@@ -1,6 +1,7 @@
 package be.hogent.startkicker.service;
 
 import be.hogent.startkicker.business.Project;
+import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.business.repositories.IProjectRepo;
 import be.hogent.startkicker.business.repositories.IUserRepo;
@@ -15,6 +16,7 @@ import be.hogent.startkicker.service.mappers.UserMapper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +66,14 @@ public class ProjectService {
             for (ProjectDTO p: allProjects) {
                 BigDecimal funded = funded(p);
                 p.setFunded(funded);
+                if (p.getStartDate().isBefore(LocalDate.now()) && p.getStatus().equals(ProjectStatus.Created))
+                {
+                    startProject(p);
+                }
+                if(p.getEndDate().isBefore(LocalDate.now()))
+                {
+                    switchFundingOff(p);
+                }
             }
             return allProjects;
         }
@@ -77,6 +87,10 @@ public class ProjectService {
                 for (FundingDTO f : p.getFunding()) {
                     if (f.getUser().getId() == user.getId()) {
                         p.setUserHasFunded(true);
+                    }
+                    if(p.getEndDate().isBefore(LocalDate.now()))
+                    {
+                        switchFundingOff(p);
                     }
                 }
             }
@@ -102,6 +116,16 @@ public class ProjectService {
         BigDecimal calculation = pDTO.getFunded().multiply(ONE_HUNDRED).divide(pDTO.getFundingTarget(), 0, RoundingMode.HALF_UP);
         int percent = calculation.toBigInteger().intValueExact();
         return percent;
+    }
+
+    public void startProject(ProjectDTO project) {
+        ProjectDTO p = projectMapper.mapObjectToDTO(projectRepo.getProject(project.getId()));
+        p.setStatus(ProjectStatus.Active);
+        projectRepo.saveProject(projectMapper.mapDTOToObject(p));
+    }
+
+    public void switchFundingOff(ProjectDTO project) {
+        project.setProjectEndDateReached(true);
     }
 
 }

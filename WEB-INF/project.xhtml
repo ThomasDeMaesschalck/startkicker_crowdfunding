@@ -96,6 +96,8 @@
 
                 <br /><br />
 
+                <h:outputText value="End date reached -- funding not possible anymore!" rendered="#{projectBean.selectedProject.projectEndDateReached}" />
+
                 <h:outputText rendered="#{projectBean.selectedProject.userHasFunded == true}" value="You have already funded this project!"></h:outputText>
 
                 <h:form id="fundForm">
