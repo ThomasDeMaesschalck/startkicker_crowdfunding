@@ -3,7 +3,9 @@ package be.hogent.startkicker.front.beans;
 
 import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
+import be.hogent.startkicker.service.FundingService;
 import be.hogent.startkicker.service.ProjectService;
+import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 
@@ -29,6 +31,7 @@ public class ProjectBean implements Serializable {
 
     private ProjectDTO projectToSave = new ProjectDTO();
     private ProjectDTO selectedProject = new ProjectDTO();
+    private FundingDTO fundingToSave = new FundingDTO();
     private LocalDate today;
     private LocalDate minEndDate;
     private int statusInt;
@@ -74,6 +77,22 @@ public class ProjectBean implements Serializable {
         ProjectService.getInstance().deleteProject(projectDTO);
         return pathToFollow;
     }
+
+    public String fundProject(UserDTO user, BigDecimal amount) {
+        String pathToFollow = null;
+        fundingToSave.setProject(selectedProject);
+        fundingToSave.setUser(user);
+        fundingToSave.setAmount(amount);
+    String outcome = FundingService.getInstance().saveFunding(fundingToSave);
+        if (outcome == "success") {
+        pathToFollow = "project.jsf?faces-redirect=true";
+        return pathToFollow;
+    }
+        else {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Funding could not be added", outcome));
+    }
+        return pathToFollow;
+}
 
     public String view(){
         return "project";
@@ -161,5 +180,13 @@ for (ProjectStatus s : ProjectStatus.values())
 
     public int getStatusInt() {
         return statusInt;
+    }
+
+    public FundingDTO getFundingToSave() {
+        return fundingToSave;
+    }
+
+    public void setFundingToSave(FundingDTO fundingToSave) {
+        this.fundingToSave = fundingToSave;
     }
 }

@@ -12,13 +12,17 @@ import java.util.Set;
 
 public class FundingMapper implements IMapper<Funding, FundingDTO>{
 
+    be.hogent.startkicker.service.mappers.UserMapper userMapper = new UserMapper();
+
 
     public Funding mapDTOToObject(FundingDTO fDTO) {
         if (fDTO == null) {
             return null;
         }
         Funding funding = null;
-        funding = new Funding(fDTO.getProject(), fDTO.getUser(), fDTO.getAmount());
+        Project project = new Project();
+        project.setId(fDTO.getProject().getId());
+       funding = new Funding(project, userMapper.mapDTOToObject(fDTO.getUser()), fDTO.getAmount());
         funding.setId(fDTO.getId());
         return funding;
     }
@@ -28,7 +32,9 @@ public class FundingMapper implements IMapper<Funding, FundingDTO>{
             return null;
         }
         FundingDTO fundingDTO = null;
-        fundingDTO = new FundingDTO(f.getProject(), f.getUser(), f.getAmount());
+        ProjectDTO projectDTO = new ProjectDTO();
+        projectDTO.setId(f.getProject().getId());
+      fundingDTO = new FundingDTO(projectDTO, userMapper.mapObjectToDTO(f.getUser()), f.getAmount());
         fundingDTO.setId(f.getId());
         return fundingDTO;
     }

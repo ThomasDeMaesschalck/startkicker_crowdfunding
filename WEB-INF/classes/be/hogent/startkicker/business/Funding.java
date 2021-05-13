@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 public class Funding {
 
     private long id;
-    private ProjectEntity project;
-    private UserEntity user;
+    private Project project;
+    private User user;
     private BigDecimal amount;
 
-    public Funding(ProjectEntity project, UserEntity user, BigDecimal amount) {
+    public Funding(Project project, User user, BigDecimal amount) {
         this.project = project;
         this.user = user;
         this.amount = amount;
@@ -26,19 +26,19 @@ public class Funding {
         this.id = id;
     }
 
-    public ProjectEntity getProject() {
+    public Project getProject() {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(Project project) {
         this.project = project;
     }
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

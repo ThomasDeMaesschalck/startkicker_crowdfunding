@@ -49,11 +49,10 @@ public class ProjectService {
            return projectMapper.mapObjectToDTO(projectRepo.getProject(id));
         }
 
-        public BigDecimal funded(ProjectDTO pDTO)
-        {
+        public BigDecimal funded(ProjectDTO pDTO) {
             BigDecimal amount;
-            amount =   pDTO.getFunding().stream().map(FundingDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
-            return amount;
+                amount = pDTO.getFunding().stream().map(FundingDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
+                return amount;
         }
 
         public List<ProjectDTO> getAllProjects() {

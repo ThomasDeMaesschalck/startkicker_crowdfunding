@@ -31,6 +31,9 @@ public class Project {
         this.comment = comment;
     }
 
+    public Project() {
+    }
+
     public long getId() {
         return id;
     }

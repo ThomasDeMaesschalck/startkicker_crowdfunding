@@ -12,12 +12,16 @@ import java.util.Set;
 
 public class FundingMapper {
 
+    UserMapper userMapper = new UserMapper();
+
     public Funding mapEntityToObject(FundingEntity fEntity) {
         if (fEntity == null) {
             return null;
         }
         Funding funding = null;
-        funding = new Funding(fEntity.getProject(), fEntity.getUser(), fEntity.getAmount());
+        Project project = new Project();
+        project.setId(fEntity.getProject().getId());
+        funding = new Funding(project, userMapper.mapEntityToObject(fEntity.getUser()), fEntity.getAmount());
         funding.setId(fEntity.getId());
         return funding;
     }
@@ -27,7 +31,10 @@ public class FundingMapper {
             return null;
         }
         FundingEntity fundingEntity = null;
-        fundingEntity = new FundingEntity(f.getProject(), f.getUser(), f.getAmount());
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setId(f.getProject().getId());
+
+       fundingEntity = new FundingEntity(projectEntity, userMapper.mapObjectToEntity(f.getUser()), f.getAmount());
         fundingEntity.setId(f.getId());
         return fundingEntity;
     }

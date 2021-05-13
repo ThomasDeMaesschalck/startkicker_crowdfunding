@@ -12,12 +12,12 @@ public class FundingDTO implements Comparable<FundingDTO>, Serializable {
     private static final long serialVersionUID = 4545078937387808563L;
 
     private long id;
-    private ProjectEntity project;
-    private UserEntity user;
+    private ProjectDTO project;
+    private UserDTO user;
     private BigDecimal amount;
 
 
-    public FundingDTO(ProjectEntity project, UserEntity user, BigDecimal amount) {
+    public FundingDTO(ProjectDTO project, UserDTO user, BigDecimal amount) {
         super();
         this.project = project;
         this.user = user;
@@ -36,19 +36,19 @@ public class FundingDTO implements Comparable<FundingDTO>, Serializable {
         this.id = id;
     }
 
-    public ProjectEntity getProject() {
+    public ProjectDTO getProject() {
         return project;
     }
 
-    public void setProject(ProjectEntity project) {
+    public void setProject(ProjectDTO project) {
         this.project = project;
     }
 
-    public UserEntity getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

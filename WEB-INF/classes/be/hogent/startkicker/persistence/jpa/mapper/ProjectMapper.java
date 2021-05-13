@@ -11,7 +11,7 @@ import java.util.List;
 public class ProjectMapper {
 
     UserMapper userMapper = new UserMapper();
-    FundingMapper fundingMapper = new FundingMapper();
+   FundingMapper fundingMapper = new FundingMapper();
 
     public Project mapEntityToObject(ProjectEntity pEntity) {
         if (pEntity == null) {
