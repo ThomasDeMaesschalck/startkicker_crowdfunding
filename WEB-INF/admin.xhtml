@@ -96,13 +96,13 @@
                     <h:outputText rendered="#{user.actif == true}"  styleClass="pi pi-check"/>
                     <p:commandButton rendered="#{user.actif == false}" action="#{userBean.activateUser(user.id)}"
                                      value="Activate #{user.id}"
-                    update="userlist" />
+                                     update="userlist" />
                 </p:column>
 
                 <p:column headerText="Edit">
-                <p:commandButton icon="fa fa-pencil" update=":userForm:userEdit" oncomplete="PF('editDialog').show()">
-                    <f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}"/>
-                </p:commandButton>
+                    <p:commandButton icon="fa fa-pencil" update=":userForm:userEdit" oncomplete="PF('editDialog').show()">
+                        <f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}"/>
+                    </p:commandButton>
 
                     <p:commandButton action="#{userBean.deleteUser(user)}"
                                      icon="fa fa-trash"

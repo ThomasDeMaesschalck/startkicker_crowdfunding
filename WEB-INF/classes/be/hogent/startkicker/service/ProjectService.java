@@ -14,6 +14,8 @@ import be.hogent.startkicker.service.mappers.ProjectMapper;
 import be.hogent.startkicker.service.mappers.UserMapper;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectService {
@@ -21,6 +23,7 @@ public class ProjectService {
         private IMapper<Project, ProjectDTO> projectMapper;
 
         private static ProjectService instance;
+        public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
 
 
         public static ProjectService getInstance() {
@@ -56,9 +59,37 @@ public class ProjectService {
         }
 
         public List<ProjectDTO> getAllProjects() {
-            return projectMapper.allObjectToDTO(projectRepo.getAllProjects());
-
+            List<ProjectDTO> allProjects = projectMapper.allObjectToDTO(projectRepo.getAllProjects());
+            for (ProjectDTO p: allProjects) {
+                BigDecimal funded = funded(p);
+                p.setFunded(funded);
+            }
+            return allProjects;
         }
 
+    public List<ProjectDTO> getAllProjects(UserDTO user) {
+        List<ProjectDTO> allProjectsWithUserInfo = projectMapper.allObjectToDTO(projectRepo.getAllProjects());
+
+        for (ProjectDTO p: allProjectsWithUserInfo) {
+            BigDecimal funded = funded(p);
+            if (user != null) {
+                for (FundingDTO f : p.getFunding()) {
+                    if (f.getUser().getId() == user.getId()) {
+                        p.setUserHasFunded(true);
+                    }
+                }
+            }
+            p.setFunded(funded);
+        }
+        return allProjectsWithUserInfo;
+
+    }
+
+    public int getPercentageFunded(ProjectDTO pDTO)
+    {
+        BigDecimal calculation = pDTO.getFunded().multiply(ONE_HUNDRED).divide(pDTO.getFundingTarget(), 0, RoundingMode.HALF_UP);
+        int percent = calculation.toBigInteger().intValueExact();
+        return percent;
+    }
 
 }

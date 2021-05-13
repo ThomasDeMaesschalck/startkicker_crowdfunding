@@ -35,7 +35,6 @@ public class ProjectBean implements Serializable {
     private LocalDate today;
     private LocalDate minEndDate;
     private int statusInt;
-    public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
     private BigDecimal fundingAmount;
 
     public ProjectBean() {
@@ -125,8 +124,7 @@ public class ProjectBean implements Serializable {
 
     public int getPercentageFunded()
     {
-      BigDecimal calculation = selectedProject.getFunded().multiply(ONE_HUNDRED).divide(selectedProject.getFundingTarget(), 0, RoundingMode.HALF_UP);
-      int percent = calculation.toBigInteger().intValueExact();
+      int percent = ProjectService.getInstance().getPercentageFunded(selectedProject);
       return percent;
     }
 

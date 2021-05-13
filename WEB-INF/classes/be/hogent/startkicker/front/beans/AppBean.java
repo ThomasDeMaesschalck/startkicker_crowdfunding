@@ -2,6 +2,7 @@ package be.hogent.startkicker.front.beans;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,23 +50,21 @@ public class AppBean implements Serializable {
 
 	public List<ProjectDTO> getAllProjects() {
 
-		List<ProjectDTO> allProjects = ProjectService.getInstance().getAllProjects();
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
 		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
 		UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
 
-		for (ProjectDTO p: allProjects) {
-			BigDecimal funded = ProjectService.getInstance().funded(p);
-			if (thisUser != null) {
-				for (FundingDTO f : p.getFunding()) {
-					if (f.getUser().getId() == thisUser.getId()) {
-						p.setUserHasFunded(true);
-					}
-				}
-			}
-			p.setFunded(funded);
+		List<ProjectDTO> allProjects;
+		if (thisUser == null)
+		{
+			allProjects = ProjectService.getInstance().getAllProjects();
 		}
+		else
+		{
+			allProjects = ProjectService.getInstance().getAllProjects(thisUser);
+		}
+
 		appBean.setAllProjects(allProjects);
 		return Collections.unmodifiableList(allProjects);
 	}
