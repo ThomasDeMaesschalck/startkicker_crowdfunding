@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import be.hogent.startkicker.service.ProjectService;
 import be.hogent.startkicker.service.UserService;
+import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 
@@ -52,8 +53,17 @@ public class AppBean implements Serializable {
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
 		AppBean appBean = (AppBean) currentSession.getServletContext().getAttribute("myAppWideBean");
+		UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+
 		for (ProjectDTO p: allProjects) {
 			BigDecimal funded = ProjectService.getInstance().funded(p);
+			if (thisUser != null) {
+				for (FundingDTO f : p.getFunding()) {
+					if (f.getUser().getId() == thisUser.getId()) {
+						p.setUserHasFunded(true);
+					}
+				}
+			}
 			p.setFunded(funded);
 		}
 		appBean.setAllProjects(allProjects);

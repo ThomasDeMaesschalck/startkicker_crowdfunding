@@ -36,6 +36,7 @@ public class ProjectBean implements Serializable {
     private LocalDate minEndDate;
     private int statusInt;
     public static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+    private BigDecimal fundingAmount;
 
     public ProjectBean() {
     }
@@ -85,7 +86,7 @@ public class ProjectBean implements Serializable {
         fundingToSave.setAmount(amount);
     String outcome = FundingService.getInstance().saveFunding(fundingToSave);
         if (outcome == "success") {
-        pathToFollow = "project.jsf?faces-redirect=true";
+        pathToFollow = "index.jsf?faces-redirect=true";
         return pathToFollow;
     }
         else {
@@ -124,7 +125,7 @@ public class ProjectBean implements Serializable {
 
     public int getPercentageFunded()
     {
-      BigDecimal calculation = selectedProject.getFunded().multiply(ONE_HUNDRED).divide(selectedProject.getFundingTarget(), 2, RoundingMode.HALF_UP);
+      BigDecimal calculation = selectedProject.getFunded().multiply(ONE_HUNDRED).divide(selectedProject.getFundingTarget(), 0, RoundingMode.HALF_UP);
       int percent = calculation.toBigInteger().intValueExact();
       return percent;
     }
@@ -188,5 +189,13 @@ for (ProjectStatus s : ProjectStatus.values())
 
     public void setFundingToSave(FundingDTO fundingToSave) {
         this.fundingToSave = fundingToSave;
+    }
+
+    public BigDecimal getFundingAmount() {
+        return fundingAmount;
+    }
+
+    public void setFundingAmount(BigDecimal fundingAmount) {
+        this.fundingAmount = fundingAmount;
     }
 }

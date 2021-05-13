@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      lang="en" xml:lang="en">
 <h:head>
     <title>Startkicker - Make a new project</title>
     <h:outputStylesheet name="css/primeflex.css" />
@@ -79,7 +80,8 @@
                 </p:textEditor>
 
                     <h:outputText for="Funding" value="Funding target in EUR" />
-                    <p:inputNumber id="Funding" name="Funding target" value="#{projectBean.projectToSave.fundingTarget}" required="true" requiredMessage="Funding target needed" />
+                    <p:inputNumber decimalSeparator="," thousandSeparator="." padControl="false"  symbol="€"
+                                   id="Funding" name="Funding target" value="#{projectBean.projectToSave.fundingTarget}" required="true" requiredMessage="Funding target needed" />
 
                     <h:outputText for="startDate" value="Start date" />
                     <p:datePicker id="startDate" mindate="#{projectBean.today}" value="#{projectBean.projectToSave.startDate}" inline="true" required="true">

@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      lang="en" xml:lang="en">
 <h:head>
     <title>Startkicker - Make a new project</title>
     <h:outputStylesheet name="css/primeflex.css" />
@@ -92,6 +93,47 @@
                 <br />
                 <h:outputText   value="There are no comments" rendered="#{projectBean.selectedProject.comment == null}"/>
                 <h:outputText   value="#{projectBean.selectedProject.comment}" />
+
+                <br /><br />
+
+                <h:outputText rendered="#{projectBean.selectedProject.userHasFunded == true}" value="You have already funded this project!"></h:outputText>
+
+                <h:form id="fundForm">
+
+                <p:commandButton value="Fund" rendered="#{loggedInUser != null and !projectBean.selectedProject.userHasFunded and
+                projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 1}" icon="fa fa-wallet" update=":fundForm:projectFunding" oncomplete="PF('projectFundDialog').show()">
+                </p:commandButton>
+
+
+    <p:dialog header="Fund this project" widgetVar="projectFundDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+        <p:outputPanel id="projectFunding" style="text-align:center;">
+
+            <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject}">
+
+                <h:outputText value="Fund #{projectBean.selectedProject.title}"/>
+                <br /><br />
+                <h:outputText value="Enter a number:" />
+
+
+                <p:inputNumber decimalSeparator="," thousandSeparator="."  symbol="€" padControl="false"  value="#{projectBean.fundingAmount}"/>
+
+            </p:panelGrid>
+
+            <p:commandButton value="Take my money!" icon="fa fa-wallet" action="#{projectBean.fundProject(loggedInUser, projectBean.fundingAmount)}"/>
+
+            <br /><br />
+            <img src="resources/images/takemoney.jpg" alt="take my money!"/>
+
+        </p:outputPanel>
+    </p:dialog>
+
+
+
+
+
+
+            </h:form>
+
             </p:card>
 
         </div>
