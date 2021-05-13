@@ -8,12 +8,15 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @ManagedBean(name = "userBean", eager = true)
 @RequestScoped
 public class UserBean implements Serializable {
 
     private UserDTO userToSave = new UserDTO();
+    protected BigDecimal totalFunded;
+
 
     public UserBean() {
     }
@@ -83,4 +86,13 @@ public class UserBean implements Serializable {
         return pathToFollow;
     }
 
+    public BigDecimal getTotalFunded(){
+        UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
+        setTotalFunded(UserService.getInstance().userTotalFunded(thisUser));
+        return 	totalFunded;
+    }
+
+    public void setTotalFunded(BigDecimal totalFunded) {
+        this.totalFunded = totalFunded;
+    }
 }

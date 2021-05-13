@@ -1,7 +1,9 @@
 package be.hogent.startkicker.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.business.repositories.IUserRepo;
@@ -66,12 +68,13 @@ public class UserService {
 
 	public BigDecimal userTotalFunded(UserDTO user)
 	{
-		BigDecimal amount = null;
 		List<ProjectDTO> fundedProjectList = ProjectService.getInstance().getAllProjectsFundedByUser(user);
-		for (ProjectDTO p: fundedProjectList)
-		{
-			amount.add(p.getFunding().stream().map(FundingDTO::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add));
+
+		List<BigDecimal> values = new ArrayList<>();
+		for (ProjectDTO project: fundedProjectList) {
+			values.addAll(project.getFunding().stream().filter(f -> f.getUser().getId() == user.getId()).map(FundingDTO::getAmount).collect(Collectors.toList()));
 		}
+		BigDecimal amount = values.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
 		return amount;
 	}
 

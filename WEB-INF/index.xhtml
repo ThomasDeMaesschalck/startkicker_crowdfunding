@@ -63,6 +63,7 @@
 		<h:panelGrid columns="2" rendered="#{loggedInUser != null}">
 			<h:outputText value="Hello "></h:outputText>
 		<h:outputText value="#{loggedInUser.firstName}"></h:outputText>
+			<h:outputText value="You have funded #{userBean.totalFunded}EUR in projects"></h:outputText>
 <br></br><br></br>
 		</h:panelGrid>
 

@@ -1,5 +1,7 @@
 package be.hogent.startkicker.business;
 
+import java.math.BigDecimal;
+
 public class User {
 
 	private long id;
@@ -10,7 +12,6 @@ public class User {
 	protected String email;
 	protected boolean actif;
 	protected boolean admin;
-
 
 	public User(String firstName, String name, String userName,
 				String password, String email) {
