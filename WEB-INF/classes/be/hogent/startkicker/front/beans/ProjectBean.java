@@ -5,6 +5,7 @@ import be.hogent.startkicker.business.ProjectStatus;
 import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.service.FundingService;
 import be.hogent.startkicker.service.ProjectService;
+import be.hogent.startkicker.service.UserService;
 import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
@@ -37,6 +38,7 @@ public class ProjectBean implements Serializable {
 
     private List<ProjectDTO> projectsCreatedByUser;
     private List<ProjectDTO> projectsFundedByUser;
+    private List<ProjectDTO> projectsEndedButNotFinalized;
 
 
     public ProjectBean() {
@@ -220,7 +222,28 @@ for (ProjectStatus s : ProjectStatus.values())
     }
 
     public void setProjectsFundedByUser(List<ProjectDTO> projectsFundedByUser) {
-        System.out.println("ProjectBEan -- setting projectsFundedByUser");
-        this.projectsFundedByUser = projectsFundedByUser;
+         this.projectsFundedByUser = projectsFundedByUser;
+    }
+
+    public List<ProjectDTO> getProjectsEndedButNotFinalized() {
+         projectsEndedButNotFinalized = ProjectService.getInstance().getAllEndedButNotFinalizedProjects();
+
+        return Collections.unmodifiableList(projectsEndedButNotFinalized);
+    }
+
+    public void setProjectsEndedButNotFinalized(List<ProjectDTO> projectsEndedButNotFinalized) {
+         this.projectsEndedButNotFinalized = projectsEndedButNotFinalized;
+    }
+
+    public String switchProjectStatus(ProjectDTO project, long status) {
+        String pathToFollow = null;
+        if (status == 2) {
+            ProjectService.getInstance().switchProjectStatus(project, ProjectStatus.Failed);
+        }
+        else
+        {
+            ProjectService.getInstance().switchProjectStatus(project, ProjectStatus.Succesful);
+        }
+        return pathToFollow;
     }
 }

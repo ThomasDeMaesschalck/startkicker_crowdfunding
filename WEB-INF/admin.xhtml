@@ -192,6 +192,60 @@
                 </p:dialog>
             </h:form>
 
+
+
+        <p:card>
+
+            <h2>Ended projects that need status change:</h2>
+            <h:form id="projectForm">
+                <p:dataTable id="projectList" value = "#{projectBean.projectsEndedButNotFinalized}" var = "project"
+                             rows="10"
+                             paginator="true"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                             rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{project.id}" />
+                    </p:column>
+
+                    <p:column headerText="Title">
+                        <h:outputText value="#{project.title}" />
+                    </p:column>
+
+                    <p:column headerText="Start date">
+                        <h:outputText value="#{project.startDate}" />
+
+                    </p:column>
+                    <p:column headerText="Creator">
+                        <h:outputText value="#{project.creator.userName}" />
+                    </p:column>
+
+                    <p:column headerText="Status">
+                        <h:outputText value="#{project.status}" />
+                    </p:column>
+
+                    <p:column headerText="View">
+
+                        <p:commandButton action="#{projectBean.switchProjectStatus(project, 2)}"
+                                         value="Failed"
+                                         update="projectList" />
+
+                        <p:commandButton action="#{projectBean.switchProjectStatus(project, 3)}"
+                                         value="Success"
+                                         update="projectList" />
+
+
+                        <p:commandButton value="View"  action="#{projectBean.view}"   style="margin-right:20px;" styleClass="ui-button-info">
+                            <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
+                        </p:commandButton>
+
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+        </p:card>
     </h:panelGrid>
 </h:body>
 </html>

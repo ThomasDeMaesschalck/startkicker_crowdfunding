@@ -68,7 +68,7 @@ public class ProjectService {
                 p.setFunded(funded);
                 if (p.getStartDate().isBefore(LocalDate.now()) && p.getStatus().equals(ProjectStatus.Created))
                 {
-                    startProject(p);
+                    switchProjectStatus(p, ProjectStatus.Active);
                 }
                 if(p.getEndDate().isBefore(LocalDate.now()))
                 {
@@ -76,6 +76,13 @@ public class ProjectService {
                 }
             }
             return allProjects;
+        }
+
+        public List<ProjectDTO> getAllEndedButNotFinalizedProjects()
+        {
+            List<ProjectDTO> allProjects = getAllProjects();
+            List<ProjectDTO> allEndedButNotFinalizedProjects = allProjects.stream().filter(o -> o.isProjectEndDateReached()).filter(o -> o.getStatus() == ProjectStatus.Active).collect(Collectors.toList());
+            return  allEndedButNotFinalizedProjects;
         }
 
     public List<ProjectDTO> getAllProjects(UserDTO user) {
@@ -118,9 +125,9 @@ public class ProjectService {
         return percent;
     }
 
-    public void startProject(ProjectDTO project) {
+    public void switchProjectStatus(ProjectDTO project, ProjectStatus status) {
         ProjectDTO p = projectMapper.mapObjectToDTO(projectRepo.getProject(project.getId()));
-        p.setStatus(ProjectStatus.Active);
+        p.setStatus(status);
         projectRepo.saveProject(projectMapper.mapDTOToObject(p));
     }
 
