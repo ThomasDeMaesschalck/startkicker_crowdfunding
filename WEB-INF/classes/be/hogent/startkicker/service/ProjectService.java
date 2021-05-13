@@ -70,7 +70,7 @@ public class ProjectService {
                 {
                     switchProjectStatus(p, ProjectStatus.Active);
                 }
-                if(p.getEndDate().isBefore(LocalDate.now()))
+                if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
                 {
                     switchFundingOff(p);
                 }
@@ -95,7 +95,7 @@ public class ProjectService {
                     if (f.getUser().getId() == user.getId()) {
                         p.setUserHasFunded(true);
                     }
-                    if(p.getEndDate().isBefore(LocalDate.now()))
+                    if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
                     {
                         switchFundingOff(p);
                     }
@@ -130,6 +130,13 @@ public class ProjectService {
         p.setStatus(status);
         projectRepo.saveProject(projectMapper.mapDTOToObject(p));
     }
+
+    public void setProjectEndDateToNow(ProjectDTO project) {
+        ProjectDTO p = projectMapper.mapObjectToDTO(projectRepo.getProject(project.getId()));
+        p.setEndDate(LocalDate.now());
+        projectRepo.saveProject(projectMapper.mapDTOToObject(p));
+    }
+
 
     public void switchFundingOff(ProjectDTO project) {
         project.setProjectEndDateReached(true);

@@ -79,24 +79,24 @@
 						 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
 						 rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
 
-				<p:column headerText="Id">
-					<h:outputText value="#{project.id}" />
+
+				<p:column headerText="Project">
+					<h:outputText value="#{project.id}. #{project.title}" />
 				</p:column>
 
-				<p:column headerText="Title">
-					<h:outputText value="#{project.title}" />
+				<p:column headerText="Creator">
+					<h:outputText value="#{project.creator.userName}" />
 				</p:column>
 
 				<p:column headerText="Start date">
 					<h:outputText value="#{project.startDate}" />
 
 				</p:column>
-				<p:column headerText="Creator">
-					<h:outputText value="#{project.creator.userName}" />
-				</p:column>
+
 
 				<p:column headerText="Status">
-					<h:outputText value="#{project.status}" />
+					<h:outputText value="#{project.status}" rendered="#{!project.projectEndDateReached or projectBean.getEnumIntPosition(project.status) > 1}"/>
+					<h:outputText value="In review" rendered="#{project.projectEndDateReached  and projectBean.getEnumIntPosition(project.status) == 1}"/>
 				</p:column>
 
 				<p:column headerText="View">
@@ -109,6 +109,7 @@
 					<p:commandButton value="Edit" rendered="#{project.creator.id == loggedInUser.id}" icon="fa fa-edit" update=":projectForm:projectEdit" oncomplete="PF('projectEditDialog').show()">
 						<f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
 					</p:commandButton>
+					<p:commandButton rendered="#{project.creator.id == loggedInUser.id and projectBean.getEnumIntPosition(project.status) != 0 and !project.projectEndDateReached}" action="#{projectBean.endProjectNow(project)}" value="End now"  update="projectList" />
 
 					<p:commandButton rendered="#{project.creator.id == loggedInUser.id}" action="#{projectBean.deleteProject(project)}" value="Delete"  update="projectList" />
 

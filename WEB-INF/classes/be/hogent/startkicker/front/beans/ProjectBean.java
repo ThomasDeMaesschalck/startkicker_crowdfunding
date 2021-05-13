@@ -246,4 +246,13 @@ for (ProjectStatus s : ProjectStatus.values())
         }
         return pathToFollow;
     }
+
+    public String endProjectNow(ProjectDTO project)
+    {
+        String pathToFollow = null;
+        ProjectService.getInstance().setProjectEndDateToNow(project);
+        return pathToFollow;
+
+    }
+
 }
