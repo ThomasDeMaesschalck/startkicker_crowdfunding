@@ -1,42 +1,82 @@
 package be.hogent.startkicker.persistence.jpa.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 
+/**
+ * Entity class for users of the appliccation. Stored in Users database table.
+ * Sets a constraint, all usernames need to be unique
+ */
 @Entity
 @Table(name = "Users", uniqueConstraints = @UniqueConstraint(columnNames = "userName"))
 public class UserEntity implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 4798929679301916147L;
+
+	/**
+	 * Auto generated user id
+	 */
 	@Id
 	@GeneratedValue
 	private long id;
+
+	/**
+	 * First name of user
+	 */
 	@Column(nullable = false) @NotBlank(message = "Firstname can't be blank")
 	protected String firstName;
+
+	/**
+	 * Last name of user
+	 */
 	@Column(nullable = false) @NotBlank(message = "Name can't be blank")
 	protected String name;
+
+	/**
+	 * Username. Needs to be unique (DB constraint)
+	 */
 	@Column(nullable = false) @NotBlank(message = "Username can't be blank")
 	protected String userName;
+
+	/**
+	 * User password
+	 */
 	@Column(nullable = false) @NotBlank(message = "Password can't be blank")
 	protected String password;
+
+	/**
+	 * User mail address
+	 */
 	@Column(nullable = false) @NotBlank(message = "Enter a valid email address")
 	protected String email;
+
+	/**
+	 *  Boolean that indicates whether an account is active (true) or needs admin activation (false)
+	 */
 	protected boolean actif;
+
+	/**
+	 * Boolean that indicates whether a user has admin rights.
+	 */
 	protected boolean admin;
 
-	// VERY IMPORTANT BECAUSE OF OVERLOADED CONSTRUCTOR!!
-	// OTHERWISE Person(String,String,String,String,String) WILL ALWAYS BE
-	// CALLED BY FRAMEWORK, RESULTING IN POSSIBLE DUPLICATE ENTRIES
+	/**
+	 * Empty constructor
+	 */
 	protected UserEntity() {
 	}
 
+	/**
+	 * Overloaded constructor
+	 * @param firstName User first name
+	 * @param name Last name
+	 * @param userName Unique username
+	 * @param password Password
+	 * @param email E-mail address
+	 */
 	public UserEntity(String firstName, String name, String userName,
 					  String password, String email) {
 		super();

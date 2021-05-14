@@ -12,39 +12,93 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Entity class for the crowdfunding projects. Saved in the Projects database table.
+ */
 @Entity
 @Table(name = "Projects")
 public class ProjectEntity implements Serializable {
 
     private static final long serialVersionUID = 7752145391102604669L;
 
-
+    /**
+     * Automatically generated project id
+     */
     @Id @GeneratedValue
     private long id;
 
+    /**
+     * Project title
+     */
     @NotBlank
     private String title;
+
+    /**
+     * Project description
+     */
     @NotBlank
     private String description;
+
+    /**
+     * Comments can be added after a project goes live
+     */
     @NotBlank
     private String comment;
+
+    /**
+     * Start date of the project
+     */
     @NotBlank @FutureOrPresent
     private LocalDate startDate;
+
+    /**
+     * End date of the project
+     */
     @NotBlank @Future
     private LocalDate endDate;
+
+    /**
+     * How much project creator wants to raise
+     */
     @NotBlank
     private BigDecimal fundingTarget;
+
+    /**
+     * Enumeration representing the project status code
+     */
     @Enumerated
     private ProjectStatus status;
+
+    /**
+     * The user that created the project. Stored in user_id column
+     */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity creator;
+
+    /**
+     * A set of FundingEntity objects. These are the fundings provided by project backers.
+     */
     @OneToMany(mappedBy = "project")
     private Set<FundingEntity> funding;
 
+    /**
+     * empty constructor
+     */
     public ProjectEntity() {
     }
 
+    /**
+     * Constructor for ProjectEntity
+     * @param title Project title
+     * @param description Project description
+     * @param startDate Project start date
+     * @param endDate Project end date
+     * @param fundingTarget Project funding target
+     * @param creator Who created the project
+     * @param status Status code of the project (enum)
+     * @param comment Comments added by creator after project status changed to active
+     */
     public ProjectEntity(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserEntity creator, ProjectStatus status, String comment) {
         super();
         this.title = title;

@@ -1,18 +1,31 @@
 package be.hogent.startkicker.persistence.jpa.mapper;
 
 import be.hogent.startkicker.business.Project;
-import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
-import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Mapping class to map Project Entity to Object or other way around
+ */
 public class ProjectMapper {
 
+    /**
+     * To use the User Mapper in Project mapping
+     */
     UserMapper userMapper = new UserMapper();
-   FundingMapper fundingMapper = new FundingMapper();
 
+    /**
+     * To use the Funding Mapper in Project mapping
+     */
+    FundingMapper fundingMapper = new FundingMapper();
+
+    /**
+     *
+     * @param pEntity
+     * @return
+     */
     public Project mapEntityToObject(ProjectEntity pEntity) {
         if (pEntity == null) {
             return null;

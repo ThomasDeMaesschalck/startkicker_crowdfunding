@@ -6,27 +6,52 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Funding entity contains details about how Funding objects need to be persisted in the database
+ * Datebase table name is set to Funding
+ */
 @Entity
 @Table(name = "Funding")
 public class FundingEntity implements Serializable {
 
     private static final long serialVersionUID = -754520177577852999L;
 
+    /**
+     * Id of the funding. Automatically generated.
+     */
     @Id @GeneratedValue
     private long id;
 
+    /**
+     * Project entity that gets funded. Saved using project id in the project_id column.
+     */
     @ManyToOne @JoinColumn(name = "project_id") @NotBlank
     private ProjectEntity project;
 
+    /**
+     * User entity, this is the user providing the funds. Saved using user id in the user_id column.
+     */
     @ManyToOne @JoinColumn(name = "user_id") @NotBlank
     private UserEntity user;
 
+    /**
+     * BigDecimal value of how much money the user has pledged
+     */
     @NotBlank
     private BigDecimal amount;
 
+    /**
+     * Empty constructor for Funding Entity
+     */
     protected FundingEntity() {
     }
 
+    /**
+     * Constructor
+     * @param project Project that gets funded
+     * @param user User funding the project
+     * @param amount How much the user is funding
+     */
     public FundingEntity(ProjectEntity project, UserEntity user, BigDecimal amount) {
         super();
         this.project = project;
