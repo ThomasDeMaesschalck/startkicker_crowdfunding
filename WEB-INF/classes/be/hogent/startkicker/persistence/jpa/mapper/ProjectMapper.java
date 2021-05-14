@@ -22,9 +22,9 @@ public class ProjectMapper {
     FundingMapper fundingMapper = new FundingMapper();
 
     /**
-     *
-     * @param pEntity
-     * @return
+     * Map Project Entity to Object
+     * @param pEntity Project entity that needs to be mapped
+     * @return Mapped Project
      */
     public Project mapEntityToObject(ProjectEntity pEntity) {
         if (pEntity == null) {
@@ -39,6 +39,12 @@ public class ProjectMapper {
         return project;
     }
 
+    /**
+     * Map Project Object to Project Entity
+     * @param p Project that needs mapping
+     * @return Mapped Project Entity
+     */
+
     public ProjectEntity mapObjectToEntity(Project p) {
         if (p == null) {
             return null;
@@ -50,6 +56,12 @@ public class ProjectMapper {
          return projectEntity;
     }
 
+    /**
+     * Map a list of Project Entities to Objects
+     * Uses the mapEntityToObject method
+     * @param listPs List of Project Entities that needs mappping
+     * @return List of mapped Project Objects
+     */
     public List<Project> allEntityToObject(List<ProjectEntity> listPs) {
         if (listPs == null)
             return null;
@@ -58,7 +70,6 @@ public class ProjectMapper {
             list.add(mapEntityToObject(p));
         }
         return list;
-
     }
 
 }

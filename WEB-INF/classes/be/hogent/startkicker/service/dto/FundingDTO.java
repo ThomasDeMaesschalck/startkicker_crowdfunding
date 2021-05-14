@@ -1,22 +1,48 @@
 package be.hogent.startkicker.service.dto;
 
-import be.hogent.startkicker.business.Funding;
-import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
-import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * Funding DTO which is used by service layer and frontend
+ */
 public class FundingDTO implements Comparable<FundingDTO>, Serializable {
 
     private static final long serialVersionUID = 4545078937387808563L;
 
+    /**
+     * Funding id
+     */
     private long id;
+
+    /**
+     * Funded project
+     */
     private ProjectDTO project;
+
+    /**
+     * User that funded the project
+     */
     private UserDTO user;
+
+    /**
+     * How much user funded
+     */
     private BigDecimal amount;
 
+    /**
+     * Empty constructor
+     */
+    public FundingDTO() {
+        super();
+    }
 
+    /**
+     * Overloaded constructor
+     * @param project Project that got funded
+     * @param user User that funded the project
+     * @param amount How much the user funded
+     */
     public FundingDTO(ProjectDTO project, UserDTO user, BigDecimal amount) {
         super();
         this.project = project;
@@ -24,9 +50,6 @@ public class FundingDTO implements Comparable<FundingDTO>, Serializable {
         this.amount = amount;
     }
 
-    public FundingDTO() {
-        super();
-    }
 
     public long getId() {
         return id;

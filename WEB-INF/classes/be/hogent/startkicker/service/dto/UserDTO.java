@@ -2,20 +2,68 @@ package be.hogent.startkicker.service.dto;
 
 import java.io.Serializable;
 
+/**
+ * User DTO is used by the service layer and the frontend.
+ */
 public class UserDTO implements Comparable<UserDTO>, Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * User id
+	 */
 	private long id;
+
+	/**
+	 * User first name
+	 */
 	protected String firstName;
+
+	/**
+	 * User last name
+	 */
 	protected String name;
+
+	/**
+	 * Username
+	 */
 	protected String userName;
+
+	/**
+	 * User password
+	 */
 	protected String password;
+
+	/**
+	 * User email address
+	 */
 	protected String email;
+
+	/**
+	 * Is the user account active (true) or inactive (false)
+	 */
 	protected boolean actif;
+
+	/**
+	 * Does the user have admin rights (true) or not (false)
+	 */
 	protected boolean admin;
 
+	/**
+	 * Empty constructor for UserDTO
+	 */
+	public UserDTO() {
+		super();
+	}
+
+	/**
+	 * Overloaded constructor
+	 * @param firstName User first name
+	 * @param name User last name
+	 * @param userName Unique username
+	 * @param password User password
+	 * @param email User email address
+	 */
 	public UserDTO(String firstName, String name, String userName,
 				   String password, String email) {
 		super();
@@ -24,10 +72,6 @@ public class UserDTO implements Comparable<UserDTO>, Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-	}
-
-	public UserDTO() {
-		super();
 	}
 
 	public long getId() {

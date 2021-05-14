@@ -6,8 +6,16 @@ import java.util.List;
 import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.service.dto.UserDTO;
 
+/**
+ * Map a User Object to User DTO and the other way around
+ */
 public class UserMapper implements IMapper<User, UserDTO> {
 
+	/**
+	 * Map a UserDTO to User Objects
+	 * @param pDTO UserDTO that needs to be mapped
+	 * @return User Object
+	 */
 	public User mapDTOToObject(UserDTO pDTO) {
 		if (pDTO == null) {
 			return null;
@@ -21,6 +29,11 @@ public class UserMapper implements IMapper<User, UserDTO> {
 		return user;
 	}
 
+	/**
+	 * Map a User Object to a User DTO
+	 * @param p User Object that needs to be mapped
+	 * @return The User DTO
+	 */
 	public UserDTO mapObjectToDTO(User p) {
 		if (p == null) {
 			return null;
@@ -34,6 +47,12 @@ public class UserMapper implements IMapper<User, UserDTO> {
 		return userDTO;
 	}
 
+	/**
+	 * Map a List of User Objects to List of UserDTOs
+	 * Uses the mapObjectToDTO method
+	 * @param listPs List of User Objects that need mapping
+	 * @return List of User DTOs
+	 */
 	public List<UserDTO> allObjectToDTO(List<User> listPs) {
 		if (listPs == null)
 			return null;
@@ -45,6 +64,12 @@ public class UserMapper implements IMapper<User, UserDTO> {
 
 	}
 
+	/**
+	 * Map a List of UserDTOs to a List of User Objects
+	 * Uses the mapDTOToObject method
+	 * @param listPs List of UserDTOs that need to be mapped
+	 * @return List of User Objects
+	 */
 	public List<User> allDTOToObject(List<UserDTO> listPs) {
 		if (listPs == null)
 			return null;

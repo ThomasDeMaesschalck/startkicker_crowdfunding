@@ -1,33 +1,98 @@
 package be.hogent.startkicker.service.dto;
 
 import be.hogent.startkicker.business.ProjectStatus;
-import be.hogent.startkicker.business.User;
-import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * Project DTO is used by the service layer and the frontend
+ */
 public class ProjectDTO implements Comparable<ProjectDTO>, Serializable {
 
     private static final long serialVersionUID = -1462565234313719335L;
 
+    /**
+     * Project id
+     */
     private long id;
+
+    /**
+     * Project title
+     */
     private String title;
+
+    /**
+     * Project description
+     */
     private String description;
+
+    /**
+     * Project comment (can be added after project went live)
+     */
     private String comment;
+
+    /**
+     * Project start date
+     */
     private LocalDate startDate;
+
+    /**
+     * Project end date
+     */
     private LocalDate endDate;
+
+    /**
+     * How much money the project creator needs
+     */
     private BigDecimal fundingTarget;
+
+    /**
+     * User that created the project
+     */
     private UserDTO creator;
+
+    /**
+     * Status code of the project (enum)
+     */
     private ProjectStatus status;
+
+    /**
+     * A set that contains the funds that have been pledged to the project and users who provided these funds
+     */
     private Set<FundingDTO> funding;
+
+    /**
+     * Value calculated by the service layer.
+     * Allows frontend to show total amounts of funds received for this project
+     */
     private BigDecimal funded;
+
+    /**
+     * Set by the service layer. Indicates whether logged in user who views this project has already funded it.
+     * Used to ensure a user can't fund a project twice
+     */
     private boolean userHasFunded;
+
+    /**
+     * Set by the service layer. If project has hit its end date this boolean is true.
+     * Admin then needs to adjust status code manually to failed or succesful
+     */
     private boolean ProjectEndDateReached;
 
-
+    /**
+     * Constructor for Project DTO
+     * @param title Project title
+     * @param description Project description
+     * @param startDate Project start date
+     * @param endDate Project end date
+     * @param fundingTarget How much money does the project need
+     * @param creator User who created the project
+     * @param status Project status code (enum)
+     * @param comment Comment from the project creator after project went active
+     */
     public ProjectDTO(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, UserDTO creator, ProjectStatus status, String comment) {
         super();
         this.title = title;

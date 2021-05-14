@@ -6,12 +6,26 @@ import be.hogent.startkicker.service.dto.ProjectDTO;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Map Project DTO to Project Object and other way around
+ */
 public class ProjectMapper implements IMapper<Project, ProjectDTO> {
 
+    /**
+     * Use the UserMapper in the ProjectMapper
+     */
        be.hogent.startkicker.service.mappers.UserMapper userMapper = new UserMapper();
+
+    /**
+     * Use the FundingMapper in the ProjectMapper
+     */
     be.hogent.startkicker.service.mappers.FundingMapper fundingMapper = new FundingMapper();
 
-
+    /**
+     * Map a Project DTO to a Project Object
+     * @param pDTO Project DTO that needs to be mapped
+     * @return Project Object
+     */
     public Project mapDTOToObject(ProjectDTO pDTO) {
         if (pDTO == null) {
             return null;
@@ -23,6 +37,11 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
          return project;
     }
 
+    /**
+     * Map an Project Object to a Project DTO
+     * @param p Project Object that needs to be mapped
+     * @return The ProjectDTO
+     */
     public ProjectDTO mapObjectToDTO(Project p) {
         if (p == null) {
             return null;
@@ -35,6 +54,12 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
         return projectDTO;
     }
 
+    /**
+     * Map a List of Project Objects to a List of Project DTOs
+     * Uses mapObjectToDTO method
+     * @param listPs List of Project Objects that need to be mapped
+     * @return The List of Project DTOs
+     */
     public List<ProjectDTO> allObjectToDTO(List<Project> listPs) {
         if (listPs == null)
             return null;
@@ -45,6 +70,13 @@ public class ProjectMapper implements IMapper<Project, ProjectDTO> {
         return list;
 
     }
+
+    /**
+     * Map Project DTO List to List of Project Objects
+     * Uses the mapDTOToObject method
+     * @param listPs List of Project DTOs that need to be mapped
+     * @return List of Project Objects
+     */
 
     public List<Project> allDTOToObject(List<ProjectDTO> listPs) {
         if (listPs == null)
