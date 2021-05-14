@@ -33,17 +33,6 @@ public class UserMapper {
 		return userEntity;
 	}
 
-//	public List<PersonEntity> allObjectToEntity(List<Person> listPs) {
-//		if (listPs == null)
-//			return null;
-//		List<PersonEntity> list = new ArrayList<PersonEntity>();
-//		for (Person p : listPs) {
-//			list.add(mapObjectToEntity(p));
-//		}
-//		return list;
-//
-//	}
-
 	public List<User> allEntityToObject(List<UserEntity> listPs) {
 		if (listPs == null)
 			return null;

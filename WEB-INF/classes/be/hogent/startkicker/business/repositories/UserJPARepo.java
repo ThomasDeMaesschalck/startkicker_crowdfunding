@@ -12,53 +12,70 @@ import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
 import be.hogent.startkicker.persistence.jpa.mapper.UserMapper;
 
+/**
+ *  Class used for persisting and retrieving users in the database.
+ *
+ */
 public class UserJPARepo implements IUserRepo {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+
 	private static final String NAME_PERSISTENCEUNIT = "startkicker";
 
 	private EntityManagerFactory emf = null;
 	private EntityManager em = null;
+
+	/**
+	 * UserMapper is a class to map objects to entities and the other way around.
+	 */
 	private UserMapper pm = new UserMapper();
 
+
+	/**
+	 * Initialize the user repository
+	 */
 	public UserJPARepo() {
-		System.out.println("UserJPARepo created");
 		emf = Persistence.createEntityManagerFactory(NAME_PERSISTENCEUNIT);
 	}
 
+	/**
+	 * Create entity manager for DB operations
+	 */
 	private void createEM() {
-//		emf = Persistence.createEntityManagerFactory(NAME_PERSISTENCEUNIT);
 		em = emf.createEntityManager();
 	}
 
+	/**
+	 * Closing the entity manager resource
+	 */
 	private void closeEM() {
 		if (em != null)
 			em.close();
-//		if (emf != null)
-//			emf.close();
 	}
 
+	/**
+	 * Tries to persist a User object in the database. Checks if user is present in the databased, based on the user id,
+	 * and performs logic to check whether a new user needs to be created, or an existing user record needs to be updated.
+	 * @param user User object that needs to be persisted in the DB.
+	 * @return Returns a string representing the success or error code.
+	 */
 	@Override
 	public String saveUser(User user) {
 		try {
 			createEM();
 			UserEntity userInDB = em.find(UserEntity.class, user.getId());
 
-			System.out.println(user.getId() + "is userID");
 
 			em.getTransaction().begin();
 			if (userInDB != null) {
-				System.out.println("User found...");
 				return updateUser(pm.mapObjectToEntity(user), userInDB);
 			} else {
-				System.out.println("Making new user...");
 				return saveNewUser(pm.mapObjectToEntity(user));
 			}
 		} catch (Exception e) {
-			System.out.println("not found...");
 			return FAIL;
 		} finally {
 			closeEM();
@@ -66,11 +83,11 @@ public class UserJPARepo implements IUserRepo {
 	}
 
 	/**
-	 * De nieuwe persoon proberen opslaan.<br>
-	 * Username moet uniek zijn om succes te hebben.<br>
+	 * Try to save a new user.<br>
+	 * Success returned if persistence succeeds.<br>
 	 * see uniqueConstraints = @UniqueConstraint(columnNames = "userName")
-	 * @param user
-	 * @return
+	 * @param user The user to save
+	 * @return A string representing the success or error code
 	 */
 	private String saveNewUser(UserEntity user) {
 		try {
@@ -83,12 +100,12 @@ public class UserJPARepo implements IUserRepo {
 	}
 
 	/**
-	 * De persoon proberen updaten.<br>
-	 * Username, indien veranderd, moet uniek zijn om succes te hebben.<br>
+	 * Try to update a user record.<br>
+	 * Usernames need to be unique (database constraint). Error code is returned if username is not unique.<br>
 	 * 
-	 * @param user
-	 * @param userInDB
-	 * @return
+	 * @param user A UserEntity to persist in DB
+	 * @param userInDB The current User object stored in the DB
+	 * @return A String representing the success or error code
 	 */
 	private String updateUser(UserEntity user, UserEntity userInDB) {
 		try {
@@ -101,16 +118,20 @@ public class UserJPARepo implements IUserRepo {
 			userInDB.setAdmin(user.isAdmin());
 			em.persist(userInDB);
 			em.getTransaction().commit();
-			System.out.println("updating...");
 			return SUCCESS;
 
 		} catch (Exception e) {
-			System.out.println(e.toString());
-
 			return USERNAME_ALREADY_EXISTS;
 		}
 	}
 
+	/**
+	 * Retrieve a user record from the database. This method is also used to perform the login functionality.
+	 * Method only returns user if username and password is correct, and if the user account has been activated by the admin. User actif boolean needs to be true.
+	 * @param userName String containing name of the user
+	 * @param password String containing user password
+	 * @return A string representing a success or error code
+	 */
 	@Override
 	public User getUser(String userName, String password) {
 		try {
@@ -131,6 +152,11 @@ public class UserJPARepo implements IUserRepo {
 
 	}
 
+	/**
+	 * Retrieve a user from the database based on the user id.
+	 * @param id The id that identifies the user.
+	 * @return Returns a User object
+	 */
 	@Override
 	public User getUser(long id) {
 		try {
@@ -143,6 +169,11 @@ public class UserJPARepo implements IUserRepo {
 		}
 
 	}
+
+	/**
+	 * Retrieves all users from the database.
+	 * @return A list with User objects.
+	 */
 
 	@Override
 	public List<User> getAllUsers() {
@@ -157,6 +188,12 @@ public class UserJPARepo implements IUserRepo {
 			closeEM();
 		}
 	}
+
+	/**
+	 * Delete a user record from the database. Method searches if user id is present in the database and tries to delete this record.
+	 * @param user A user object with the user's id and other information.
+	 * @return A String representing the success or error code.
+	 */
 
 	@Override
 	public String deleteUser(User user) {

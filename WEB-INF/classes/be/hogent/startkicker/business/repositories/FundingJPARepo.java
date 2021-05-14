@@ -15,6 +15,10 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used for persisting and retrieving Funding objects from the database.
+ */
+
 public class FundingJPARepo implements IFundingRepo {
 
     private static final long serialVersionUID = 4805531531908225999L;
@@ -22,28 +26,49 @@ public class FundingJPARepo implements IFundingRepo {
 
     private EntityManagerFactory emf = null;
     private EntityManager em = null;
+
+    /**
+     * Mapper used to map Project objects to entities, and the other way around.
+     */
     private ProjectMapper pm = new ProjectMapper();
+
+    /**
+     * Mapper used to map User objects to entities, and the other way around.
+     */
     private UserMapper um = new UserMapper();
+
+    /**
+     * Mapper used to map Funding objects to entities, and the other way around.
+     */
     private FundingMapper fm = new FundingMapper();
 
 
+    /**
+     * Initialize the Funding JPA repository
+     */
     public FundingJPARepo() {
-        System.out.println("FundingJPARepo created");
         emf = Persistence.createEntityManagerFactory(NAME_PERSISTENCEUNIT);
     }
 
+    /**
+     * Open the entity manager resource connection
+     */
     private void createEM() {
-//		emf = Persistence.createEntityManagerFactory(NAME_PERSISTENCEUNIT);
         em = emf.createEntityManager();
     }
 
+    /**
+     * Close the entity manager resource connection
+     */
     private void closeEM() {
         if (em != null)
             em.close();
-//		if (emf != null)
-//			emf.close();
     }
 
+    /**
+     * Method for retrieving all Funding objects from the database.
+     * @return A List with all Funding objects.
+     */
     @Override
     public List<Funding> getAllFunding() {
         {
@@ -59,6 +84,11 @@ public class FundingJPARepo implements IFundingRepo {
             }
         }    }
 
+    /**
+     * Get a Funding object based on the funding id.
+     * @param id The funding id.
+     * @return Returns a Funding object.
+     */
     @Override
     public Funding getFunding(long id) {
         try {
@@ -71,7 +101,13 @@ public class FundingJPARepo implements IFundingRepo {
         }
     }
 
-
+    /**
+     * Try to save a Funding object in the database.
+     * Checks if the Funding object is present.
+     * If Funding is found in database it returns FAIL. Duplicates are not possible.
+     * @param f The Funding object that needs to be persisted.
+     * @return A String representing the success or error code.
+     */
     @Override
     public String saveFunding(Funding f) {
         try {
@@ -80,14 +116,11 @@ public class FundingJPARepo implements IFundingRepo {
 
             em.getTransaction().begin();
             if (fundingInDB != null) {
-                System.out.println("Funding found...");
                 return FAIL;
             } else {
-                System.out.println("Making new Funding...");
                 return saveNewFunding(fm.mapObjectToEntity(f));
             }
         } catch (Exception e) {
-            System.out.println("not found...");
             return FAIL;
         } finally {
             closeEM();
@@ -95,9 +128,9 @@ public class FundingJPARepo implements IFundingRepo {
     }
 
     /**
-     * Funding proberen opslaan.<br>
-     * @param f
-     * @return
+     * Try to persist new funding record to the database
+     * @param f FundingEntity that needs to be persisted.
+     * @return A String representing the success or error code
      */
     private String saveNewFunding(FundingEntity f) {
         try {
