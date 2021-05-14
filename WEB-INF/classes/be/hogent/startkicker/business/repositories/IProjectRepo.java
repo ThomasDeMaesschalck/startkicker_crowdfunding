@@ -1,7 +1,6 @@
 package be.hogent.startkicker.business.repositories;
 
 import be.hogent.startkicker.business.Project;
-import be.hogent.startkicker.business.User;
 
 import java.io.Serializable;
 import java.util.List;

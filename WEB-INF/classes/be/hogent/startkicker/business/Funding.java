@@ -1,8 +1,5 @@
 package be.hogent.startkicker.business;
 
-import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
-import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
-
 import java.math.BigDecimal;
 
 /**

@@ -7,8 +7,6 @@ import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.mappers.FundingMapper;
 import be.hogent.startkicker.service.mappers.IMapper;
 
-import java.util.List;
-
 /**
  * Funding service. Communicates with the frontend
  */

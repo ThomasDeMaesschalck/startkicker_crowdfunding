@@ -299,7 +299,7 @@ for (ProjectStatus s : ProjectStatus.values())
      * Method that allows an administrator to set an ended project to Failed or Succesful
      * @param project Project that needs a status code update
      * @param status Long that represents the new ProjectStatus code
-     * @return
+     * @return Returns String used for JSF navigation
      */
     public String switchProjectStatus(ProjectDTO project, long status) {
         String pathToFollow = null;

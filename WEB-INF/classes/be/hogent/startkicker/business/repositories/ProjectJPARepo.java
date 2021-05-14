@@ -1,9 +1,7 @@
 package be.hogent.startkicker.business.repositories;
 
 import be.hogent.startkicker.business.Project;
-import be.hogent.startkicker.business.User;
 import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
-import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
 import be.hogent.startkicker.persistence.jpa.mapper.ProjectMapper;
 import be.hogent.startkicker.persistence.jpa.mapper.UserMapper;
 
@@ -11,8 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

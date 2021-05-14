@@ -1,6 +1,5 @@
 package be.hogent.startkicker.service.mappers;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

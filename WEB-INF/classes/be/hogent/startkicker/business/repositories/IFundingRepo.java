@@ -1,7 +1,6 @@
 package be.hogent.startkicker.business.repositories;
 
 import be.hogent.startkicker.business.Funding;
-import be.hogent.startkicker.business.Project;
 
 import java.io.Serializable;
 import java.util.List;

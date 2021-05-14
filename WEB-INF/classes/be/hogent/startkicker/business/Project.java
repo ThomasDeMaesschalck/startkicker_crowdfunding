@@ -1,7 +1,5 @@
 package be.hogent.startkicker.business;
 
-import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;

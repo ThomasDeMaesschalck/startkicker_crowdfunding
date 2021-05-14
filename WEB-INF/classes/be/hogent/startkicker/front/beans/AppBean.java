@@ -1,8 +1,6 @@
 package be.hogent.startkicker.front.beans;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import be.hogent.startkicker.service.ProjectService;
 import be.hogent.startkicker.service.UserService;
-import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 

@@ -1,9 +1,7 @@
 package be.hogent.startkicker.business.repositories;
 
 import be.hogent.startkicker.business.Funding;
-import be.hogent.startkicker.business.Project;
 import be.hogent.startkicker.persistence.jpa.entities.FundingEntity;
-import be.hogent.startkicker.persistence.jpa.entities.ProjectEntity;
 import be.hogent.startkicker.persistence.jpa.mapper.FundingMapper;
 import be.hogent.startkicker.persistence.jpa.mapper.ProjectMapper;
 import be.hogent.startkicker.persistence.jpa.mapper.UserMapper;
