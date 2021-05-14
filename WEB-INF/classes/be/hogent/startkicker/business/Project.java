@@ -6,6 +6,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * Project objects are crowdfunding projects. Each project has a number of properties including title, description, start and end date, and funding target.
+ */
 public class Project {
 
     private long id;
@@ -14,12 +17,39 @@ public class Project {
     private String comment;
     private LocalDate startDate;
     private LocalDate endDate;
+
+    /**
+     * The target amount of money the creator of the project hopes to raise
+     */
     private BigDecimal fundingTarget;
+
+    /**
+     * User who created the project
+     */
     private User creator;
+
+    /**
+     * Status code of the project
+     */
     private ProjectStatus status;
+
+    /**
+     * Set containing the Funding pledged to this project by various users.
+     */
     private Set<Funding> funding;
 
 
+    /**
+     * Constructor to create a Project object.
+     * @param title Title of the project
+     * @param description Project description
+     * @param startDate When the Project needs to start
+     * @param endDate The end date of the Project
+     * @param fundingTarget Funding target of the project
+     * @param creator User who created the project
+     * @param status The status code of the project (created, activate, ...)
+     * @param comment Comments added after the project went live.
+     */
     public Project(String title, String description, LocalDate startDate, LocalDate endDate, BigDecimal fundingTarget, User creator, ProjectStatus status, String comment) {
         this.title = title;
         this.description = description;
@@ -31,6 +61,9 @@ public class Project {
         this.comment = comment;
     }
 
+    /**
+     * Default constructor
+     */
     public Project() {
     }
 

@@ -18,6 +18,9 @@ import be.hogent.startkicker.service.dto.FundingDTO;
 import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 
+/**
+ * Frontend bean that retrieves all users and projects stored in the database. Known in view as myAppWideBean
+ */
 @ManagedBean(name = "myAppWideBean", eager = true)
 @ApplicationScoped
 public class AppBean implements Serializable {
@@ -28,13 +31,17 @@ public class AppBean implements Serializable {
 	private List<UserDTO> allUsers;
 	private List<ProjectDTO> allProjects;
 
-
+	/**
+	 * Constructor of the AppBean.
+	 */
 	public AppBean() {
-		System.out.println("AppBean -- constructor");
 	}
 
+	/**
+	 * Get all users stored in the database.
+	 * @return Returns a list of type UserDTO that contains all user details.
+	 */
 	public List<UserDTO> getAllUsers() {
-
 		List<UserDTO> allUsers = UserService.getInstance().getAllUsers();
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
 		HttpSession currentSession = (HttpSession) ctx.getSession(true);
@@ -43,11 +50,19 @@ public class AppBean implements Serializable {
 		return Collections.unmodifiableList(allUsers);
 	}
 
+	/**
+	 * Setter for all user list.
+	 * @param allUsers List containing UserDTO objects.
+	 */
 	public void setAllUsers(List<UserDTO> allUsers) {
-		System.out.println("AppBean -- setting allUsers");
 		this.allUsers = allUsers;
 	}
 
+	/**
+	 * Get a list of all projects stored in the database.
+	 * If the user is logged in, the method will also retrieve which projects have already been funded by the logged in user
+	 * @return Returns list of all requested projects, type is UserDTO.
+	 */
 	public List<ProjectDTO> getAllProjects() {
 
 		ExternalContext ctx = FacesContext.getCurrentInstance().getExternalContext();
@@ -69,8 +84,11 @@ public class AppBean implements Serializable {
 		return Collections.unmodifiableList(allProjects);
 	}
 
+	/**
+	 * Setter for all projects list
+	 * @param allProjects Returns list containing ProjectDTO objects.
+	 */
 	public void setAllProjects(List<ProjectDTO> allProjects) {
-		System.out.println("AppBean -- setting allProjects");
 		this.allProjects = allProjects;
 	}
 

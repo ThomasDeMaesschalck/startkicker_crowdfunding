@@ -5,6 +5,9 @@ import be.hogent.startkicker.persistence.jpa.entities.UserEntity;
 
 import java.math.BigDecimal;
 
+/**
+ * A Funding contains the crowdfunding Project, the User that pledged funds, the amount the User pledged.
+ */
 public class Funding {
 
     private long id;
@@ -12,6 +15,13 @@ public class Funding {
     private User user;
     private BigDecimal amount;
 
+
+    /**
+     * Funding constructor
+     * @param project Project that gets funded
+     * @param user User that funds the project
+     * @param amount How much money the user pledged to the project
+     */
     public Funding(Project project, User user, BigDecimal amount) {
         this.project = project;
         this.user = user;

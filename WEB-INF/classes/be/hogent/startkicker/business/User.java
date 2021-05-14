@@ -1,7 +1,8 @@
 package be.hogent.startkicker.business;
 
-import java.math.BigDecimal;
-
+/**
+ * Registered users of the crowdfunding application. Each user has a unique username.
+ */
 public class User {
 
 	private long id;
@@ -10,9 +11,26 @@ public class User {
 	protected String userName;
 	protected String password;
 	protected String email;
+
+	/**
+	 * Boolean actif indicates whether the user account has been activated by an administrator. False means account needs activation.
+	 */
 	protected boolean actif;
+
+	/**
+	 * Boolean admin. Specifies whether the user has administrator rights. True means the user have administrative rights.
+	 */
 	protected boolean admin;
 
+
+	/**
+	 * Constructor to make our User.
+	 * @param firstName First name of user
+	 * @param name Last name of user
+	 * @param userName Unique username
+	 * @param password Password of the user
+	 * @param email E-mail adress of the user
+	 */
 	public User(String firstName, String name, String userName,
 				String password, String email) {
 		super();
