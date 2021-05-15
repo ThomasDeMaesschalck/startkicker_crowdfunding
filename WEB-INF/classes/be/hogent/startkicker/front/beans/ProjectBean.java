@@ -308,7 +308,7 @@ for (ProjectStatus s : ProjectStatus.values())
         }
         else
         {
-            ProjectService.getInstance().switchProjectStatus(project, ProjectStatus.Succesful);
+            ProjectService.getInstance().switchProjectStatus(project, ProjectStatus.Success);
         }
         return pathToFollow;
     }

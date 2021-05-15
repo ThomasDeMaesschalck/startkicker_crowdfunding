@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui"
       lang="en" xml:lang="en">
 <h:head>
-    <title>Startkicker - Make a new project</title>
+    <title>StartKicker - Make a new project</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -18,30 +18,15 @@
         <ui:include src="resources/includes/header.xhtml" />
     </ui:insert>
 
-
-    <h:panelGrid>
-        <div class="card">
-            <h:form>
-                <p:breadCrumb>
-                    <p:menuitem value="Home" url="index.jsf"/>
-                    <p:menuitem value="Project ##{projectBean.selectedProject.id}"/>
-                </p:breadCrumb>
-            </h:form>
-        </div>
-
-        <div class="card">
-            <br></br><br></br>
+    <p:card styleClass="p-mt-2">
 
             <h1>     Project details:            </h1>
 
-            <p:messages id="messages" showDetail="false" closable="true">
-                <p:autoUpdate/>
-            </p:messages>
 
 
             <p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
                 <h:outputText value="Title: " />
-                <h:outputText value="#{projectBean.selectedProject.title}" />
+                <h:outputText value="Project ##{projectBean.selectedProject.id} - #{projectBean.selectedProject.title}" />
                 <h:outputText value="Funds required: " />
                 <h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
                 <h:outputText value="Amount funded: " />
@@ -110,10 +95,8 @@
 
             </p:card>
 
-        </div>
 
-    </h:panelGrid>
-
+    </p:card>
 
     <ui:insert name="footer" >
         <ui:include src="resources/includes/footer.xhtml" />

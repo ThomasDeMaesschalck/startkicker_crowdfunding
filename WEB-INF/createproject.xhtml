@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui"
       lang="en" xml:lang="en">
 <h:head>
-    <title>Startkicker - Make a new project</title>
+    <title>StartKicker - Make a new project</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -24,19 +24,17 @@
     <h:panelGrid rendered="#{loggedInUser != null}">
 
 
-        <div class="card">
-            <br></br><br></br>
+        <p:card class="p-mt-2">
 
             <h1>      Make a new project on Startkicker
             </h1>
 
-            <p:messages id="messages" showDetail="false" closable="true">
-                <p:autoUpdate/>
-            </p:messages>
+            <p:divider></p:divider>
 
+            <p>Enter all the required details. The project will start automatically when the start date is reached.</p>
 
             <h:form>
-                <p:panelGrid columns="1"   contentStyleClass="p-align-baseline ui-fluid">
+                <p:panelGrid columns="1"  contentStyleClass="p-align-baseline ui-fluid" styleClass="p-mt-2">
 
                     <h:outputText for="Title"  value="Project title" />
                     <p:inputText id="Title" name="Title" value="#{projectBean.projectToSave.title}" required="true" requiredMessage="Title needed" />
@@ -66,15 +64,14 @@
                     <h:outputText for="endDate" value="End date" />
                     <p:datePicker id="endDate" mindate="#{projectBean.minEndDate}" value="#{projectBean.projectToSave.endDate}" inline="true" required="true"/>
 
-                     <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{projectBean.makeAProject}" />
+                     <p:commandButton value="Create your project" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{projectBean.makeAProject}" />
 
                 </p:panelGrid>
             </h:form>
 
 
 
-
-        </div>
+</p:card>
 
     </h:panelGrid>
 

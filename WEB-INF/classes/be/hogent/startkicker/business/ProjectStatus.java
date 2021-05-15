@@ -7,6 +7,6 @@ public enum ProjectStatus {
     Created,
     Active,
     Failed,
-    Succesful
+    Success
 }
 

@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui"
       lang="en" xml:lang="en">
 <h:head>
-    <title>Startkicker - Funded Projects</title>
+    <title>StartKicker - Funded Projects</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -19,21 +19,14 @@
     </ui:insert>
 
 
-    <br></br><br></br>
+    <p:card class="p-mt-2" rendered="#{loggedInUser != null}">
 
 
-    <p:card>
-
-        <h:panelGrid columns="2" rendered="#{loggedInUser != null}">
-            <h:outputText value="Hello "></h:outputText>
-            <h:outputText value="#{loggedInUser.firstName}"></h:outputText>
+            <h:outputText value="Hello, #{loggedInUser.firstName}. "></h:outputText>
             <h:outputText value="You have funded #{userBean.totalFunded}EUR in projects"></h:outputText>
-            <br></br><br></br>
-        </h:panelGrid>
 
-    </p:card>
+ <p:divider></p:divider>
 
-    <p:card>
         <h2>You funded the following projects</h2>
         <h:form id="projectForm">
             <p:dataTable id="projectList" value = "#{projectBean.projectsFundedByUser}" var = "project"
@@ -60,78 +53,25 @@
                 </p:column>
 
                 <p:column headerText="Status">
-                    <h:outputText value="#{project.status}" />
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 0}" styleClass="project-badge status-created"/>
+                    <h:outputText value="#{project.status}" rendered="#{!project.projectEndDateReached and projectBean.getEnumIntPosition(project.status) == 1}"   styleClass="project-badge status-active"/>
+                    <h:outputText value="In review" rendered="#{project.projectEndDateReached  and projectBean.getEnumIntPosition(project.status) == 1}" />
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 2}" styleClass="project-badge status-failed"/>
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 3}" styleClass="project-badge status-success"/>
                 </p:column>
 
-                <p:column headerText="View">
+                <p:column>
 
-                    <p:commandButton value="View"  action="#{projectBean.view}"   style="margin-right:20px;" styleClass="ui-button-info">
+                    <p:commandButton action="#{projectBean.view}" label="View project"
+                                     icon="pi pi-search-plus" styleClass="rounded-button p-mr-2">
                         <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
                     </p:commandButton>
-
-
-                    <p:commandButton value="Edit" rendered="#{project.creator.id == loggedInUser.id}" icon="fa fa-edit" update=":projectForm:projectEdit" oncomplete="PF('projectEditDialog').show()">
-                        <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
-                    </p:commandButton>
-
-                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id}" action="#{projectBean.deleteProject(project)}" value="Delete"  update="projectList" />
-
 
                 </p:column>
 
             </p:dataTable>
 
 
-
-            <p:dialog header="Edit project" widgetVar="projectEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
-                <p:outputPanel id="projectEdit" style="text-align:center;">
-
-                    <strong><h:outputText value="Project is active -- only comments can be added" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" /></strong>
-
-
-                    <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject and projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 0}" columnClasses="label,value">
-
-                        <h:outputText value="id #{projectBean.selectedProject.id}" type="hidden"/>
-
-                        <p:inputNumber type="hidden" value="#{projectBean.selectedProject.id}"/>
-
-                        <h:outputText value="Title: " />
-                        <p:inputText value="#{projectBean.selectedProject.title}" />
-                        <h:outputText value="Description: " />
-                        <p:textEditor escape="false" secure="false" responsive="true" value="#{projectBean.selectedProject.description}" >
-                            <f:facet name="toolbar">
-             <span class="ql-formats">
-                <button class="ql-bold"></button>
-                <button class="ql-italic"></button>
-                <button class="ql-underline"></button>
-                <button class="ql-strike"></button>
-            </span>
-                            </f:facet>
-                        </p:textEditor>
-                        <h:outputText value="Funds required: " />
-                        <p:inputNumber value="#{projectBean.selectedProject.fundingTarget}" />
-                        <h:outputText value="Start date: " />
-                        <p:datePicker id="startDate" mindate="#{projectBean.today}" value="#{projectBean.selectedProject.startDate}" >
-                            <p:ajax event="dateSelect" update="endDate" global="false" />
-                            <p:ajax event="change" update="endDate" global="false" />
-                        </p:datePicker>
-                        <h:outputText value="End date:" />
-                        <p:datePicker id="endDate" mindate="#{projectBean.minEditEndDate}" value="#{projectBean.selectedProject.endDate}"/>
-
-                        <h:outputText value="Project created by:" />
-                        <h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
-
-                    </p:panelGrid>
-
-                    <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject and projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" columnClasses="label,value">
-                        <h:outputText value="Comments: " rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" />
-                        <p:inputTextarea  value="#{projectBean.selectedProject.comment}" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" />
-                    </p:panelGrid>
-
-                    <p:commandButton value="Update" icon="fa fa-fw fa-pencil" action="#{projectBean.projectEdit}"/>
-
-                </p:outputPanel>
-            </p:dialog>
 
         </h:form>
     </p:card>

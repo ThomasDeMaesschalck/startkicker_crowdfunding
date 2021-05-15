@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui"
       lang="en" xml:lang="en">
 <h:head>
-    <title>Startkicker - My Projects</title>
+    <title>StartKicker - My Projects</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -19,23 +19,10 @@
     </ui:insert>
 
 
+    <p:card class="p-mt-2">
 
-
-    <br></br>
-
-
-    <p:card>
-
-        <h:panelGrid columns="2" rendered="#{loggedInUser != null}">
-            <h:outputText value="Hello "></h:outputText>
-            <h:outputText value="#{loggedInUser.firstName}"></h:outputText>
-            <br></br><br></br>
-        </h:panelGrid>
-
-    </p:card>
-
-    <p:card>
-
+            <h:outputText value="Hello #{loggedInUser.firstName}, here are the projects you created."></h:outputText>
+        <br /><br />
         <h2>My Projects</h2>
         <h:form id="projectForm">
             <p:dataTable id="projectList" value = "#{projectBean.projectsCreatedByUser}" var = "project"
@@ -62,22 +49,38 @@
                 </p:column>
 
                 <p:column headerText="Status">
-                    <h:outputText value="#{project.status}" />
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 0}" styleClass="project-badge status-created"/>
+                    <h:outputText value="#{project.status}" rendered="#{!project.projectEndDateReached and projectBean.getEnumIntPosition(project.status) == 1}"   styleClass="project-badge status-active"/>
+                    <h:outputText value="In review" rendered="#{project.projectEndDateReached  and projectBean.getEnumIntPosition(project.status) == 1}" />
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 2}" styleClass="project-badge status-failed"/>
+                    <h:outputText value="#{project.status}" rendered="#{projectBean.getEnumIntPosition(project.status) == 3}" styleClass="project-badge status-success"/>
                 </p:column>
 
-                <p:column headerText="View">
+                <p:column>
 
-                    <p:commandButton value="View"  action="#{projectBean.view}"   style="margin-right:20px;" styleClass="ui-button-info">
+                    <p:commandButton action="#{projectBean.view}" label="View project"
+                                     icon="pi pi-search-plus" styleClass="rounded-button p-mr-1">
                         <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
                     </p:commandButton>
 
 
-                    <p:commandButton value="Edit" rendered="#{project.creator.id == loggedInUser.id}" icon="fa fa-edit" update=":projectForm:projectEdit" oncomplete="PF('projectEditDialog').show()">
+                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id}"
+                                     icon="pi pi-pencil" styleClass="rounded-button ui-button-success p-mr-1" label="Edit project"
+                                     update=":projectForm:projectEdit" oncomplete="PF('projectEditDialog').show()">
                         <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id}" action="#{projectBean.deleteProject(project)}" value="Delete"  update="projectList" />
+                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id}" label="Remove project" process="@this"
+                                     styleClass="p-mr-1 ui-button-danger rounded-button" icon="pi pi-trash" oncomplete="PF('deleteProjectDialog').show()">
+                        <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
+                    </p:commandButton>
 
+                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id and projectBean.getEnumIntPosition(project.status) != 0
+					and !project.projectEndDateReached}" process="@this" label="End now"
+                                     styleClass="p-mr-1 ui-button-danger rounded-button" icon="pi pi-clock"
+                                     update="projectList" oncomplete="PF('endProjectDialog').show()">
+                        <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
+                    </p:commandButton>
 
                 </p:column>
 
@@ -85,10 +88,29 @@
 
 
 
-            <p:dialog header="Edit project" widgetVar="projectEditDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+            <p:confirmDialog widgetVar="deleteProjectDialog" showEffect="fade" width="300"
+                             message="Delete the Project?" header="Confirm" severity="warn">
+                <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{projectBean.deleteProject(projectBean.selectedProject)}"
+                               update="projectList"  process="@this" oncomplete="PF('deleteProjectDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteProjectDialog').hide()"/>
+            </p:confirmDialog>
+
+
+            <p:confirmDialog widgetVar="endProjectDialog" showEffect="fade" width="300"
+                             message="End the Project immediately?" header="Confirm" severity="warn">
+                <p:commandButton value="Yes" icon="pi pi-check" actionListener="#{projectBean.endProjectNow(projectBean.selectedProject)}"
+                                 update="projectList"  process="@this" oncomplete="PF('endProjectDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('endProjectDialog').hide()"/>
+            </p:confirmDialog>
+
+
+            <p:dialog header="Edit project" widgetVar="projectEditDialog" modal="true" showEffect="fade"
+                      fitViewport="true" hideEffect="fade" resizable="false" responsive="true">
                 <p:outputPanel id="projectEdit" style="text-align:center;">
 
-                    <strong><h:outputText value="Project is active -- only comments can be added" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" /></strong>
+                    <strong><h:outputText value="Project is active or finished -- only comments can be added" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) >= 1}" /></strong>
 
 
                     <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject and projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 0}" columnClasses="label,value">
@@ -100,7 +122,7 @@
                         <h:outputText value="Title: " />
                         <p:inputText value="#{projectBean.selectedProject.title}" />
                         <h:outputText value="Description: " />
-                        <p:textEditor escape="false" secure="false" responsive="true" value="#{projectBean.selectedProject.description}" >
+                        <p:textEditor escape="false" secure="false" height="300" responsive="true" value="#{projectBean.selectedProject.description}" >
                             <f:facet name="toolbar">
              <span class="ql-formats">
                 <button class="ql-bold"></button>
@@ -111,7 +133,7 @@
                             </f:facet>
                         </p:textEditor>
                         <h:outputText value="Funds required: " />
-                        <p:inputNumber value="#{projectBean.selectedProject.fundingTarget}" />
+                        <p:inputNumber value="#{projectBean.selectedProject.fundingTarget}" decimalSeparator="," thousandSeparator="." padControl="false"  symbol="€"/>
                         <h:outputText value="Start date: " />
                         <p:datePicker id="startDate" mindate="#{projectBean.today}" value="#{projectBean.selectedProject.startDate}" >
                             <p:ajax event="dateSelect" update="endDate" global="false" />

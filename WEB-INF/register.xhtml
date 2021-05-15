@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Startkicker - User registration</title>
+    <title>StartKicker - User registration</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -22,19 +22,13 @@
     <h:panelGrid rendered="#{loggedInUser == null}">
 
 
+        <p:card class="p-mt-2">
 
-    <div class="card">
-        <br></br><br></br>
 
         <h1>        Register a new user acccount on Startkicker
         </h1>
 
-        <p:messages id="messages" showDetail="true" closable="true">
-            <p:autoUpdate/>
-        </p:messages>
-
-
-        <h:form>
+          <h:form>
             <p:panelGrid columns="4"
                          layout="flex"
                          columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
@@ -57,11 +51,11 @@
                 <p:inputText id="Email" name="Email" value="#{userBean.userToSave.email}" required="true" validatorMessage="Incorrect e-mail…" requiredMessage="Email needed" >
                 <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
                 </p:inputText>
-
-                <p:commandButton value="Save" ajax="false"  update="@form" icon="pi pi-check" validateClient="true" styleClass="p-mr-3"  action="#{userBean.register(false)}" />
-
             </p:panelGrid>
-        </h:form>
+
+            <p:commandButton value="Register your account" ajax="false"  update="@form" icon="pi pi-fw pi-user-plus" validateClient="true" styleClass="p-mt-2 p-ml-3 p-mr-3"  action="#{userBean.register(false)}" />
+
+          </h:form>
 
 
 
@@ -74,7 +68,7 @@
         </p>
     </p:card>
 
-    </div>
+        </p:card>
 
     </h:panelGrid>
 

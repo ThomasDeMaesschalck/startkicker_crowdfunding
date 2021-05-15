@@ -1,3 +1,31 @@
 html, body {
     padding: 10px;
 }
+
+.project-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px; }
+
+.project-badge.status-created {
+    background: #f7f7f7;
+    color: #292b2c; }
+
+.project-badge.status-active {
+    background: #C8E6C9;
+    color: #256029; }
+
+.project-badge.status-inreview {
+    background: #FEEDAF;
+    color: #8A5340; }
+
+.project-badge.status-success {
+    background: #5bc0de;
+    color: #f4fbfc; }
+
+.project-badge.status-failed {
+    background: #FFCDD2;
+    color: #C63737; }

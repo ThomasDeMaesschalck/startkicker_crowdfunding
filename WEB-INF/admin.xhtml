@@ -7,7 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Startkicker - Admin Panel</title>
+    <title>StartKicker - Admin Panel</title>
     <h:outputStylesheet name="css/primeflex.css" />
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
@@ -18,30 +18,25 @@
     </ui:insert>
 
 
-    <h:panelGrid rendered="#{loggedInUser.admin == true}">
+    <p:card class="p-mt-2" rendered="#{loggedInUser.admin == true}">
 <h1>Admin menu</h1>
 
-       Hello admin
-        <h:outputText value="#{loggedInUser.firstName}"></h:outputText>
+        <h:outputText value="Hello administrator #{loggedInUser.firstName}"></h:outputText>
+
+<p:divider></p:divider>
 
 
-    <br></br><br></br>
-
-    <p:card>
-        <br></br>
 
 
-        <p:messages id="messages" showDetail="true" closable="true">
-            <p:autoUpdate/>
-        </p:messages>
 
+        <h1>User list:</h1>
 
-        <p:commandButton icon="pi pi-user-plus" value="Add a new user" update=":userCreateForm:userCreate" oncomplete="PF('makeDialog').show()">
+        <p:commandButton icon="pi pi-user-plus" value="Add a new user"  styleClass="p-mb-2"
+                         update=":userCreateForm:userCreate" oncomplete="PF('makeDialog').show()">
             <f:setPropertyActionListener value="#{user}" target="#{userBean.userToSave}"/>
         </p:commandButton>
 
-        <br /><br />
-        <h1>User list:</h1>
+
         <h:form id="userForm">
             <p:dataTable id="userlist" value = "#{myAppWideBean.allUsers}" var = "user"
                          rows="10"
@@ -70,19 +65,19 @@
                 <p:column headerText="Active?">
                     <h:outputText rendered="#{user.actif == true}"  styleClass="pi pi-check"/>
                     <p:commandButton rendered="#{user.actif == false}" action="#{userBean.activateUser(user.id)}"
-                                     value="Activate #{user.id}"
+                                     value="Activate" styleClass="ui-button-success rounded-button"
                                      update="userlist" />
                 </p:column>
 
                 <p:column headerText="Edit">
-                    <p:commandButton icon="fa fa-pencil" update=":userForm:userEdit" oncomplete="PF('editDialog').show()">
+                    <p:commandButton icon="fa fa-pencil" update=":userForm:userEdit" styleClass="ui-buton rounded-button p-mr-1" oncomplete="PF('editDialog').show()">
                         <f:setPropertyActionListener value="#{user}" target="#{userBean.selectedUser}"/>
                     </p:commandButton>
 
                     <p:commandButton action="#{userBean.deleteUser(user)}"
                                      icon="fa fa-trash"
                                      update="userlist"
-                                     styleClass="ui-button-danger"/>
+                                     styleClass="ui-button-danger rounded-button"/>
                 </p:column>
             </p:dataTable>
 
@@ -171,7 +166,7 @@
 
         <p:card>
 
-            <h2>Ended projects that need status change:</h2>
+            <h2>Ended projects that a need status change:</h2>
             <h:form id="projectForm">
                 <p:dataTable id="projectList" value = "#{projectBean.projectsEndedButNotFinalized}" var = "project"
                              rows="10"
@@ -221,7 +216,6 @@
 
             </h:form>
         </p:card>
-    </h:panelGrid>
 
     <ui:insert name="footer" >
         <ui:include src="resources/includes/footer.xhtml" />
