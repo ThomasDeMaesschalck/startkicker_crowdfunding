@@ -325,7 +325,6 @@ for (ProjectStatus s : ProjectStatus.values())
         return pathToFollow;
     }
 
-
     public int getStatusInt() {
         return statusInt;
     }

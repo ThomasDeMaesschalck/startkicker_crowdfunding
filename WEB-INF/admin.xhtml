@@ -12,37 +12,12 @@
     <h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
-        <div class="card">
-            <h:form>
-                <p:growl id="messages"/>
 
-                <p:menubar>
-                    <f:facet name="options">
-                        <p:linkButton outcome="index" value="Home" style="margin-right:20px;" />
-                    </f:facet>
+    <ui:insert name="header" >
+        <ui:include src="resources/includes/header.xhtml" />
+    </ui:insert>
 
 
-                    <f:facet name="options">
-                        <p:linkButton rendered="#{loggedInUser != null}" outcome="createproject" value="Create a project" style="margin-right:20px;" />
-                        <p:button rendered="#{loggedInUser == null}" outcome="login" value="Login here" style="margin-right:20px;"  />
-                    </f:facet>
-
-                    <p:divider layout="vertical"/>
-
-
-                    <f:facet name="options">
-
-                        <p:linkButton  rendered="#{loggedInUser == null}" outcome="register" value="Register" style="margin-right:20px;" />
-
-                        <p:linkButton rendered="#{loggedInUser.admin == true}" outcome="admin" value="Admin" style="margin-right:20px;" />
-
-                        <p:commandButton  rendered="#{loggedInUser != null}" value="Logout"
-                                          action="#{loginBean.logout}" style="margin-right:20px;"
-                                          icon="pi pi-fw pi-sign-out" styleClass="ui-button-info"></p:commandButton>
-                    </f:facet>
-                </p:menubar>
-            </h:form>
-        </div>
     <h:panelGrid rendered="#{loggedInUser.admin == true}">
 <h1>Admin menu</h1>
 
@@ -247,5 +222,9 @@
             </h:form>
         </p:card>
     </h:panelGrid>
+
+    <ui:insert name="footer" >
+        <ui:include src="resources/includes/footer.xhtml" />
+    </ui:insert>
 </h:body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      lang="en" xml:lang="en">
+
+<body>
+
+    <h:form>
+        <p:growl id="messages"/>
+
+        <p:menubar>
+            <p:menuitem label="Home" url="index.jsf" value="Home" icon="pi pi-fw pi-home" />
+
+
+            <p:submenu rendered="#{loggedInUser != null}" label="Projects" icon="pi pi-fw pi-file">
+                <p:menuitem label="Create project" url="createproject.jsf" value="Create project" icon="pi pi-fw pi-plus" />
+                <p:divider />
+                <p:menuitem label="My projects" url="myprojects.jsf" value="My projects" icon="pi pi-fw pi-folder-open" />
+                <p:menuitem label="Funded projects" url="fundedprojects.jsf" value="Funded projects" icon="pi pi-fw pi-wallet" />
+            </p:submenu>
+
+            <p:divider layout="vertical"/>
+
+                <p:menuitem  rendered="#{loggedInUser == null}" value="Register" icon="pi pi-fw pi-user-plus" url="register.jsf"/>
+            <p:divider layout="vertical"/>
+                <p:menuitem  rendered="#{loggedInUser == null}" value="Login" icon="pi pi-sign-in" url="login.jsf"/>
+
+
+
+            <p:divider layout="vertical"/>
+
+            <p:menuitem rendered="#{loggedInUser.admin == true}"  label="Admin" url="admin.jsf" value="Admin" icon="pi pi-fw pi-cog" />
+
+            <p:divider rendered="#{loggedInUser.admin == true}" layout="vertical"/>
+
+
+            <p:menuitem rendered="#{loggedInUser != null}" value="Logout #{loggedInUser.userName}" action="#{loginBean.logout}"
+                        icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" />
+
+
+        </p:menubar>
+    </h:form>
+
+</body>
+</html>
