@@ -184,6 +184,7 @@ public class ProjectService {
      */
     public int getPercentageFunded(ProjectDTO pDTO)
     {
+
         BigDecimal ONE_HUNDRED = new BigDecimal(100);
         BigDecimal calculation = pDTO.getFunded().multiply(ONE_HUNDRED).divide(pDTO.getFundingTarget(), 0, RoundingMode.HALF_UP);
         int percent = calculation.toBigInteger().intValueExact();
