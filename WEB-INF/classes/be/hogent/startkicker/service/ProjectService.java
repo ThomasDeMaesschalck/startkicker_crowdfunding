@@ -78,27 +78,58 @@ public class ProjectService {
 
     /**
      * Get a list of all Projects that have been persisted.
-     * Upon retrieval, this method will call the funded method to add the amount that has been funded to each ProjectDTO
-     * An iteration over all projects will be performed to set ProjectStatus.Created to Active in case project start date is before LocalDate.now()
-     * If the project end date is before LocalDate.now, the ProjectDTO projectEndDateReached will be set to true to disable funding in the frontend.
+    * Iterates over all projects and uses adjustProjectAndFundingStatus method to set the correct Project Status and funding details
      * @return List of all ProjectDTO
      */
     public List<ProjectDTO> getAllProjects() {
             List<ProjectDTO> allProjects = projectMapper.allObjectToDTO(projectRepo.getAllProjects());
             for (ProjectDTO p: allProjects) {
-                BigDecimal funded = funded(p);
-                p.setFunded(funded);
-                if (p.getStartDate().isBefore(LocalDate.now()) && p.getStatus().equals(ProjectStatus.Created))
-                {
-                    switchProjectStatus(p, ProjectStatus.Active);
-                }
-                if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
-                {
-                    switchFundingOff(p);
-                }
+                adjustProjectAndFundingStatus(p, null);
             }
             return allProjects;
         }
+
+    /**
+     This method will call the funded method to add the amount that has been funded to each ProjectDTO
+     * Set ProjectStatus.Created to Active in case project start date is before LocalDate.now()
+     * If the project end date is before LocalDate.now, the ProjectDTO projectEndDateReached will be set to true to disable funding in the frontend.
+     * @param p The ProjectDTO that needs project and funding status adjusted
+     * @return The adjusted ProjectDTO
+     */
+    public ProjectDTO adjustProjectAndFundingStatus(ProjectDTO p, UserDTO user) {
+        BigDecimal funded = funded(p);
+        p.setFunded(funded);
+        if (user != null) {
+            for (FundingDTO f : p.getFunding()) {
+                if (f.getUser().getId() == user.getId()) {
+                    p.setUserHasFunded(true);
+                }
+            }
+            if (p.getStartDate().isBefore(LocalDate.now()) && p.getStatus().equals(ProjectStatus.Created)) {
+                switchProjectStatus(p, ProjectStatus.Active);
+            }
+            if (p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now())) {
+                switchFundingOff(p);
+            }
+        }
+            return p;
+        }
+
+
+    /**
+     * Retrieve a list of all persisted projects with some extra information for the logged in user.
+     * Compared with the regular getAllProjects(), this method will add whether a user has already funded a project to prevent the double funding of a project.
+     * @param user The logged in user
+     * @return Returns a list of Project DTOs
+     */
+    public List<ProjectDTO> getAllProjects(UserDTO user) {
+        List<ProjectDTO> allProjectsWithUserInfo = projectMapper.allObjectToDTO(projectRepo.getAllProjects());
+
+        for (ProjectDTO p: allProjectsWithUserInfo) {
+           adjustProjectAndFundingStatus(p, user);
+        }
+        return allProjectsWithUserInfo;
+    }
 
     /**
      * Calculate the total amount of funding a project has received from project backers
@@ -121,34 +152,6 @@ public class ProjectService {
             List<ProjectDTO> allEndedButNotFinalizedProjects = allProjects.stream().filter(o -> o.isProjectEndDateReached()).filter(o -> o.getStatus() == ProjectStatus.Active).collect(Collectors.toList());
             return  allEndedButNotFinalizedProjects;
         }
-
-    /**
-     * Retrieve a list of all persisted projects with some extra information.
-     * Compared with the regular getAllProjects(), this method will add whether a user has already funded a project to prevent the double funding of a project.
-     * @param user The logged in user
-     * @return Returns a list of Project DTOs
-     */
-    public List<ProjectDTO> getAllProjects(UserDTO user) {
-        List<ProjectDTO> allProjectsWithUserInfo = projectMapper.allObjectToDTO(projectRepo.getAllProjects());
-
-        for (ProjectDTO p: allProjectsWithUserInfo) {
-            BigDecimal funded = funded(p);
-            if (user != null) {
-                for (FundingDTO f : p.getFunding()) {
-                    if (f.getUser().getId() == user.getId()) {
-                        p.setUserHasFunded(true);
-                    }
-
-                }
-                if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
-                {
-                    switchFundingOff(p);
-                }
-            }
-            p.setFunded(funded);
-        }
-        return allProjectsWithUserInfo;
-    }
 
     /**
      * Retrieve a list of all the Projects that have received funding from the logged in user.
