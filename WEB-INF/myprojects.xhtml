@@ -70,7 +70,7 @@
                         <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
                     </p:commandButton>
 
-                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id}" label="Remove project" process="@this"
+                    <p:commandButton rendered="#{project.creator.id == loggedInUser.id and projectBean.getEnumIntPosition(project.status) == 0}" label="Remove project" process="@this"
                                      styleClass="p-mr-1 ui-button-danger rounded-button" icon="pi pi-trash" oncomplete="PF('deleteProjectDialog').show()">
                         <f:setPropertyActionListener value="#{project}" target="#{projectBean.selectedProject}"/>
                     </p:commandButton>
