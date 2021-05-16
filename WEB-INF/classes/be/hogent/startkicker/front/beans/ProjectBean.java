@@ -84,7 +84,7 @@ public class ProjectBean implements Serializable {
         String pathToFollow = null;
         String outcome = ProjectService.getInstance().saveProject(selectedProject);
         if (outcome == "success") {
-            pathToFollow = "index.jsf?faces-redirect=true";
+            pathToFollow = "myprojects.jsf?faces-redirect=true";
             return pathToFollow;
         }
         else {

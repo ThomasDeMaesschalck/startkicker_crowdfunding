@@ -18,59 +18,99 @@
         <ui:include src="resources/includes/header.xhtml" />
     </ui:insert>
 
-    <p:card styleClass="p-mt-2">
+    <p:card styleClass="p-mt-1">
 
-            <h1>     Project details:            </h1>
-
-
-
-            <p:panelGrid  columns="1" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
-                <h:outputText value="Title: " />
+            <h1>
                 <h:outputText value="Project ##{projectBean.selectedProject.id} - #{projectBean.selectedProject.title}" />
+            </h1>
+
+
+        <div class="p-grid">
+
+
+
+        <div class="p-col">
+            <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject}" columnClasses="label,value">
+
+                <h:outputText value="Project status" />
+                <h:outputText value="#{projectBean.selectedProject.status}" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 0}" styleClass="project-badge status-created"/>
+                <h:outputText value="#{projectBean.selectedProject.status}" rendered="#{!project.projectEndDateReached and projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 1}"   styleClass="project-badge status-active"/>
+                <h:outputText value="In review" rendered="#{projectBean.selectedProject.projectEndDateReached  and projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 1}" />
+                <h:outputText value="#{projectBean.selectedProject.status}" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 2}" styleClass="project-badge status-failed"/>
+                <h:outputText value="#{projectBean.selectedProject.status}" rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 3}" styleClass="project-badge status-success"/>
+
+
                 <h:outputText value="Funds required: " />
                 <h:outputText value="#{projectBean.selectedProject.fundingTarget}EUR" />
+
                 <h:outputText value="Amount funded: " />
                 <h:outputText value="#{projectBean.selectedProject.funded}EUR" />
-                <p:progressBar value="#{projectBean.percentageFunded}" labelTemplate="{value}%" displayOnly="true"/>
+
+
                 <h:outputText value="Start date: " />
                 <h:outputText value="#{projectBean.selectedProject.startDate}"/>
+
                 <h:outputText value="End date:" />
                 <h:outputText value="#{projectBean.selectedProject.endDate}" />
+
                 <h:outputText value="Project created by:" />
                 <h:outputText value="#{projectBean.selectedProject.creator.userName}"/>
             </p:panelGrid>
+        </div>
 
-            <p:card>
-            <h:outputText value="Description: " />
+            <div class="p-col p-as-center">
+
+                <h2>Percent funded:</h2>
+                <div class="knob-container  ui-corner-all">
+                    <p:knob labelTemplate="{value}%" value="#{projectBean.percentageFunded}" foregroundColor="green" disabled="true"/>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <h2> <h:outputText value="Description: " /> </h2>
+
             <h:outputText escape="false"  value="#{projectBean.selectedProject.description}" />
 
-                <br /><br />
-
-                <h:outputText value="Comments from project creator: " />
                 <br />
-                <h:outputText   value="There are no comments" rendered="#{projectBean.selectedProject.comment == null}"/>
+
+        <h3>  <h:outputText value="Comments from project creator: " rendered="#{projectBean.selectedProject.comment != null}"/> </h3>
                 <h:outputText   value="#{projectBean.selectedProject.comment}" />
 
-                <br /><br />
 
-                <h:outputText value="End date reached -- funding not possible anymore!" rendered="#{projectBean.selectedProject.projectEndDateReached}" />
 
-                <h:outputText rendered="#{projectBean.selectedProject.userHasFunded == true}" value="You have already funded this project!"></h:outputText>
+
+
+
+        <br /><br />
+        <h3 class="p-mt-2">Fund this project</h3>
+        <h:outputText value="End date reached -- funding not possible anymore!" rendered="#{projectBean.selectedProject.projectEndDateReached}" styleClass="p-mt-1"/>
+        <strong><h:outputText rendered="#{projectBean.selectedProject.userHasFunded == true}" value="You have already funded this project!" styleClass="p-mt-1" /></strong>
+        <strong><h:outputText rendered="#{loggedInUser == null and !projectBean.selectedProject.projectEndDateReached and projectBean.getEnumIntPosition(projectBean.selectedProject.status) > 0}" value="Login/register to fund this project" styleClass="p-mt-1" /></strong>
+        <strong><h:outputText rendered="#{projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 0}" value="Funding will open when this project reaches the start date" styleClass="p-mt-1" /></strong>
+
 
                 <h:form id="fundForm">
 
-                <p:commandButton value="Fund" rendered="#{loggedInUser != null and !projectBean.selectedProject.userHasFunded and
-                projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 1}" icon="fa fa-wallet" update=":fundForm:projectFunding" oncomplete="PF('projectFundDialog').show()">
+                <p:commandButton value="Give money to this project" rendered="#{loggedInUser != null and !projectBean.selectedProject.userHasFunded and
+                projectBean.getEnumIntPosition(projectBean.selectedProject.status) == 1}" styleClass="p-mt-2"
+                                 icon="fa fa-wallet" update=":fundForm:projectFunding" oncomplete="PF('projectFundDialog').show()">
                 </p:commandButton>
 
+                    <p:progressBar value="#{projectBean.percentageFunded}" styleClass="p-mt-4" labelTemplate="{value}%" displayOnly="true"/>
 
-    <p:dialog header="Fund this project" widgetVar="projectFundDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
+
+                    <p:dialog header="Fund this project" widgetVar="projectFundDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" responsive="true">
         <p:outputPanel id="projectFunding" style="text-align:center;">
 
             <p:panelGrid  columns="2" rendered="#{not empty projectBean.selectedProject}">
 
-                <h:outputText value="Fund #{projectBean.selectedProject.title}"/>
-                <br /><br />
+                <h:outputText value="Project to fund:"/>
+
+                <h:outputText value="#{projectBean.selectedProject.title}"/>
                 <h:outputText value="Enter a number:" />
 
 
@@ -78,7 +118,7 @@
 
             </p:panelGrid>
 
-            <p:commandButton value="Take my money!" icon="fa fa-wallet" action="#{projectBean.fundProject(loggedInUser, projectBean.fundingAmount)}"/>
+            <p:commandButton value="Take my money!" icon="fa fa-wallet" styleClass="p-mt-2" action="#{projectBean.fundProject(loggedInUser, projectBean.fundingAmount)}"/>
 
             <br /><br />
             <img src="resources/images/takemoney.jpg" alt="take my money!"/>
@@ -95,8 +135,6 @@
 
             </p:card>
 
-
-    </p:card>
 
     <ui:insert name="footer" >
         <ui:include src="resources/includes/footer.xhtml" />

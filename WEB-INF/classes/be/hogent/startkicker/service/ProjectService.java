@@ -138,10 +138,11 @@ public class ProjectService {
                     if (f.getUser().getId() == user.getId()) {
                         p.setUserHasFunded(true);
                     }
-                    if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
-                    {
-                        switchFundingOff(p);
-                    }
+
+                }
+                if(p.getEndDate().isBefore(LocalDate.now()) || p.getEndDate().equals(LocalDate.now()))
+                {
+                    switchFundingOff(p);
                 }
             }
             p.setFunded(funded);
@@ -174,6 +175,7 @@ public class ProjectService {
 
     /**
      * Calculates a percentage of how much of the funding target of a project has already been funded by backers.
+     * If the project is overfunded, the percentage remains 100 percent in order not to break UI components
      * @param pDTO ProjectDTO that needs calculation
      * @return An int value that represents the percentage of the funding target that has been achieved
      */
@@ -182,6 +184,10 @@ public class ProjectService {
         BigDecimal ONE_HUNDRED = new BigDecimal(100);
         BigDecimal calculation = pDTO.getFunded().multiply(ONE_HUNDRED).divide(pDTO.getFundingTarget(), 0, RoundingMode.HALF_UP);
         int percent = calculation.toBigInteger().intValueExact();
+        if (percent > 100)
+        {
+            percent = 100;
+        }
         return percent;
     }
 
