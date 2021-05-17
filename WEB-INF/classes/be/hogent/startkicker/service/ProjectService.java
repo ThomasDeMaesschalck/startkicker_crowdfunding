@@ -94,6 +94,7 @@ public class ProjectService {
      * Set ProjectStatus.Created to Active in case project start date is before LocalDate.now()
      * If the project end date is before LocalDate.now, the ProjectDTO projectEndDateReached will be set to true to disable funding in the frontend.
      * @param p The ProjectDTO that needs project and funding status adjusted
+     * @param user The logged in user (null if none)
      * @return The adjusted ProjectDTO
      */
     public ProjectDTO adjustProjectAndFundingStatus(ProjectDTO p, UserDTO user) {

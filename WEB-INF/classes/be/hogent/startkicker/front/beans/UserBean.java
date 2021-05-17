@@ -1,6 +1,8 @@
 package be.hogent.startkicker.front.beans;
 
+import be.hogent.startkicker.service.ProjectService;
 import be.hogent.startkicker.service.UserService;
+import be.hogent.startkicker.service.dto.ProjectDTO;
 import be.hogent.startkicker.service.dto.UserDTO;
 
 import javax.faces.application.FacesMessage;
@@ -9,6 +11,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Frontend bean used for user registration and administrative management of users.
@@ -105,7 +108,8 @@ public class UserBean implements Serializable {
      */
     public BigDecimal getTotalFunded(){
         UserDTO thisUser =  (UserDTO) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("loggedInUser");
-        setTotalFunded(UserService.getInstance().userTotalFunded(thisUser));
+        List<ProjectDTO> projectsFundedByUser = ProjectService.getInstance().getAllProjectsFundedByUser(thisUser);
+        setTotalFunded(UserService.getInstance().userTotalFunded(thisUser, projectsFundedByUser));
         return 	totalFunded;
     }
 

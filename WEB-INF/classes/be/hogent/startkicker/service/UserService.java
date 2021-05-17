@@ -104,12 +104,11 @@ public class UserService {
 	/**
 	 * Calculate the total amount of money a logged in user has pledged to projects
 	 * @param user The logged in user
+	 * @param fundedProjectList  The list that needs calculation
 	 * @return BigDecimal of how much money the user has pledged to projects
 	 */
-	public BigDecimal userTotalFunded(UserDTO user)
+	public BigDecimal userTotalFunded(UserDTO user, List<ProjectDTO> fundedProjectList)
 	{
-		List<ProjectDTO> fundedProjectList = ProjectService.getInstance().getAllProjectsFundedByUser(user);
-
 		List<BigDecimal> values = new ArrayList<>();
 		for (ProjectDTO project: fundedProjectList) {
 			values.addAll(project.getFunding().stream().filter(f -> f.getUser().getId() == user.getId()).map(FundingDTO::getAmount).collect(Collectors.toList()));

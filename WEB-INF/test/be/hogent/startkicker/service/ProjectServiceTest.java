@@ -21,6 +21,7 @@ class ProjectServiceTest {
     private UserDTO testUser2;
     private ProjectDTO testProjectDTO;
     private FundingDTO funding1;
+    private FundingDTO funding2;
     private Set<FundingDTO> testSet;
 
     @BeforeEach
@@ -51,13 +52,20 @@ class ProjectServiceTest {
     testProjectDTO.setFundingTarget(fundingTarget);
 
         funding1 = new FundingDTO();
-        funding1.setAmount(BigDecimal.valueOf(300));
+        funding1.setId(1);
+        funding1.setAmount(BigDecimal.valueOf(500));
         funding1.setUser(testUser);
         funding1.setProject(testProjectDTO);
 
+        funding2 = new FundingDTO();
+        funding2.setId(2);
+        funding2.setAmount(BigDecimal.valueOf(500));
+        funding2.setUser(testUser2);
+        funding2.setProject(testProjectDTO);
 
     testSet = new HashSet<>();
     testSet.add(funding1);
+    testSet.add(funding2);
 
     testProjectDTO.setFunding(testSet);
     }
@@ -76,13 +84,13 @@ class ProjectServiceTest {
     @Test
     void funded() {
         ProjectService.getInstance().adjustProjectAndFundingStatus(testProjectDTO, testUser);
-        assertEquals(BigDecimal.valueOf(300), ProjectService.getInstance().funded(testProjectDTO), "Test 05 failed - funding total not correct");
+        assertEquals(BigDecimal.valueOf(1000), ProjectService.getInstance().funded(testProjectDTO), "Test 05 failed - funding total not correct");
     }
 
     @Test
     void getPercentageFunded() {
         ProjectService.getInstance().adjustProjectAndFundingStatus(testProjectDTO, testUser);
-        assertEquals(6, ProjectService.getInstance().getPercentageFunded(testProjectDTO), "Test 06 failed - percentage not correct");
+        assertEquals(20, ProjectService.getInstance().getPercentageFunded(testProjectDTO), "Test 06 failed - percentage not correct");
     }
 
       @Test
@@ -90,6 +98,6 @@ class ProjectServiceTest {
         ProjectDTO test = new ProjectDTO();
         test.setProjectEndDateReached(true);
         ProjectService.getInstance().switchFundingOff(testProjectDTO);
-        assertEquals(test.isProjectEndDateReached(), testProjectDTO.isProjectEndDateReached());
+        assertEquals(test.isProjectEndDateReached(), testProjectDTO.isProjectEndDateReached(), "Test 07 failed - should be false");
     }
 }
