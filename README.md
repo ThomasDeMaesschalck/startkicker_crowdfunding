@@ -18,7 +18,7 @@ View a project:
 Fund a project:
 ![crowdfunding_5](https://user-images.githubusercontent.com/58608713/124358196-80ec5180-dc1f-11eb-870b-fc64c4c3dc04.png)
 
-List a projects funded by a registered user:
+List of projects funded by a registered user:
 ![crowdfunding_6](https://user-images.githubusercontent.com/58608713/124358200-85186f00-dc1f-11eb-9a99-5df9378f3165.png)
 
 Make a new project:
